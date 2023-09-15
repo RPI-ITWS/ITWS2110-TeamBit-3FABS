@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1-Bit</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li><a href="./index.html">HOME</a></li>
+            <li><a href="./browse.html">BROWSE</a></li>
+            <li><a href="./share.html" class="selected">SHARE</a></li>
+            <li><a href="./login.html">LOGIN</a></li>
+        </ul>
+    </header>
+    <div class="content" id="content">
+         <div class="editBar">
+            <div class="sliderWrap">
+                <p>Threshold:</p>
+                <input id="thresholdSlider" class="slider" type="range" min="1" max="255" step="1" value="127"
+                    oninput="ditherCall()">
+                <p id="thresholdValue">127</p>
+            </div>
+            <div class="sliderWrap">
+                <p>Contrast:</p>
+                <input id="contrastSlider" class="slider" type="range" min="0" max="200" step="1" value="100"
+                    oninput="ditherCall()">
+                <p id="contrastValue">100%</p>
+            </div>
+            <select id="dithering" oninput="ditherCall()">
+                <option value="bayer4x4">bayer 4x4</option>
+                <option value="bayer2x2">bayer 2x2</option>
+                <option value="floydsteinberg">floyd-steinberg</option>
+                <option value="atkinson">atkinson</option>
+                <option value="none">none</option>
+                <option value="randomBayer">random bayer</option>
+                <option value="randomAtkinson">random atkinson</option>
+                <option value="randomNone">random none</option>
+            </select>
+        </div>
+        <canvas id="display" width="300px" height="300px"></canvas>
+        <form>
+            <label for="img">Select image:</label>
+            <input type="file" id="img" name="img" accept="image/*">
+            <input type="submit">
+        </form>
+    </div>
+
+    <script src="./Javascript/Dither.js"></script>
+</body>
+
+</html>
