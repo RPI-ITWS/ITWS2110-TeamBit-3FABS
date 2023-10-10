@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "restricted area"
+AuthUserFile /var/www/ITWS2110-TeamBit-3FABS/maintainence.htpasswd
+Require valid-user
