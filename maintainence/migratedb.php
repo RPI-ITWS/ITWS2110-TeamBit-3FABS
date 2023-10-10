@@ -22,13 +22,22 @@
         error_reporting(E_ALL);
 
         function printTrace($e) {
-            echo "<pre class=". '"failure"' .">\n" . $e->getTraceAsString() . "\n</pre>";
+            $message = $e->getMessage();
+            $trace = $e->getTraceAsString();
+            echo <<<EOD
+            <pre class="failure">
+            Exception: <b>$message</b>
+
+            Stack trace (most recent call first):
+            $trace
+            </pre>
+            EOD;
         }
 
         try {
             $db = new mysqli("localhost","team5project","team5project","team5project");
         } catch (Exception $e) {
-            echo '<p class="failure">Caught exception during DB connection: ' . $e->getMessage() . "</p>";
+            echo '<p class="failure">Caught exception during DB connection:</p>';
             printTrace($e);
             exit;
         }
@@ -46,7 +55,7 @@
             $migrationVersion = intval($migrationVersionResult->fetch_assoc()['migration_version']);
             echo '<p class="success">Current migration version: ' . $migrationVersion . '</p>';
         } catch (Exception $e) {
-            echo '<p class="failure">Caught exception during metadata query: ' . $e->getMessage() . "</p>";
+            echo '<p class="failure">Caught exception during metadata query:</p>';
             printTrace($e);
             exit;
         }
@@ -95,7 +104,7 @@
                     )
                 ');
             } catch (Exception $e) {
-                echo '<p class="failure">Caught exception during migration #1: ' . $e->getMessage() . "</p>";
+                echo '<p class="failure">Caught exception during migration #1:</p>';
                 printTrace($e);
                 exit;
             }
@@ -118,7 +127,7 @@
                     ALTER TABLE comments ADD FOREIGN KEY (parent_comment_id) REFERENCES comments(id);
                 ');
             } catch (Exception $e) {
-                echo '<p class="failure">Caught exception during migration #2: ' . $e->getMessage() . "</p>";
+                echo '<p class="failure">Caught exception during migration #2:</p>';
                 printTrace($e);
                 exit;
             }
@@ -128,7 +137,7 @@
                 $db->query("UPDATE metadata SET value = " . $maxMigrationVersion . " WHERE id = 1");
                 echo '<p class="success">Successfully migrated to version ' . $maxMigrationVersion . '</p>';
             } catch (Exception $e) {
-                echo '<p class="failure">Caught exception during metadata update: ' . $e->getMessage() . "</p>";
+                echo '<p class="failure">Caught exception during metadata update:</p>';
                 printTrace($e);
                 exit;
             }
