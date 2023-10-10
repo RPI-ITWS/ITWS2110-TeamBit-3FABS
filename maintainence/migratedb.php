@@ -78,7 +78,6 @@
                     expires_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )
             ');
-            echo '<p class="success">Successfully migrated to version 1</p>';
         }
         if ($migrationVersion != $maxMigrationVersion) {
             $db->query("UPDATE metadata SET value = " . $maxMigrationVersion . " WHERE id = 1");
