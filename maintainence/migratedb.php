@@ -17,6 +17,9 @@
     <body>
         <h1>DB Migration</h1>
         <?php
+        ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
+        error_reporting(E_ALL);
 
         $db = new mysqli("localhost","team5project","team5project","team5project");
         if ($db->connect_error) {
