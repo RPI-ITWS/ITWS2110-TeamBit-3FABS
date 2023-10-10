@@ -20,10 +20,10 @@
 
         $db = new mysqli("localhost","team5project","team5project","team5project");
         if ($db->connect_error) {
-            echo '<p class="failure">Connection failed: ' . $db->connect_error . "</p>\n";
+            echo '<p class="failure">Connection failed: ' . $db->connect_error . "</p>";
             exit;
         } else {
-            echo '<p class="success">Successfully connected to the database.</p>\n';
+            echo '<p class="success">Successfully connected to the database.</p>';
         }
 
         ?> 
