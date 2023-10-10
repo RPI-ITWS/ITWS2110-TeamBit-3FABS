@@ -53,7 +53,7 @@
                     image_url VARCHAR(255) NOT NULL,
                     author_id INT NOT NULL,
                     FOREIGN KEY (author_id) REFERENCES users(id),
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             ');
             $db->query('
