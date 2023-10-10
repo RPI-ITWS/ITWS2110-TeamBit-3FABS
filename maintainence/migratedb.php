@@ -35,7 +35,7 @@
         // Return result as integer
         $migrationVersion = intval($migrationVersionResult->fetch_assoc()['migration_version']);
         echo '<p class="success">Current migration version: ' . $migrationVersion . '</p>';
-        $maxMigrationVersion = 1; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 2; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             $db->query('
                 CREATE TABLE IF NOT EXISTS users (
@@ -77,6 +77,23 @@
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     expires_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )
+            ');
+        }
+        if ($migrationVersion < 2) {
+            $db->query('
+                CREATE INDEX idx_comments_post_id ON comments (post_id);
+            ');
+            $db->query('
+                CREATE INDEX idx_comments_author_id ON comments (author_id);
+            ');
+            $db->query('
+                CREATE INDEX idx_posts_author_id ON posts (author_id);
+            ');
+            $db->query('
+                ALTER TABLE comments ADD COLUMN parent_comment_id INT DEFAULT NULL;
+            ');
+            $db->query('
+                ALTER TABLE comments ADD FOREIGN KEY (parent_comment_id) REFERENCES comments(id);
             ');
         }
         if ($migrationVersion != $maxMigrationVersion) {
