@@ -245,6 +245,24 @@
                 exit;
             }
         }
+        if ($migrationVersion < 5) {
+            try {
+                // Remove first and last name columns on users table and add display name
+                $db->query('
+                    ALTER TABLE users DROP COLUMN first_name;
+                ');
+                $db->query('
+                    ALTER TABLE users DROP COLUMN last_name;
+                ');
+                $db->query('
+                    ALTER TABLE users ADD COLUMN display_name VARCHAR(255) DEFAULT NULL;
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #5:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
         if ($migrationVersion != $maxMigrationVersion) {
             try {
                 $db->query("UPDATE metadata SET value = " . $maxMigrationVersion . " WHERE id = 1");
