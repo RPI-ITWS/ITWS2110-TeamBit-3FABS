@@ -23,6 +23,7 @@
         <p>There should be a feed of content here, wouldnt be suprised if this becomes browse.php. You should also be able to switch between friends and general feeds</p>
         <?php
         require_once './helpers/db.php';
+        echo "<pre>\n" . var_dump($_GET) . "\n</pre>";
         $sort = $_GET["sort"];
         $time = $_GET["time"];
         $sortMode = $_GET["sortMode"] == "desc" ? "desc" : "asc";
