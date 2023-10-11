@@ -23,9 +23,6 @@
         <p>There should be a feed of content here, wouldnt be suprised if this becomes browse.php. You should also be able to switch between friends and general feeds</p>
         <?php
         require_once './helpers/db.php';
-        echo "<pre>\n";
-        var_dump($_GET);
-        echo "\n</pre>";
         $sort = $_GET["sort"];
         // $time = $_GET["time"]; Not used yet
         $sortMode = ($_GET["sortMode"] ?? "desc") == "desc" ? "desc" : "asc";
@@ -75,7 +72,7 @@
         $preparedPostQuery->close();
         ?>
 
-        <?php foreach($result as $post): ?>
+        <?php foreach($posts as $post): ?>
         <div class="post">
             <h1 class="postTitle"><?php $post["title"] ?></h1>
             <img class="postImage" src="<?php urlFor('/images/'. $post['image_url']) ?>">
