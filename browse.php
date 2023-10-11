@@ -49,7 +49,7 @@
                 FROM 
                     likes
             ) like_subquery ON like_subquery.like_post_id = post_id
-            ORDER BY ? ?
+            ORDER BY ? ' . $sortMode . '
             LIMIT ?;
         ');
 
@@ -65,7 +65,7 @@
                 break;
         }
 
-        $preparedPostQuery->bind_param("ssi", $sortColumn, $sortMode, $limit);
+        $preparedPostQuery->bind_param("si", $sortColumn, $limit);
         $preparedPostQuery->execute();
         $result = $preparedPostQuery->get_result();
         $posts = $result->fetch_all(MYSQLI_ASSOC);
