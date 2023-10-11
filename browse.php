@@ -75,17 +75,19 @@
         echo "\n</pre>";
         ?>
 
-        <?php foreach($posts as $post): ?>
-        <div class="post">
-            <h1 class="postTitle"><?php $post["title"] ?></h1>
-            <img class="postImage" src="<?php urlFor('/images/'. $post['image_url']) ?>">
-            <div class="postFooter ">
-                <img class="like" src="<?php $assetURLs['heart'] ?>" onclick="like(this)">
-                <p class="tag"><a href="<?php urlFor('/profile/' . $post['username']) ?>">@<?php $post['username'] ?></a></p>
-                <p class="postDate"><?php $post["post_created_at"] ?></p>
-            </div>
-        </div>
-        <?php endforeach; ?>
+        <?php 
+        foreach($posts as $post){
+            echo '<div class="post">
+                <h1 class="postTitle">'. $post["title"] . '</h1>
+                <img class="postImage" src="'. urlFor('/images/'. $post['image_url']) .'">
+                <div class="postFooter">
+                    <img class="like" src="'. $assetURLs['heart'] .'" onclick="like(this)">
+                    <p class="tag"><a href="'. urlFor('/profile/' . $post['username']) .'">@'. $post['username'] .'</a></p>
+                    <p class="postDate">'. $post["post_created_at"] .'</p>
+                </div>
+            </div>';
+        }
+        ?>
 
         <!-- <div class="post">
             <h1 class="postTitle">End of the Dither-Day</h1>
