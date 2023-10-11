@@ -59,7 +59,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 4; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 5; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
