@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>1-Bit</title>
+    <title><?php echo $_GET["sort"] . ' Posts' ?></title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 </head>
-
 <body>
     <header>
         <ul>
-            <li><a href="./index.html" class="navi">HOME</a></li>
-            <li><a href="./browse.html" class="navi selected">BROWSE</a></li>
-            <li><a href="./share.html" class="navi">SHARE</a></li>
-            <li><a href="./login.html" class="navi">LOGIN</a></li>
+            <li><a href="<?php (require './helpers/urls.php')('/') ?>" class="navi">HOME</a></li>
+            <li><a href="<?php (require './helpers/urls.php')('/browse') ?>" class="navi selected">BROWSE</a></li>
+            <li><a href="<?php (require './helpers/urls.php')('/share') ?>" class="navi">SHARE</a></li>
+            <li><a href="<?php (require './helpers/urls.php')('/login') ?>" class="navi">LOGIN</a></li>
         </ul>
     </header>
     <div class="contentFeed">

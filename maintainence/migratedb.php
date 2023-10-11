@@ -59,7 +59,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 2; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 3; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -128,6 +128,100 @@
                 ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #2:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
+        if ($migrationVersion < 3) {
+            try {
+                // Add new table for likes
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS likes (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        post_id INT NOT NULL,
+                        author_id INT NOT NULL,
+                        FOREIGN KEY (post_id) REFERENCES posts(id),
+                        FOREIGN KEY (author_id) REFERENCES users(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                ');
+                $db->query('
+                    CREATE INDEX idx_likes_post_id ON likes (post_id);
+                ');
+                $db->query('
+                    CREATE INDEX idx_likes_author_id ON likes (author_id);
+                ');
+                // Add new table for comment likes
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS comment_likes (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        comment_id INT NOT NULL,
+                        author_id INT NOT NULL,
+                        FOREIGN KEY (comment_id) REFERENCES comments(id),
+                        FOREIGN KEY (author_id) REFERENCES users(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                ');
+                $db->query('
+                    CREATE INDEX idx_comment_likes_comment_id ON comment_likes (comment_id);
+                ');
+                // Add new table for follows
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS follows (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        follower_id INT NOT NULL,
+                        followee_id INT NOT NULL,
+                        FOREIGN KEY (follower_id) REFERENCES users(id),
+                        FOREIGN KEY (followee_id) REFERENCES users(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                ');
+                $db->query('
+                    CREATE INDEX idx_follows_follower_id ON follows (follower_id);
+                ');
+                $db->query('
+                    CREATE INDEX idx_follows_followee_id ON follows (followee_id);
+                ');
+                // Add new table for blocked users
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS blocks (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        blocker_id INT NOT NULL,
+                        blockee_id INT NOT NULL,
+                        FOREIGN KEY (blocker_id) REFERENCES users(id),
+                        FOREIGN KEY (blockee_id) REFERENCES users(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                ');
+                $db->query('
+                    CREATE INDEX idx_blocks_blocker_id ON blocks (blocker_id);
+                ');
+                // Add new table for hashtags
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS hashtags (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        name VARCHAR(255) NOT NULL UNIQUE
+                    )
+                ');
+                // Add new table for post-hashtag relationships
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS post_hashtags (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        post_id INT NOT NULL,
+                        hashtag_id INT NOT NULL,
+                        FOREIGN KEY (post_id) REFERENCES posts(id),
+                        FOREIGN KEY (hashtag_id) REFERENCES hashtags(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                ');
+                $db->query('
+                    CREATE INDEX idx_post_hashtags_post_id ON post_hashtags (post_id);
+                ');
+                $db->query('
+                    CREATE INDEX idx_post_hashtags_hashtag_id ON post_hashtags (hashtag_id);
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #3:</p>';
                 printTrace($e);
                 exit;
             }
