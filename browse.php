@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php require './helpers/urls.php' ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +12,10 @@
 <body>
     <header>
         <ul>
-            <li><a href="<?php (require './helpers/urls.php')('/') ?>" class="navi">HOME</a></li>
-            <li><a href="<?php (require './helpers/urls.php')('/browse') ?>" class="navi selected">BROWSE</a></li>
-            <li><a href="<?php (require './helpers/urls.php')('/share') ?>" class="navi">SHARE</a></li>
-            <li><a href="<?php (require './helpers/urls.php')('/login') ?>" class="navi">LOGIN</a></li>
+            <li><a href="<?php urlFor('/') ?>" class="navi">HOME</a></li>
+            <li><a href="<?php urlFor('/browse') ?>" class="navi selected">BROWSE</a></li>
+            <li><a href="<?php urlFor('/share') ?>" class="navi">SHARE</a></li>
+            <li><a href="<?php urlFor('/login') ?>" class="navi">LOGIN</a></li>
         </ul>
     </header>
     <div class="contentFeed">
