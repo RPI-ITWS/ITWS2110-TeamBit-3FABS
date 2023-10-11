@@ -59,7 +59,7 @@
                 FROM
                     comments
                 GROUP BY comments.post_id
-            ) num_comments_subquery ON num_comments_subquery.comment_post_id = post_id;
+            ) num_comments_subquery ON num_comments_subquery.comment_post_id = post_id
             ORDER BY ? ' . $sortMode . '
             LIMIT ?;
         ');
