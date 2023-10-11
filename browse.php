@@ -21,7 +21,70 @@
     </header>
     <div class="contentFeed">
         <p>There should be a feed of content here, wouldnt be suprised if this becomes browse.php. You should also be able to switch between friends and general feeds</p>
+        <?php
+        require_once './helpers/db.php';
+        $sort = $_GET["sort"];
+        $time = $_GET["time"];
+        $sortMode = $_GET["sortMode"] == "desc" ? "desc" : "asc";
+        $limit = 50;
+        $sortColumn;
+        $preparedPostQuery = $db->prepare('
+            SELECT
+                posts.id "post_id",
+                image_url,
+                users.username "username",
+                COALESCE(users.display_name, users.username) "display_name",
+                posts.created_at "post_created_at",
+                comments.content "title",
+                comments.updated_at "post_updated_at",
+                COALESCE(like_subquery.num_likes, 0) "num_likes"
+            FROM
+                posts
+            INNER JOIN users ON posts.author_id = users.id
+            INNER JOIN comments ON posts.primary_comment_id = comments.id
+            LEFT JOIN (
+                SELECT 
+                    likes.post_id "like_post_id",
+                    COUNT(likes.author_id) "num_likes" 
+                FROM 
+                    likes
+            ) like_subquery ON like_subquery.like_post_id = post_id
+            ORDER BY ? ?
+            LIMIT ?;
+        ');
+
+        switch ($sort) {
+            case "new":
+                $sortColumn = "post_created_at";
+                break;
+            case "top":
+                $sortColumn = "num_likes";
+                break;
+            default:
+                $sortColumn = "post_created_at";
+                break;
+        }
+
+        $preparedPostQuery->bind_param("ssi", $sortColumn, $sortMode, $limit);
+        $preparedPostQuery->execute();
+        $result = $preparedPostQuery->get_result();
+        $posts = $result->fetch_all(MYSQLI_ASSOC);
+        $preparedPostQuery->close();
+        ?>
+
+        <?php foreach($result as $post): ?>
         <div class="post">
+            <h1 class="postTitle"><?php $post["title"] ?></h1>
+            <img class="postImage" src="<?php urlFor('/images/'. $post['image_url']) ?>">
+            <div class="postFooter ">
+                <img class="like" src="<?php $assetURLs['heart'] ?>" onclick="like(this)">
+                <p class="tag"><a href="<?php urlFor('/profile/' . $post['username']) ?>">@<?php $post['username'] ?></a></p>
+                <p class="postDate"><?php $post["post_created_at"] ?></p>
+            </div>
+        </div>
+        <?php endforeach; ?>
+
+        <!-- <div class="post">
             <h1 class="postTitle">End of the Dither-Day</h1>
             <img class="postImage" src="./images/sunset.png">
             <div class="postFooter ">
@@ -56,9 +119,9 @@
                 <p class="tag"><a href="./linktoaccount">@chii28</a></p>
                 <p class="postDate">08/31/2018</p>
             </div>
-        </div>
+        </div> -->
     </div>
-    <script src="./Javascript/Functions.js"></script>
+    <script src="<?php urlFor('/Javascript/Functions.js') ?>"></script>
 </body>
 
 </html>
