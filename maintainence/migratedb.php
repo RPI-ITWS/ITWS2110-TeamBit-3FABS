@@ -59,7 +59,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 3; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 4; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -222,6 +222,25 @@
                 ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #3:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
+        if ($migrationVersion < 4) {
+            try {
+                // Add profile_image_path to users table
+                $db->query('
+                    ALTER TABLE users ADD COLUMN profile_image_path VARCHAR(255) DEFAULT NULL;
+                ');
+                // Add primary_comment to posts table
+                $db->query('
+                    ALTER TABLE posts ADD COLUMN primary_comment_id INT DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE posts ADD FOREIGN KEY (primary_comment_id) REFERENCES comments(id);
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #4:</p>';
                 printTrace($e);
                 exit;
             }
