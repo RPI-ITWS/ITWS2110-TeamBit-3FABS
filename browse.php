@@ -70,9 +70,6 @@
         $result = $preparedPostQuery->get_result();
         $posts = $result->fetch_all(MYSQLI_ASSOC);
         $preparedPostQuery->close();
-        echo "<pre>\n";
-        var_dump($posts);
-        echo "\n</pre>";
         ?>
 
         <?php 
