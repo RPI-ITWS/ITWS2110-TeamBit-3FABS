@@ -38,7 +38,7 @@
                 comments.content "title",
                 comments.updated_at "post_updated_at",
                 COALESCE(like_subquery.num_likes, 0) "num_likes",
-                COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked",
+                -- COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked", -- Needed in the future
                 (COALESCE(num_comments_subquery.num_comments, 1) - 1) "num_comments" -- This has to be - 1 because we use a comment to make the post title.
             FROM
                 posts
