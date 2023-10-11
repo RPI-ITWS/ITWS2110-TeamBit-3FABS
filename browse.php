@@ -12,10 +12,10 @@
 <body>
     <header>
         <ul>
-            <li><a href="<?php urlFor('/') ?>" class="navi">HOME</a></li>
-            <li><a href="<?php urlFor('/browse') ?>" class="navi selected">BROWSE</a></li>
-            <li><a href="<?php urlFor('/share') ?>" class="navi">SHARE</a></li>
-            <li><a href="<?php urlFor('/login') ?>" class="navi">LOGIN</a></li>
+            <li><a href="<?php echo urlFor('/') ?>" class="navi">HOME</a></li>
+            <li><a href="<?php echo urlFor('/browse') ?>" class="navi selected">BROWSE</a></li>
+            <li><a href="<?php echo urlFor('/share') ?>" class="navi">SHARE</a></li>
+            <li><a href="<?php echo urlFor('/login') ?>" class="navi">LOGIN</a></li>
         </ul>
     </header>
     <div class="contentFeed">
