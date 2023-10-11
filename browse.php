@@ -37,7 +37,9 @@
                 posts.created_at "post_created_at",
                 comments.content "title",
                 comments.updated_at "post_updated_at",
-                COALESCE(like_subquery.num_likes, 0) "num_likes"
+                COALESCE(like_subquery.num_likes, 0) "num_likes",
+                COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked",
+                (COALESCE(num_comments_subquery.num_comments, 1) - 1) "num_comments" -- This has to be - 1 because we use a comment to make the post title.
             FROM
                 posts
             INNER JOIN users ON posts.author_id = users.id
@@ -48,7 +50,16 @@
                     COUNT(likes.author_id) "num_likes" 
                 FROM 
                     likes
+                GROUP BY likes.post_id
             ) like_subquery ON like_subquery.like_post_id = post_id
+            LEFT JOIN (
+                SELECT 
+                    comments.post_id "comment_post_id",
+                    COUNT(comments.id) "num_comments"
+                FROM
+                    comments
+                GROUP BY comments.post_id
+            ) num_comments_subquery ON num_comments_subquery.comment_post_id = post_id;
             ORDER BY ? ' . $sortMode . '
             LIMIT ?;
         ');
