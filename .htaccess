@@ -1,6 +1,7 @@
+RewriteEngine On
 Redirect /project/browse /browse/new
 RewriteRule ^project/browse/(new|top)$ /browse.php?sort=$1 [QSA]
 RewriteRule ^project/browse/(new|top)/([0-9]+)$ /browse.php?sort=$1&page=$2 [QSA]
 RewriteRule ^project/browse/friend/(new|top)$ /browse.php?sort=$1&friend=1 [QSA]
 RewriteRule ^project/browse/friend/(new|top)/([0-9]+)$ /browse.php?sort=$1&page=$2&friend=1 [QSA]
-RewriteRule ^project/login$ /login.php [QSA]
+RewriteRule ^project/login$ /login.php [QSA, L]
