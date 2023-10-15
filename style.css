@@ -88,7 +88,9 @@ input[type=button], input[type="file"]::file-selector-button, input[type=submit]
     cursor: pointer;
 }
 
-
+.hidden{
+    display: none;
+}
 
 /*NAVBAR CSS*/
 header ul {
@@ -175,9 +177,11 @@ header li {
 /*POST CSS*/
 .post{
     border: 4px white solid;
-    width: fit-content;
     padding: 16px;
-    margin: 8px;
+    margin: 8px; 
+    width: 100%;
+    max-width: 400px;
+    max-height: 400px;
 }
 
 .postImage{
@@ -205,6 +209,17 @@ header li {
     100%   { transform: rotatey(360deg); }
   }
 
+.comment > *{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.comment > input[type=text]{
+    border: 1px white solid;
+    background-color: black;
+    width: 50%;
+}
+
 /*ACCOUNT CSS*/
 
 .profile{
@@ -230,4 +245,46 @@ header li {
     width: 25%;
     padding: 4px;
     border: 1px white solid;
+}
+
+/*INDEX CSS*/
+.signup{
+    background-image: url("./images/background.png");
+    background-size: 80%;
+}
+.login{
+    background-image: url("./images/background2.png");
+    background-size: 80%;
+}
+
+.signup, .login{
+    width: 100%;
+    border: 1px white solid;
+    padding: 2px;
+    margin: 5px auto;
+}
+.buttonWrap{
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.indexWrap { 
+    display: flex; 
+    flex-direction: row; 
+} 
+
+.right { 
+    align-self: center;
+    width: 50%; 
+} 
+.right > h1{
+    padding: 10px;
+}
+.left{ 
+    align-self: center;
+    width: 50%; 
+} 
+.left > img{
+    max-width: 100%;
 }
