@@ -3,3 +3,7 @@ function like(element) {
     element.bln = !element.bln;
     element.classList.toggle("active")
 }
+
+function toggleCommentBox(elem){
+    elem.parentElement.parentElement.querySelector("#commentbox").classList.toggle("hidden")
+}
