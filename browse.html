@@ -19,23 +19,26 @@
             <li><a href="./login.html" class="navi">LOGIN</a></li>
         </ul>
     </header>
-    <div class="contentFeed">
+    <main class="contentFeed">
         <!--<p>There should be a feed of content here, wouldnt be suprised if this becomes browse.php. You should also be able to switch between friends and general feeds</p>-->
-        <div class="post">
+        <article class="post">
             <h1 class="postTitle">End of the Dither-Day</h1>
+            <figure>
             <img class="postImage" src="./images/sunset.png">
-            <div class="postFooter">
+            </figure>
+            <footer class="postFooter">
                 <img class="like" src="./images/heart.png" onclick="like(this)">
                 <img class="like" src="./images/comment.png" onclick="toggleCommentBox(this)">
                 <p class="tag"><a href="./linktoaccount">@myfriend</a></p>
                 <p class="postDate">07/23/2010</p>
                 <img class="like" src="./images/share.png" onclick="share()">
-            </div>
+            </footer>
+            </article>
             <form id="commentbox" class="comment hidden">
-                <input type="text" id="comment" placeholder="Write your comment...">
-                <input type="image" src="./images/send.png" width="30px" value="Submit" />
+                <label for="comment">Write your comment:</label>
+                <input type="text" id="comment" placeholder="Write your comment..." required>
+                <input type="image" src="./images/send.png" width="30px" alt="Submit" />
             </form>
-        </div>
         <div class="post">
             <h1 class="postTitle">My New Friend!</h1>
             <img class="postImage" src="./images/newfriend.png">
@@ -47,8 +50,9 @@
                 <img class="like" src="./images/share.png" onclick="share()">
             </div>
             <form id="commentbox" class="comment hidden">
-                <input type="text" id="comment" placeholder="Write your comment...">
-                <input type="image" src="./images/send.png" width="30px" value="Submit" />
+                <label for="comment">Write your comment:</label>
+                <input type="text" id="comment" placeholder="Write your comment..." required>
+                <input type="image" src="./images/send.png" width="30px" alt="Submit" />
             </form>
         </div>
         <div class="post">
@@ -62,8 +66,9 @@
                 <img class="like" src="./images/share.png" onclick="share()">
             </div>
             <form id="commentbox" class="comment hidden">
-                <input type="text" id="comment" placeholder="Write your comment...">
-                <input type="image" src="./images/send.png" width="30px" value="Submit" />
+                <label for="comment">Write your comment:</label>
+                <input type="text" id="comment" placeholder="Write your comment..." required>
+                <input type="image" src="./images/send.png" width="30px" alt="Submit" />
             </form>
         </div>
         <div class="post">
@@ -77,8 +82,9 @@
                 <img class="like" src="./images/share.png" onclick="share()">
             </div>
             <form id="commentbox" class="comment hidden">
-                <input type="text" id="comment" placeholder="Write your comment...">
-                <input type="image" src="./images/send.png" width="30px" value="Submit" />
+                <label for="comment">Write your comment:</label>
+                <input type="text" id="comment" placeholder="Write your comment..." required>
+                <input type="image" src="./images/send.png" width="30px" alt="Submit" />
             </form>
         </div>
         <div class="post">
@@ -92,11 +98,13 @@
                 <img class="like" src="./images/share.png" onclick="share()">
             </div>
             <form id="commentbox" class="comment hidden">
-                <input type="text" id="comment" placeholder="Write your comment...">
-                <input type="image" src="./images/send.png" width="30px" value="Submit" />
+                <label for="comment">Write your comment:</label>
+                <input type="text" id="comment" placeholder="Write your comment..." required>
+                <input type="image" src="./images/send.png" width="30px" alt="Submit" />
             </form>
         </div>
     </div>
+</main>
     <script src="./Javascript/Functions.js"></script>
 </body>
 
