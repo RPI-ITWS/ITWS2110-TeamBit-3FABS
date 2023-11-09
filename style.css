@@ -230,7 +230,7 @@ body {
     font-style: italic;
 }
 .like{
-    width: 1.5em;
+    width: 4em;
 }
 .like.active{
     animation:like 0.5s 1;

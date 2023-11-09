@@ -1,6 +1,6 @@
 function like(element) {
-    const likedImage = "./images/liked.png";
-    const unlikedImage = "./images/heart.png";
+    const likedImage = "./images/heart-white.png";
+    const unlikedImage = "./images/heart-black.png";
 
     element.src = element.classList.contains("active") ? unlikedImage : likedImage;
     element.classList.toggle("active");
