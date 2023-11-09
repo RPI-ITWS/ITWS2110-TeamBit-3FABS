@@ -219,7 +219,7 @@ body {
     padding: 8px;
 }
 .postFooter > *{
-    display: inline-block;
+    display: inline-flex; 
     vertical-align: middle;
 }
 .tag{
@@ -230,7 +230,7 @@ body {
     font-style: italic;
 }
 .like{
-    width: 4em;
+    width: 3em;
 }
 .like.active{
     animation:like 0.5s 1;
