@@ -59,7 +59,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 5; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 6; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -259,6 +259,63 @@
                 ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #5:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
+        if ($migrationVersion < 6) {
+            try {
+                // Remove first and last name columns on users table and add display name
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS post_reports (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        reported_post_id INT NOT NULL,
+                        reporter_id INT NOT NULL,
+                        message TEXT NOT NULL,
+                        FOREIGN KEY (reported_post_id) REFERENCES posts(id),
+                        FOREIGN KEY (reporter_id) REFERENCES users(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        acted_on TIMESTAMP DEFAULT NULL,
+                        moderator_id INT NOT NULL,
+                        FOREIGN KEY (moderator_id) REFERENCES users(id),
+                        accepted BOOLEAN DEFAULT NULL,
+                        moderator_message TEXT DEFAULT NULL
+                ');
+                $db->query('
+                    CREATE INDEX idx_post_reports_reported_post_id ON post_reports (reported_post_id);
+                ');
+                $db->query('
+                    CREATE INDEX idx_post_reports_reporter_id ON post_reports (reporter_id);
+                ');
+                $db->query('
+                    CREATE INDEX idx_post_reports_moderator_id ON post_reports (moderator_id);
+                ');
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS comment_reports (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        reported_comment_id INT NOT NULL,
+                        reporter_id INT NOT NULL,
+                        message TEXT NOT NULL,
+                        FOREIGN KEY (reported_comment_id) REFERENCES comments(id),
+                        FOREIGN KEY (reporter_id) REFERENCES users(id),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        acted_on TIMESTAMP DEFAULT NULL,
+                        moderator_id INT NOT NULL,
+                        FOREIGN KEY (moderator_id) REFERENCES users(id),
+                        accepted BOOLEAN DEFAULT NULL,
+                        moderator_message TEXT DEFAULT NULL
+                ');
+                $db->query('
+                    CREATE INDEX idx_comment_reports_reported_comment_id ON comment_reports (reported_comment_id);
+                ');
+                $db->query('
+                    CREATE INDEX idx_comment_reports_reporter_id ON comment_reports (reporter_id);
+                ');
+                $db->query('
+                    CREATE INDEX idx_comment_reports_moderator_id ON comment_reports (moderator_id);
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #6:</p>';
                 printTrace($e);
                 exit;
             }
