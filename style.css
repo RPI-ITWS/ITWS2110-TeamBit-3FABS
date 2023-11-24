@@ -88,7 +88,9 @@ input[type=button], input[type="file"]::file-selector-button, input[type=submit]
     cursor: pointer;
 }
 
-
+.hidden{
+    display: none;
+}
 
 /*NAVBAR CSS*/
 header ul {
@@ -110,6 +112,26 @@ header li {
     list-style-type: none;
     background-color: black;
 
+}
+
+/* New Styles */
+@media (max-width: 600px) {
+    header ul {
+        font-size: 1.5em;
+        width: 90vw;
+    }
+}
+
+/* Global Styles */
+body {
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+/* Variables */
+:root {
+    --primary-color: white;
+    --secondary-color: black;
 }
 
 .selected {
@@ -154,11 +176,16 @@ header li {
     border: 1px white solid;
 }
 
-.editBar > *{
-    display:inline-block;
+.editBar {
+    display: flex;
+    justify-content: center; 
+    align-items: center; /* Added this line */
+    flex-wrap: wrap;
+    width: 100%; /* Added this line for full width */
 }
 
-.sliderWrap{
+.sliderWrap {
+    margin: 10px; 
     width: fit-content;
     border: 1px white solid;
     padding: 4px;
@@ -168,23 +195,31 @@ header li {
     border: 1px white dashed;
 }
 
-.sliderWrap > *{
-    display:inline-block;
+.sliderWrap > * {
+    display: inline-flex; 
+    vertical-align: middle; /* Add this line to center items vertically */
 }
 
 /*POST CSS*/
 .post{
     border: 4px white solid;
-    width: fit-content;
     padding: 16px;
-    margin: 8px;
+    margin: 8px; 
+    width: 100%;
+    max-width: 400px;
+    max-height: 400px;
+}
+
+#caption{
+    border: 4x white;
+    color:black;
 }
 
 .postImage{
     padding: 8px;
 }
 .postFooter > *{
-    display: inline-block;
+    display: inline-flex; 
     vertical-align: middle;
 }
 .tag{
@@ -195,7 +230,7 @@ header li {
     font-style: italic;
 }
 .like{
-    width: 1.5em;
+    width: 3em;
 }
 .like.active{
     animation:like 0.5s 1;
@@ -204,6 +239,17 @@ header li {
   @-webkit-keyframes like {
     100%   { transform: rotatey(360deg); }
   }
+
+.comment > *{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.comment > input[type=text]{
+    border: 1px white solid;
+    background-color: black;
+    width: 50%;
+}
 
 /*ACCOUNT CSS*/
 
@@ -230,4 +276,46 @@ header li {
     width: 25%;
     padding: 4px;
     border: 1px white solid;
+}
+
+/*INDEX CSS*/
+.signup{
+    background-image: url("./images/background.png");
+    background-size: 80%;
+}
+.login{
+    background-image: url("./images/background2.png");
+    background-size: 80%;
+}
+
+.signup, .login{
+    width: 100%;
+    border: 1px white solid;
+    padding: 2px;
+    margin: 5px auto;
+}
+.buttonWrap{
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.indexWrap { 
+    display: flex; 
+    flex-direction: row; 
+} 
+
+.right { 
+    align-self: center;
+    width: 50%; 
+} 
+.right > h1{
+    padding: 30px;
+}
+.left{ 
+    align-self: center;
+    width: 50%; 
+} 
+.left > img{
+    max-width: 100%;
 }
