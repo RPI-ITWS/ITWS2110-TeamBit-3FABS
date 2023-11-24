@@ -219,7 +219,7 @@ body {
     padding: 8px;
 }
 .postFooter > *{
-    display: inline-flex; 
+    display: inline-flex;
     vertical-align: middle;
 }
 .tag{
@@ -318,4 +318,13 @@ body {
 } 
 .left > img{
     max-width: 100%;
+}
+
+
+textarea:focus, input:focus {
+    color: black;
+}
+
+input, select, textarea{
+    color: black;
 }
