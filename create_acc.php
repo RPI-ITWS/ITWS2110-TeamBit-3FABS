@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php require './helpers/urls.php' ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,72 +50,63 @@
                 </form>
             </article>
         </section>
-        <div id="accountMessage"></div>
+        <div id="accountMessage">
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                require_once './helpers/db.php';
+                global $db;
+
+                $display_name = $_REQUEST["displayname"] ?? $_REQUEST["username"];
+                $email = $_REQUEST["email"];
+                $user_name = $_REQUEST["username"];
+                $password = $_REQUEST["password"];
+                try {
+                    $salt = bin2hex(random_bytes(16));
+                } catch (Exception $e) {
+                    echo '<p>Sorry, but the computer running this code sucks and should be sent to the local dumpster. If you\'re seeing this, it means that you need to go bribe RPI IT to give us computers that came after the 90s.</p>';
+                    die();
+                }
+
+                // Check if username exists
+                $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
+                $result = $stmt->execute(['username' => $user_name]);
+
+                if ($result === false) {
+                    die("Error executing the query: " . var_export($stmt->errorInfo(), true));
+                }
+
+                if ($stmt->rowCount() > 0) {
+                    echo '<p>"This username is already in use!"</p>';
+                } else {
+                    // Check if email exists
+                    $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
+                    $result = $stmt->execute(['email' => $email]);
+
+                    if ($result === false) {
+                        die("Error executing the query: " . var_export($stmt->errorInfo(), true));
+                    }
+
+                    if ($stmt->rowCount() > 0) {
+                        echo '<p>This email is already associated with an account!</p>';
+                    } else {
+                        $salted = $salt . $password;
+                        $hashed = hash('sha512', $salted);
+                        $sql = "INSERT INTO users (username, email, display_name, password_hash, password_salt) 
+                    VALUES (:username, :email, :display_name, :password_hash, :password_salt)";
+                        $stmt = $db->prepare($sql);
+                        if ($stmt) {
+                            if ($stmt->execute(['username' => $user_name, 'email' => $email, 'display_name' => $display_name, 'password_hash' => $hashed, 'password_salt' => $salt])) {
+                                echo '<script>document.getElementById("accountMessage").innerHTML = "Account Created Successfully!";</script>';
+                            } else {
+                                echo "ERROR: Could not execute $sql. " . var_export($stmt->errorInfo(), true);
+                            }
+                        }
+                    }
+                }
+            }
+            ?>
+        </div>
     </main>
 </body>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = mysqli_connect("localhost", "root", "team5", "team5project");
-
-    if ($conn === false) {
-        die("ERROR: Could not connect. " . mysqli_connect_error());
-    }
-
-    $display_name = $_REQUEST["displayname"] ?? $_REQUEST["username"];
-    $email = $_REQUEST["email"];
-    $user_name = $_REQUEST["username"];
-    $password = $_REQUEST["password"];
-    $salt = bin2hex(random_bytes(16));
-
-    // Check if username exists
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param("s", $user_name);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result === false) {
-        die("Error executing the query: " . $stmt->error);
-    }
-
-    if (mysqli_num_rows($result) > 0) {
-        echo '<script>document.getElementById("accountMessage").innerHTML = "This username is already in use!";</script>';
-        mysqli_close($conn);
-    } else {
-        // Check if email exists
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result === false) {
-            die("Error executing the query: " . $stmt->error);
-        }
-
-        if (mysqli_num_rows($result) > 0) {
-            echo '<script>document.getElementById("accountMessage").innerHTML = "This email is already associated with an account!";</script>';
-            mysqli_close($conn);
-        } else {
-            $salted = $salt . $password;
-            $hashed = hash('sha512', $salted);
-            $sql = "INSERT INTO users (username, email, display_name, password_hash, password_salt) 
-                    VALUES (?, ?, ?, ?, ?)";
-            $stmt = mysqli_prepare($conn, $sql);
-            if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "sssss", $user_name, $email, $display_name, $hashed, $salt);
-                if (mysqli_stmt_execute($stmt)) {
-                    echo '<script>document.getElementById("accountMessage").innerHTML = "Account Created Successfully!";</script>';
-                } else {
-                    echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
-                }
-                mysqli_stmt_close($stmt);
-            } else {
-                echo "ERROR: Could not prepare statement. " . mysqli_error($conn);
-            }
-        }
-    }
-    mysqli_close($conn);
-}
-?>
 
 </html>
