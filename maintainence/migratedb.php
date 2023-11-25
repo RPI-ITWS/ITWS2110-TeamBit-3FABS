@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>DB Migration</title>
         <style>
@@ -21,7 +21,7 @@
         ini_set('display_startup_errors', '1');
         error_reporting(E_ALL);
 
-        function printTrace($e) {
+        function printTrace(Throwable $e) {
             $message = $e->getMessage();
             $trace = $e->getTraceAsString();
             echo <<<EOD
@@ -34,32 +34,34 @@
             EOD;
         }
 
+        set_exception_handler(function (Throwable $e) {
+            echo '<p class="failure">Caught exception:</p>';
+            printTrace($e);
+            exit;
+        });
+
         try {
-            $db = new mysqli("localhost","team5project","team5project","team5project");
+            $db = new PDO('mysql:host=localhost;dbname=team5project', 'team5project', 'team5project');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (Exception $e) {
             echo '<p class="failure">Caught exception during DB connection:</p>';
             printTrace($e);
             exit;
         }
-        if ($db->connect_error) {
-            echo '<p class="failure">Connection failed: ' . $db->connect_error . "</p>";
-            exit;
-        } else {
-            echo '<p class="success">Successfully connected to the database.</p>';
-        }
+        echo '<p class="success">Successfully connected to the database.</p>';
         try {
             $db->query("CREATE TABLE IF NOT EXISTS metadata (id INT NOT NULL PRIMARY KEY, value VARCHAR(255) NOT NULL)");
             $db->query("INSERT IGNORE INTO metadata (id, value) VALUES (1, '0')");
             $migrationVersionResult = $db->query('SELECT value "migration_version" FROM metadata WHERE id = 1');
             // Return result as integer
-            $migrationVersion = intval($migrationVersionResult->fetch_assoc()['migration_version']);
+            $migrationVersion = intval($migrationVersionResult->fetch()['migration_version']);
             echo '<p class="success">Current migration version: ' . $migrationVersion . '</p>';
         } catch (Exception $e) {
             echo '<p class="failure">Caught exception during metadata query:</p>';
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 6; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 7; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -108,7 +110,7 @@
                 printTrace($e);
                 exit;
             }
-        } 
+        }
         if ($migrationVersion < 2) {
             try {
                 $db->query('
@@ -280,6 +282,7 @@
                         FOREIGN KEY (moderator_id) REFERENCES users(id),
                         accepted BOOLEAN DEFAULT NULL,
                         moderator_message TEXT DEFAULT NULL
+                    )
                 ');
                 $db->query('
                     CREATE INDEX idx_post_reports_reported_post_id ON post_reports (reported_post_id);
@@ -304,6 +307,7 @@
                         FOREIGN KEY (moderator_id) REFERENCES users(id),
                         accepted BOOLEAN DEFAULT NULL,
                         moderator_message TEXT DEFAULT NULL
+                    )
                 ');
                 $db->query('
                     CREATE INDEX idx_comment_reports_reported_comment_id ON comment_reports (reported_comment_id);
@@ -316,6 +320,36 @@
                 ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #6:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
+        if ($migrationVersion < 7) {
+            try {
+                // Add new columns to user table
+                $db->query('
+                    ALTER TABLE users ADD COLUMN bio TEXT DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE users ADD COLUMN website VARCHAR(255) DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE users ADD COLUMN password_hash VARCHAR(128) DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE users ADD COLUMN password_salt VARCHAR(128) DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE users ADD COLUMN email_verified BOOLEAN DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE users ADD COLUMN email_verification_token VARCHAR(255) DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE posts ADD COLUMN alt_text VARCHAR(255) DEFAULT NULL;
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #7:</p>';
                 printTrace($e);
                 exit;
             }

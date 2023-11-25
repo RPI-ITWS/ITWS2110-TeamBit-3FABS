@@ -23,23 +23,26 @@
         <p>There should be a feed of content here, wouldnt be suprised if this becomes browse.php. You should also be able to switch between friends and general feeds</p>
         <?php
         require_once './helpers/db.php';
+        global $db;
+        global $assetURLs;
         $sort = $_GET["sort"];
         // $time = $_GET["time"]; Not used yet
         $sortMode = ($_GET["sortMode"] ?? "desc") == "desc" ? "desc" : "asc";
         $limit = 50;
-        $sortColumn;
+        $sortColumn = "post_created_at";
         $preparedPostQuery = $db->prepare('
             SELECT
-                posts.id "post_id",
+                posts.id AS "post_id",
                 image_url,
-                users.username "username",
-                COALESCE(users.display_name, users.username) "display_name",
-                posts.created_at "post_created_at",
-                comments.content "title",
-                comments.updated_at "post_updated_at",
-                COALESCE(like_subquery.num_likes, 0) "num_likes",
+                alt_text,
+                users.username AS "username",
+                COALESCE(users.display_name, users.username) AS "display_name",
+                posts.created_at AS "post_created_at",
+                comments.content AS "title",
+                comments.updated_at AS "post_updated_at",
+                COALESCE(like_subquery.num_likes, 0) AS "num_likes",
                 -- COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked", -- Needed in the future
-                (COALESCE(num_comments_subquery.num_comments, 1) - 1) "num_comments" -- This has to be - 1 because we use a comment to make the post title.
+                (COALESCE(num_comments_subquery.num_comments, 1) - 1) AS "num_comments" -- This has to be - 1 because we use a comment to make the post title.
             FROM
                 posts
             INNER JOIN users ON posts.author_id = users.id
@@ -60,8 +63,8 @@
                     comments
                 GROUP BY comments.post_id
             ) num_comments_subquery ON num_comments_subquery.comment_post_id = post_id
-            ORDER BY ? ' . $sortMode . '
-            LIMIT ?;
+            ORDER BY :sortColumn ' . $sortMode . '
+            LIMIT :limit;
         ');
 
         switch ($sort) {
@@ -76,20 +79,20 @@
                 break;
         }
 
-        $preparedPostQuery->bind_param("si", $sortColumn, $limit);
-        $preparedPostQuery->execute();
-        $result = $preparedPostQuery->get_result();
-        $posts = $result->fetch_all(MYSQLI_ASSOC);
-        $preparedPostQuery->close();
+//        $preparedPostQuery->bind_param("si", $sortColumn, $limit);
+        $preparedPostQuery->execute(["sortColumn" => $sortColumn, "limit" => $limit]);
+        $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
+        $preparedPostQuery->closeCursor();
         ?>
 
         <?php 
         foreach($posts as $post){
+            $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);
             echo '<div class="post">
                 <h1 class="postTitle">'. $post["title"] . '</h1>
-                <img class="postImage" src="'. urlFor('/images/'. $post['image_url']) .'">
+                <img class="postImage" src="'. urlFor('/images/'. $post['image_url']) .'" alt="'. $altText . '">
                 <div class="postFooter">
-                    <img class="like" src="'. $assetURLs['heart'] .'" onclick="like(this)">
+                    <img class="like" src="'. $assetURLs['heart'] .'" onclick="like(this)" alt="Like button">
                     <p class="tag"><a href="'. urlFor('/profile/' . $post['username']) .'">@'. $post['username'] .'</a></p>
                     <p class="postDate">'. $post["post_created_at"] .'</p>
                 </div>
