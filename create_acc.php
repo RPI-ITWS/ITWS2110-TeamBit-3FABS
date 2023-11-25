@@ -25,39 +25,34 @@
                 <img src="./images/bit_logo_dither_trans.png" alt="1-Bit Logo">
             </figure>
             <article class="right">
-            <form action="create_acc.php" method="post">
-             
-             <p>
-                            <label for="displayname">Display Name</label>
-                            <input type="text" name="displayname" id="displayname">
-                         </p>
+                <form action="create_acc.php" method="post">
+                    <p>
+                        <label for="displayname">Display Name (optional)</label>
+                        <input type="text" name="displayname" id="displayname">
+                    </p>
 
-             <p>
-                            <label for="email">Email</label>
-                            <input type="text" name="email" id="email">
-                         </p>
-              
-                          
-             <p>
-                            <label for="username">Username</label>
-                            <input type="text" name="username" id="username">
-                         </p>
-              
-                          
-             <p>
-                            <label for="password">Password</label>
-                            <input type="text" name="password" id="password">
-                         </p>
-              
-                         <input type="submit" value="Submit">
-                      </form>
+                    <p>
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email">
+                    </p>
+
+                    <p>
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username">
+                    </p>
+
+                    <p>
+                        <label for="password">Password</label>
+                        <input type="text" name="password" id="password">
+                    </p>
+
+                    <input type="submit" value="Submit">
+                </form>
             </article>
-           
         </section>
         <div id="accountMessage"></div>
     </main>
 </body>
-
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -76,11 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
     $password = mysqli_real_escape_string($conn, $_REQUEST["password"]);
     $salt = bin2hex(random_bytes(16));
-
-    error_log("Display Name: " . $display_name);
-    error_log("Email: " . $email);
-    error_log("Username: " . $user_name);
-    error_log("Password: " . $password);
 
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $user_name);
@@ -121,7 +111,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($conn);
 }
 ?>
-
-
-    
 </html>
