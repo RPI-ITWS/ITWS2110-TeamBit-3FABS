@@ -28,7 +28,7 @@
             <form action="create_acc.php" method="post">
              
              <p>
-                            <label for="displayName">Display Name</label>
+                            <label for="displayName">Display Name(optional)</label>
                             <input type="text" name="display_name" id="displayName">
                          </p>
 
