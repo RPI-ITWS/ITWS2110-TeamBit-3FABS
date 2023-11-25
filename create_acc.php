@@ -29,7 +29,7 @@
              
              <p>
                             <label for="displayName">Display Name(optional)</label>
-                            <input type="text" name="display_name" id="displayName">
+                            <input type="text" name="displayname" id="displayname">
                          </p>
 
              <p>
@@ -73,7 +73,7 @@
 
         // Taking all 5 values from the form data(input)
         $id = null;
-        $display_name = mysqli_real_escape_string($conn, $_REQUEST["display_name"]);
+        $display_name = mysqli_real_escape_string($conn, $_REQUEST["displayname"]);
         if($display_name == ''){
             $display_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
         }
