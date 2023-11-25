@@ -64,7 +64,7 @@
                 GROUP BY comments.post_id
             ) num_comments_subquery ON num_comments_subquery.comment_post_id = post_id
             ORDER BY :sortColumn ' . $sortMode . '
-            LIMIT :limit;
+            LIMIT :lim;
         ');
 
         switch ($sort) {
@@ -80,7 +80,7 @@
         }
 
 //        $preparedPostQuery->bind_param("si", $sortColumn, $limit);
-        $preparedPostQuery->execute(["sortColumn" => $sortColumn, "limit" => $limit]);
+        $preparedPostQuery->execute(["sortColumn" => $sortColumn, "lim" => $limit]);
         $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
         $preparedPostQuery->closeCursor();
         ?>
