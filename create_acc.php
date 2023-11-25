@@ -70,9 +70,6 @@
         if ($conn === false) {
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
-        else{
-            echo "WORKS WORKS"
-        }
 
         // Taking all 5 values from the form data(input)
         $id = null;
