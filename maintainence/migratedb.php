@@ -360,6 +360,79 @@
                 $db->query('
                     ALTER TABLE users MODIFY COLUMN email VARCHAR(255) NOT NULL UNIQUE;
                 ');
+                // Make email verified default to false and do not allow null
+                $db->query('
+                    ALTER TABLE users MODIFY COLUMN email_verified BOOLEAN NOT NULL DEFAULT FALSE;
+                ');
+                // Remove email verification token from users table
+                $db->query('
+                    ALTER TABLE users DROP COLUMN email_verification_token;
+                ');
+                // Add new table for email verification tokens
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS email_verification_tokens (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        user_id INT NOT NULL,
+                        FOREIGN KEY (user_id) REFERENCES users(id),
+                        token VARCHAR(255) NOT NULL,
+                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        expires_at TIMESTAMP NOT NULL
+                    )
+                ');
+                // Make other timestamp columns not null
+                $db->query('
+                    ALTER TABLE posts MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE comments MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE comments MODIFY COLUMN updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE sessions MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE sessions MODIFY COLUMN expires_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE likes MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE comment_likes MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE follows MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE blocks MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE post_hashtags MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE post_reports MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE post_reports MODIFY COLUMN acted_on TIMESTAMP DEFAULT NULL;
+                ');
+                $db->query('
+                    ALTER TABLE comment_reports MODIFY COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+                ');
+                $db->query('
+                    ALTER TABLE comment_reports MODIFY COLUMN acted_on TIMESTAMP DEFAULT NULL;
+                ');
+                // Add new table for password reset tokens
+                $db->query('
+                    CREATE TABLE IF NOT EXISTS password_reset_tokens (
+                        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        user_id INT NOT NULL,
+                        FOREIGN KEY (user_id) REFERENCES users(id),
+                        token VARCHAR(255) NOT NULL,
+                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        expires_at TIMESTAMP NOT NULL
+                    )
+                ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #8:</p>';
                 printTrace($e);
