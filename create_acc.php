@@ -59,76 +59,68 @@
 </body>
 
 
-    <?php if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // servername => localhost
-        // username => root
-        // password => empty
-        // database name => staff
-        $conn = mysqli_connect("localhost", "root", "team5", "team5project");
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conn = mysqli_connect("localhost", "root", "team5", "team5project");
 
-        // Check connection
-        if ($conn === false) {
-            die("ERROR: Could not connect. " . mysqli_connect_error());
-        }
+    if ($conn === false) {
+        die("ERROR: Could not connect. " . mysqli_connect_error());
+    }
 
-        // Taking all 5 values from the form data(input)
-        $id = null;
-        $display_name = mysqli_real_escape_string($conn, $_REQUEST["displayname"]);
-        if($display_name == ''){
-            $display_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
-        }
-        $email = mysqli_real_escape_string($conn, $_REQUEST["email"]);
-        $user_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
-        $password = mysqli_real_escape_string($conn, $_REQUEST["password"]);
-        $salt = bin2hex(random_bytes(16));
+    $id = null;
+    $display_name = mysqli_real_escape_string($conn, $_REQUEST["displayname"]);
+    if ($display_name == '') {
+        $display_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
+    }
+    $email = mysqli_real_escape_string($conn, $_REQUEST["email"]);
+    $user_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
+    $password = mysqli_real_escape_string($conn, $_REQUEST["password"]);
+    $salt = bin2hex(random_bytes(16));
 
-        // Ensure the usernmae they wish to use is free
-        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-        $stmt->bind_param("s", $user_name);
+    error_log("Display Name: " . $display_name);
+    error_log("Email: " . $email);
+    error_log("Username: " . $user_name);
+    error_log("Password: " . $password);
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $user_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (mysqli_num_rows($result) > 0) {
+        echo '<script>document.getElementById("accountMessage").innerHTML = "This username is already in use!";</script>';
+        mysqli_close($conn);
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
         $stmt->execute();
-        $result = $stmt->get_result();  
+        $result = $stmt->get_result();
 
         if (mysqli_num_rows($result) > 0) {
-            echo '<script>document.getElementById("accountMessage").innerHTML = "This username is already in use!";</script>';
+            echo '<script>document.getElementById("accountMessage").innerHTML = "This email is already associated with an account!";</script>';
             mysqli_close($conn);
-        }
-        else{
-            //Ensure email hasnt been used already
-            $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();  
-
-            if (mysqli_num_rows($result) > 0) {
-                echo '<script>document.getElementById("accountMessage").innerHTML = "This email is already associated to an account!";</script>';
-                mysqli_close($conn);
-                
-                
-            } else {
-
-
-
-
-                $salted =$salt.$password;
-
-                $hashed = hash('sha512', $salted);
-                $sql = "INSERT INTO users (id, username, email, is_admin, profile_image_path, display_name, bio, website, password_hash, password_salt, email_verified, email_verification_token) 
-                VALUES (NULL, ?, ?, 0, NULL, ?, NULL, NULL, ?, ?, NULL, NULL)";
-                $stmt = mysqli_prepare($conn, $sql);
-                if ($stmt) {
-                    mysqli_stmt_bind_param($stmt, "sssss", $user_name, $email, $display_name, $hashed, $salt);
-                    if (mysqli_stmt_execute($stmt)) {
-                        echo '<script>document.getElementById("accountMessage").innerHTML = "Account Created Successfully!";</script>';
-                    } else {
-                        echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
-                    }
-                    mysqli_stmt_close($stmt);
+        } else {
+            $salted = $salt . $password;
+            $hashed = hash('sha512', $salted);
+            $sql = "INSERT INTO users (id, username, email, is_admin, profile_image_path, display_name, bio, website, password_hash, password_salt, email_verified, email_verification_token) 
+                    VALUES (NULL, ?, ?, 0, NULL, ?, NULL, NULL, ?, ?, NULL, NULL)";
+            $stmt = mysqli_prepare($conn, $sql);
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "sssss", $user_name, $email, $display_name, $hashed, $salt);
+                if (mysqli_stmt_execute($stmt)) {
+                    echo '<script>document.getElementById("accountMessage").innerHTML = "Account Created Successfully!";</script>';
                 } else {
-                    echo "ERROR: Could not prepare statement. " . mysqli_error($conn);
+                    echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
                 }
+                mysqli_stmt_close($stmt);
+            } else {
+                echo "ERROR: Could not prepare statement. " . mysqli_error($conn);
             }
         }
-    } ?>
+    }
+    mysqli_close($conn);
+}
+?>
 
 
     
