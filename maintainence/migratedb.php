@@ -61,7 +61,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 7; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 8; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -350,6 +350,18 @@
                 ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #7:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
+        if ($migrationVersion < 8) {
+            try {
+                // Make email mandatory and unique
+                $db->query('
+                    ALTER TABLE users MODIFY COLUMN email VARCHAR(255) NOT NULL UNIQUE;
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #8:</p>';
                 printTrace($e);
                 exit;
             }
