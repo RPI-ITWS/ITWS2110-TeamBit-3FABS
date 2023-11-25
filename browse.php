@@ -64,8 +64,9 @@
                 GROUP BY comments.post_id
             ) num_comments_subquery ON num_comments_subquery.comment_post_id = post_id
             ORDER BY :sortColumn ' . $sortMode . '
-            LIMIT :lim;
+            LIMIT '. $limit .';
         ');
+        // Look, I know we're not supposed to do this but I cannot find a better way to get PHP to stop yelling at me about both the sort direction (asc/desc) or the limit
 
         switch ($sort) {
             case "new":
