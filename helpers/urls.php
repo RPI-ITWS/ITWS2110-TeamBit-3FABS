@@ -5,7 +5,7 @@ require "config.php";
  * @param string $script_path the path to the script
  * @return string the absolute path
  */
-function urlFor($script_path) {
+function urlFor(string $script_path) {
     global $root;
     // add the leading '/' if not present
     if($script_path[0] != '/') {
