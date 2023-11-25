@@ -81,7 +81,7 @@
         }
 
 //        $preparedPostQuery->bind_param("si", $sortColumn, $limit);
-        $preparedPostQuery->execute(["sortColumn" => $sortColumn, "lim" => $limit]);
+        $preparedPostQuery->execute(["sortColumn" => $sortColumn]);
         $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
         $preparedPostQuery->closeCursor();
         ?>
