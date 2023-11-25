@@ -36,7 +36,7 @@
                 image_url,
                 alt_text,
                 users.username AS "username",
-                COALESCE(users.display_name, users.username) AS "display_name",
+                users.display_name AS "display_name",
                 posts.created_at AS "post_created_at",
                 comments.content AS "title",
                 comments.updated_at AS "post_updated_at",
