@@ -94,7 +94,7 @@
                 <img class="postImage" src="'. urlFor('/images/'. $post['image_url']) .'" alt="'. $altText . '">
                 <div class="postFooter">
                     <img class="like" src="'. $assetURLs['heart'] .'" onclick="like(this)" alt="Like button">
-                    <p class="tag"><a href="'. urlFor('/profile/' . $post['username']) .'">@'. $post['username'] .'</a></p>
+                    <p class="tag"><a href="'. urlFor('/profile/' . $post['username']) .'">'. $post['display_name'] .'</a></p>
                     <p class="postDate">'. $post["post_created_at"] .'</p>
                 </div>
             </div>';
