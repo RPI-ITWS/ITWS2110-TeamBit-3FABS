@@ -61,7 +61,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 8; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 9; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -435,6 +435,18 @@
                 ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #8:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
+        if ($migrationVersion < 9) {
+            try {
+                // Make display name not null and make it use the username by default
+                $db->query('
+                    ALTER TABLE users MODIFY COLUMN display_name VARCHAR(255) NOT NULL DEFAULT "username";
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #9:</p>';
                 printTrace($e);
                 exit;
             }
