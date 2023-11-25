@@ -62,29 +62,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("ERROR: Could not connect. " . mysqli_connect_error());
     }
 
-    $id = null;
-    $display_name = mysqli_real_escape_string($conn, $_REQUEST["displayname"]);
-    if ($display_name == '') {
-        $display_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
-    }
-    $email = mysqli_real_escape_string($conn, $_REQUEST["email"]);
-    $user_name = mysqli_real_escape_string($conn, $_REQUEST["username"]);
-    $password = mysqli_real_escape_string($conn, $_REQUEST["password"]);
+    $display_name = $_REQUEST["displayname"] ?? $_REQUEST["username"];
+    $email = $_REQUEST["email"];
+    $user_name = $_REQUEST["username"];
+    $password = $_REQUEST["password"];
     $salt = bin2hex(random_bytes(16));
 
+    // Check if username exists
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $user_name);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    if ($result === false) {
+        die("Error executing the query: " . $stmt->error);
+    }
+
     if (mysqli_num_rows($result) > 0) {
         echo '<script>document.getElementById("accountMessage").innerHTML = "This username is already in use!";</script>';
         mysqli_close($conn);
     } else {
+        // Check if email exists
         $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        if ($result === false) {
+            die("Error executing the query: " . $stmt->error);
+        }
 
         if (mysqli_num_rows($result) > 0) {
             echo '<script>document.getElementById("accountMessage").innerHTML = "This email is already associated with an account!";</script>';
@@ -92,8 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $salted = $salt . $password;
             $hashed = hash('sha512', $salted);
-            $sql = "INSERT INTO users (id, username, email, is_admin, profile_image_path, display_name, bio, website, password_hash, password_salt, email_verified, email_verification_token) 
-                    VALUES (NULL, ?, ?, 0, NULL, ?, NULL, NULL, ?, ?, NULL, NULL)";
+            $sql = "INSERT INTO users (username, email, display_name, password_hash, password_salt) 
+                    VALUES (?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $sql);
             if ($stmt) {
                 mysqli_stmt_bind_param($stmt, "sssss", $user_name, $email, $display_name, $hashed, $salt);
@@ -111,4 +117,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($conn);
 }
 ?>
+
 </html>
