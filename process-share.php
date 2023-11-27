@@ -7,6 +7,7 @@ $password = "team5";
 
 $conn = mysqli_connect($servername, $username, $password, $database);
 
+<form method="post" action="<?php echo urlFor('/process-share.php') ?>" enctype="multipart/form-data">
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if file is uploaded

@@ -215,23 +215,55 @@ body {
     color:black;
 }
 
+.posts {
+    margin-top: 20px;
+}
+
 .postImage{
     padding: 8px;
 }
+
 .postFooter > *{
     display: inline-flex; 
     vertical-align: middle;
 }
+
+.post-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.post-date {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.post-content {
+    margin-bottom: 20px;
+}
+
+.share-form {
+    margin-top: 20px;
+}
+
+.share-form button {
+    color: black;
+}
+
 .tag{
     text-decoration: underline;
 }
+
 .tag:hover{
     cursor: pointer;
     font-style: italic;
 }
+
 .like{
     width: 3em;
 }
+
 .like.active{
     animation:like 0.5s 1;
 }
