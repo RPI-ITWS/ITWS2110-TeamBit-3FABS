@@ -14,7 +14,7 @@
     <header>
         <ul>
             <li><a href="./index.php" class="navi selected">HOME</a></li>
-            <li><a href="./browse.html" class="navi">BROWSE</a></li>
+            <li><a href="./browse.php" class="navi">BROWSE</a></li>
             <li><a href="./share.html" class="navi">SHARE</a></li>
             <li><a href="./account.html" class="navi">LOGIN</a></li>
         </ul>

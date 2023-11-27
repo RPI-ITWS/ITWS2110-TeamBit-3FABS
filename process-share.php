@@ -1,4 +1,13 @@
 <?php
+
+$servername = "localhost";
+$database = "team5project";
+$username = "root";
+$password = "team5";
+
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if file is uploaded
     if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
