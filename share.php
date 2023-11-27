@@ -12,13 +12,11 @@
 
 <body>
     <header>
-
         <ul>
-            <li><a href="./index.html">HOME</a></li>
-            <li><a href="/project/browse">BROWSE</a></li>
-            <li><a href="./share.html" class="selected">SHARE</a></li>
-            <li><a href="./login.html">LOGIN</a></li>
-
+            <li><a href="./index.php" class="navi">HOME</a></li>
+            <li><a href="./browse.php" class="navi">BROWSE</a></li>
+            <li><a href="./share.php" class="navi selected">SHARE</a></li>
+            <li><a href="./account.php" class="navi">ACCOUNT</a></li>
         </ul>
     </nav>
 </header>
