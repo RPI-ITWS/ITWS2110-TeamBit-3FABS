@@ -79,22 +79,25 @@
             }
             var picture = document.getElementById('display');
             var caption = document.getElementById('caption').value;
+            
+            var formData = new FormData()
+            formData.append('img', picture, 'dithered_picture.png');
+            formData.append('caption', caption);
+            // picture.Dithered(function(dPicture) {
+            //     var formData = new FormData();
+            //     formData.append('img', picture, 'dithered_picture.png');
+            //     formData.append('caption', caption);
 
-            picture.Dithered(function(dPicture) {
-                var formData = new FormData();
-                formData.append('img', picture, 'dithered_picture.png');
-                formData.append('caption', caption);
+            fetch('process-share.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+             })
 
-                fetch('process-share.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-                    console.log(data);
-                })
-
-            }, 'image/png');
+            // }, 'image/png');
         });
     </script>
         
