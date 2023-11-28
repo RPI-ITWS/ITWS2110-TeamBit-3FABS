@@ -3,6 +3,10 @@ require_once "./db.php";
 require "./urls.php";
 require "./sessions.php";
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 function generate_header(string $title = "TeamBit-3FABS") {
     $rootURL = urlFor('/');
     $browseURL = urlFor('/browse');
