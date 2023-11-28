@@ -71,19 +71,20 @@
     <script src="./Javascript/Dither.js"></script>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
-            var fileInput = document.getElementById('img');
-            var fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
-            if (fileSize > 2) { //change the value??
-                alert('File size must not exceed 2 MB');
-            }
+            e.preventDefault();
+            // var fileInput = document.getElementById('img');
+            // var fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
+            // if (fileSize > 2) { //change the value??
+            //     alert('File size must not exceed 2 MB');
+            // }
             
             var picture = document.getElementById('display');
             var caption = document.getElementById('caption').value;
-
             var dataURL = picture.toDataURL();
+
             var formData = new FormData();
             formData.append('img', dataURL);
-            formdata.append('alt_text', 'sample text');
+            formData.append('alt_text', caption);
 
             fetch('process-share.php', {
                 method: 'POST',
