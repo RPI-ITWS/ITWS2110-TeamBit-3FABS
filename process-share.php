@@ -6,8 +6,11 @@ $username = "root";
 $password = "team5";
 
 $conn = mysqli_connect($servername, $username, $password, $database);
+$target_dir = "uploads/";
 
-<form method="post" action="<?php echo urlFor('/process-share.php') ?>" enctype="multipart/form-data">
+if (!file_exists($target_dir)) {
+    mkdir($target_dir, 0777, true);
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if file is uploaded
@@ -28,10 +31,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Additional validations or processing can be added here
 
         // Move uploaded file to a designated directory (optional)
-        $target_dir = "uploads/";
         $target_file = $target_dir . basename($_FILES["img"]["name"]);
         if (move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)) {
             echo "The file ". htmlspecialchars( basename( $_FILES["img"]["name"])). " has been uploaded.";
+            $author_id = 1;
+            $primary_comment_id = 1;
+            $alt_text = $_POST['alt_text'];
+            $image_url = $target_file;
+
+            $stmt = $conn->prepare("INSERT INTO posts (image_url, author_id, primary_comment_id, alt_text");
+            $stmt->bind_param("siis", $image_url, $author_id, $primary_comment_id, $alt_text);
+
+            $stmt->execute();
+            $stmt->close();
+
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
@@ -39,4 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "No file was uploaded or there was an error in the upload.";
     }
 }
+
+mysqli_close($conn);
 ?>
