@@ -1,25 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<?php require './helpers/urls.php' ?>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>1-Bit</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-</head>
-
-<body>
-    <header>
-        <ul>
-        <li><a href="<?php echo urlFor('/') ?>" class="navi selected">HOME</a></li>
-        <li><a href="<?php echo urlFor('/browse') ?>" class="navi">BROWSE</a></li>
-        <li><a href="<?php echo urlFor('/share') ?>" class="navi">SHARE</a></li>
-        <li><a href="<?php echo urlFor('/login') ?>" class="navi">LOGIN</a></li>
-        </ul>
-    </header>
-    <main class="content">
+<?php
+require './helpers/heading.php';
+generate_header();
+?>
         <section class="indexWrap">
             <figure class="left">
                 <img src="./images/3fabs.png" alt="1-Bit Logo">
@@ -36,6 +18,4 @@
                 </div>
             </article>
         </section>
-    </main>
-</body>
-</html>
+<?php generate_footer(); ?>
