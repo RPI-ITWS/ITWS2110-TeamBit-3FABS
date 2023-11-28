@@ -77,10 +77,9 @@
             if (fileSize > 2) { //change the value??
                 alert('File size must not exceed 2 MB');
             }
-            var formData = new FormData()
-            formData.append('img', picture, 'dithered_picture.png');
-            formData.append('caption', caption);
-
+            
+            var picture = document.getElementById('display');
+            var caption = document.getElementById('caption').value;
             picture.toBlob(function(dPicture) {
                 var formData = new FormData();
                 formData.append('img', dPicture, 'dithered_picture.png');
