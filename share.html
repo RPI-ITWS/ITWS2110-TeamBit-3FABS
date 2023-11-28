@@ -14,8 +14,8 @@
     <header>
 
         <ul>
-            <li><a href="./index.php">HOME</a></li>
-            <li><a href="/project/browse.php">BROWSE</a></li>
+            <li><a href="./index.html">HOME</a></li>
+            <li><a href="/project/browse">BROWSE</a></li>
             <li><a href="./share.html" class="selected">SHARE</a></li>
             <li><a href="./login.html">LOGIN</a></li>
 
@@ -71,7 +71,6 @@
     <script src="./Javascript/Dither.js"></script>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
             var fileInput = document.getElementById('img');
             var fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
             if (fileSize > 2) { //change the value??
@@ -80,21 +79,34 @@
             
             var picture = document.getElementById('display');
             var caption = document.getElementById('caption').value;
-            picture.toBlob(function(dPicture) {
-                var formData = new FormData();
-                formData.append('img', dPicture, 'dithered_picture.png');
-                formData.append('caption', caption);
+            
+            var pictureURL = picture.toDataURL('image/png');
 
-            fetch('process-share.php', {
-                method: 'POST',
-                body: formData
+            $.ajax({
+                type: "POST",
+                url: "process-share.php",
+                data: {
+                    imgBase64: pictureURL
+                }
             })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-             })
+            // var formData = new FormData()
+            // formData.append('img', picture, 'dithered_picture.png');
+            // formData.append('caption', caption);
+            // // picture.Dithered(function(dPicture) {
+            // //     var formData = new FormData();
+            // //     formData.append('img', picture, 'dithered_picture.png');
+            // //     formData.append('caption', caption);
 
-            }, 'image/png');
+            // fetch('process-share.php', {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            // .then(response => response.text())
+            // .then(data => {
+            //     console.log(data);
+            //  })
+
+            // // }, 'image/png');
         });
     </script>
         

@@ -31,7 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Additional validations or processing can be added here
 
         // Move uploaded file to a designated directory (optional)
+        $target_file = $_POST['photo'];
+        list($type, $target_file) = explode(';', $target_file);
+        list(, $target_file)      = explode(',', $target_file);
+        $target_file = base64_decode($target_file);
         $target_file = $target_dir . basename($_FILES["img"]["name"]);
+        
         if (move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)) {
             echo "The file ". htmlspecialchars( basename( $_FILES["img"]["name"])). " has been uploaded.";
             $author_id = 1;
