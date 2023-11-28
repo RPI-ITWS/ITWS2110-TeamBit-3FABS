@@ -14,8 +14,8 @@
     <header>
 
         <ul>
-            <li><a href="./index.html">HOME</a></li>
-            <li><a href="/project/browse">BROWSE</a></li>
+            <li><a href="./index.php">HOME</a></li>
+            <li><a href="/project/browse.php">BROWSE</a></li>
             <li><a href="./share.html" class="selected">SHARE</a></li>
             <li><a href="./login.html">LOGIN</a></li>
 
@@ -77,22 +77,22 @@
             if (fileSize > 2) { //change the value??
                 alert('File size must not exceed 2 MB');
             }
+            
             var picture = document.getElementById('display');
             var caption = document.getElementById('caption').value;
-
-            picture.Dithered(function(dPicture) {
+            picture.toBlob(function(dPicture) {
                 var formData = new FormData();
-                formData.append('img', picture, 'dithered_picture.png');
+                formData.append('img', dPicture, 'dithered_picture.png');
                 formData.append('caption', caption);
 
-                fetch('process-share.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-                    console.log(data);
-                })
+            fetch('process-share.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+             })
 
             }, 'image/png');
         });
