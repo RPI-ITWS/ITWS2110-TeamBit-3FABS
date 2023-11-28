@@ -10,6 +10,7 @@ $target_dir = "images/";
 
 if (!file_exists($target_dir)) {
     mkdir($target_dir, 0777, true);
+
 }
 
 define('UPLOAD_DIR', 'images/');
@@ -66,6 +67,7 @@ print $success ? $file : 'Unable to save the file.';
 //         echo "No file was uploaded or there was an error in the upload.";
 //     }
 // }
+
 
 mysqli_close($conn);
 ?>

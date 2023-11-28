@@ -87,19 +87,25 @@
         ?>
 
         <?php 
-        foreach($posts as $post){
+        foreach ($posts as $post) {
             $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);
             echo '<div class="post">
                 <h1 class="postTitle">'. $post["title"] . '</h1>
                 <img class="postImage" src="'. urlFor('/images/'. $post['image_url']) .'" alt="'. $altText . '">
+                <div class="postDetails">
+                    <p class="author"><a href="'. urlFor('/profile/' . $post['username']) .'">'. $post['display_name'] .'</a></p>
+                    <p class="postDate">'. formatDate($post["post_created_at"]) .'</p>
+                    <p class="likes">Likes: '. $post["num_likes"] .'</p>
+                    <p class="comments">Comments: '. $post["num_comments"] .'</p>
+                </div>
                 <div class="postFooter">
                     <img class="like" src="'. $assetURLs['heart'] .'" onclick="like(this)" alt="Like button">
-                    <p class="tag"><a href="'. urlFor('/profile/' . $post['username']) .'">'. $post['display_name'] .'</a></p>
-                    <p class="postDate">'. $post["post_created_at"] .'</p>
                 </div>
             </div>';
         }
         ?>
+
+        
 
         <!-- <div class="post">
             <h1 class="postTitle">End of the Dither-Day</h1>

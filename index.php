@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php require './helpers/urls.php' ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,10 @@
 <body>
     <header>
         <ul>
-            <li><a href="./index.php" class="navi selected">HOME</a></li>
-            <li><a href="./browse.html" class="navi">BROWSE</a></li>
-            <li><a href="./share.html" class="navi">SHARE</a></li>
-            <li><a href="./account.html" class="navi">LOGIN</a></li>
+        <li><a href="<?php echo urlFor('/') ?>" class="navi selected">HOME</a></li>
+        <li><a href="<?php echo urlFor('/browse') ?>" class="navi">BROWSE</a></li>
+        <li><a href="<?php echo urlFor('/share') ?>" class="navi">SHARE</a></li>
+        <li><a href="<?php echo urlFor('/login') ?>" class="navi">LOGIN</a></li>
         </ul>
     </header>
     <main class="content">
@@ -28,8 +28,11 @@
                 <h1>Join the dither revolution.</h1>
                 <p>Log in, or create a new account.</p>
                 <div class="buttonWrap">
-                    <button class="login" onclick="location.href = './login.php'"><h2>Log In</h2></button>
-                    <button class="signup" onclick="location.href = './create_acc.php'"><h2>Create Account</h2></button>
+                <?php         ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
+        error_reporting(E_ALL); ?>
+                <button class="login" onclick="location.href = '<?php echo urlFor('/login.php') ?>'"><h2>Log In</h2></button>
+                <button class="signup" onclick="location.href = '<?php echo urlFor('/create_acc.php') ?>'"><h2>Create Account</h2></button>
                 </div>
             </article>
         </section>

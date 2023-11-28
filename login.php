@@ -13,10 +13,10 @@
 <body>
 <header>
     <ul>
-        <li><a href="./index.php" class="navi">HOME</a></li>
-        <li><a href="./browse.html" class="navi">BROWSE</a></li>
-        <li><a href="./share.html" class="navi">SHARE</a></li>
-        <li><a href="./account.html" class="navi">LOGIN</a></li>
+    <li><a href="<?php echo urlFor('/') ?>" class="navi">HOME</a></li>
+    <li><a href="<?php echo urlFor('/browse') ?>" class="navi">BROWSE</a></li>
+    <li><a href="<?php echo urlFor('/share') ?>" class="navi">SHARE</a></li>
+    <li><a href="<?php echo urlFor('/login') ?>" class="navi selected">LOGIN</a></li>
     </ul>
 </header>
 <main class="content">
