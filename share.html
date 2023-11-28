@@ -71,12 +71,27 @@
     <script src="./Javascript/Dither.js"></script>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
             var fileInput = document.getElementById('img');
             var fileSize = fileInput.files[0].size / 1024 / 1024; // in MB
             if (fileSize > 2) { //change the value??
                 e.preventDefault();
                 alert('File size must not exceed 2 MB');
             }
+            var picture = document.getElementById('display');
+            var caption = document.getElementById('caption').value;
+
+            picture.Dithered(function(dPicture) {
+                var formData = new FormData();
+                formData.append('img', dPicture, 'dithered_picture.png');
+                formData.append('caption', caption);
+
+                fetch('process-share.php', {
+                    method: 'POST',
+                    body: 'formData'
+                })
+
+            }, 'image/png');
         });
     </script>
         
