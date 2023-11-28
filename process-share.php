@@ -6,7 +6,7 @@ $username = "root";
 $password = "team5";
 
 $conn = mysqli_connect($servername, $username, $password, $database);
-$target_dir = "uploads/";
+$target_dir = "images/";
 
 if (!file_exists($target_dir)) {
     mkdir($target_dir, 0777, true);
