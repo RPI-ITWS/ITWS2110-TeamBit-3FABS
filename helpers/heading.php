@@ -1,7 +1,7 @@
 <?php
-require_once "./db.php";
-require "./urls.php";
-require "./sessions.php";
+require_once "./helpers/db.php";
+require "./helpers/urls.php";
+require "./helpers/sessions.php";
 
 function generate_header(string $title = "TeamBit-3FABS") {
     $rootURL = urlFor('/');
