@@ -76,27 +76,37 @@
             if (fileSize > 2) { //change the value??
                 alert('File size must not exceed 2 MB');
             }
+            
             var picture = document.getElementById('display');
             var caption = document.getElementById('caption').value;
             
-            var formData = new FormData()
-            formData.append('img', picture, 'dithered_picture.png');
-            formData.append('caption', caption);
-            // picture.Dithered(function(dPicture) {
-            //     var formData = new FormData();
-            //     formData.append('img', picture, 'dithered_picture.png');
-            //     formData.append('caption', caption);
+            var pictureURL = picture.toDataURL('image/png');
 
-            fetch('process-share.php', {
-                method: 'POST',
-                body: formData
+            $.ajax({
+                type: "POST",
+                url: "process-share.php",
+                data: {
+                    imgBase64: pictureURL
+                }
             })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-             })
+            // var formData = new FormData()
+            // formData.append('img', picture, 'dithered_picture.png');
+            // formData.append('caption', caption);
+            // // picture.Dithered(function(dPicture) {
+            // //     var formData = new FormData();
+            // //     formData.append('img', picture, 'dithered_picture.png');
+            // //     formData.append('caption', caption);
 
-            // }, 'image/png');
+            // fetch('process-share.php', {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            // .then(response => response.text())
+            // .then(data => {
+            //     console.log(data);
+            //  })
+
+            // // }, 'image/png');
         });
     </script>
         
