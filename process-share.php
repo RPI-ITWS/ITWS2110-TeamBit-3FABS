@@ -12,60 +12,53 @@ if (!file_exists($target_dir)) {
     mkdir($target_dir, 0777, true);
 
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if file is uploaded
+    if (isset($_POST['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
+        // Check file size (the value is in bytes, so 2MB is 2097152 bytes)
+        if ($_FILES['img']['size'] > 2097152) {
+            echo "Sorry, your file is too large. It should be less than 2MB.";
+            exit;
+        }
 
-$img = $_POST['photo'];
-$img = str_replace('data:image/png;base64,', '', $img);
-$img = str_replace(' ', '+', $img);
-$fileData = base64_decode($img);
-//saving
-$fileName = 'photo.png';
-file_put_contents($fileName, $fileData);
+        // // Check if it's an image file
+        // $check = getimagesize($_FILES['img']['tmp_name']);
+        // if($check === false) {
+        //     echo "File is not an image.";
+        //     exit;
+        // }
+        $dataURL = $_POST['img'];
+        $alt_text = $_POST['alt_text'];
 
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//     // Check if file is uploaded
-//     if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
-//         // Check file size (the value is in bytes, so 2MB is 2097152 bytes)
-//         if ($_FILES['img']['size'] > 2097152) {
-//             echo "Sorry, your file is too large. It should be less than 2MB.";
-//             exit;
-//         }
+        list($type, $dataURL) = explode(';', $dataURL);
+        list(, $dataURL) = explode(',', $dataURL);
+        $data = base64_decode($dataURL);
 
-//         // Check if it's an image file
-//         $check = getimagesize($_FILES['img']['tmp_name']);
-//         if($check === false) {
-//             echo "File is not an image.";
-//             exit;
-//         }
+        $filename = uniqid() . 'png';
+        $target_file = $target_dir . $filename;
 
-//         // Additional validations or processing can be added here
+        // Additional validations or processing can be added here
 
-//         // Move uploaded file to a designated directory (optional)
-//         $target_file = $_POST['photo'];
-//         list($type, $target_file) = explode(';', $target_file);
-//         list(, $target_file)      = explode(',', $target_file);
-//         $target_file = base64_decode($target_file);
-//         $target_file = $target_dir . basename($_FILES["img"]["name"]);
-        
-//         if (move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)) {
-//             echo "The file ". htmlspecialchars( basename( $_FILES["img"]["name"])). " has been uploaded.";
-//             $author_id = 1;
-//             $primary_comment_id = 1;
-//             $alt_text = $_POST['alt_text'];
-//             $image_url = $target_file;
+        // Move uploaded file to a designated directory (optional)
+        if (file_put_contents($target_file, $data)) {
+            echo "The file has been uploaded.";
+            $author_id = 1;
+            $primary_comment_id = 1;
+            $image_url = $target_file;
 
-//             $stmt = $conn->prepare("INSERT INTO posts (image_url, author_id, primary_comment_id, alt_text) VALUES (?, ?, ?, ?)");
-//             $stmt->bind_param("siis", $image_url, $author_id, $primary_comment_id, $alt_text);
+            $stmt = $conn->prepare("INSERT INTO posts (image_url, author_id, primary_comment_id, alt_text) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("siis", $image_url, $author_id, $primary_comment_id, $alt_text);
 
-//             $stmt->execute();
-//             $stmt->close();
+            $stmt->execute();
+            $stmt->close();
 
-//         } else {
-//             echo "Sorry, there was an error uploading your file.";
-//         }
-//     } else {
-//         echo "No file was uploaded or there was an error in the upload.";
-//     }
-// }
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    } else {
+        echo "No file was uploaded or there was an error in the upload.";
+    }
+}
 
 
 mysqli_close($conn);
