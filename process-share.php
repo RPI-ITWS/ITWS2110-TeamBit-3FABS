@@ -14,7 +14,7 @@ if (!file_exists($target_dir)) {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if file is uploaded
-    if (isset($_POST['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
+    if (isset($_POST['img'])) {
         // Check file size (the value is in bytes, so 2MB is 2097152 bytes)
         if ($_FILES['img']['size'] > 2097152) {
             echo "Sorry, your file is too large. It should be less than 2MB.";
