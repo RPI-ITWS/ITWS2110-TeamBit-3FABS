@@ -15,12 +15,15 @@ if (!file_exists($target_dir)) {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if user is logged in
-    $userInfo = getCurrentUserInfo();
-    if (!checkSessionValidity() || $userInfo == NULL) {
+    if (!checkSessionValidity()) {
         header('Location: login.php');
         exit;
     }
-
+    $userInfo = getCurrentUserInfo();
+    if ($userInfo == NULL) {
+        header('Location: login.php');
+        exit;
+    }
     // Check if file is uploaded
     if (isset($_POST['img'])) {
         // Check file size (the value is in bytes, so 2MB is 2097152 bytes)
