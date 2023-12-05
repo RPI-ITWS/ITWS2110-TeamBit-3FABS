@@ -28,7 +28,7 @@ function checkSessionValidity() {
     if (!isset($_SESSION['expires'])) {
         return false;
     }
-    $expires = new DateTimeImmutable($_SESSION['expires']);
+    $expires = $_SESSION['expires'];
     if ($expires < new DateTimeImmutable()) {
         return false;
     }
