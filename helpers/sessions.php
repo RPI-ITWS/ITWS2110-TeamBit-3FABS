@@ -53,9 +53,9 @@ function refreshValidity() {
     global $db;
     $newExpires = (new DateTimeImmutable())->add(new DateInterval('P1D'));
     $_SESSION['expires'] = $newExpires;
-    $db->prepare("UPDATE sessions SET expires = :expires WHERE user_id = :userId AND token = :token")
+    $db->prepare("UPDATE sessions SET expires_at = :expires_at WHERE user_id = :userId AND token = :token")
         ->execute([
-            'expires' => $newExpires->format('Y-m-d H:i:s'),
+            'expires_at' => $newExpires->format('Y-m-d H:i:s'),
             'userId' => $_SESSION['userId'],
             'token' => session_id()
         ]);
