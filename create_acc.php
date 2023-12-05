@@ -36,7 +36,6 @@ generate_header();
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once './helpers/db.php';
-        global $db;
 
         $display_name = $_REQUEST["displayname"] ?? $_REQUEST["username"];
         $email = $_REQUEST["email"];
@@ -78,7 +77,16 @@ generate_header();
                 $stmt = $db->prepare($sql);
                 if ($stmt) {
                     if ($stmt->execute(['username' => $user_name, 'email' => $email, 'display_name' => $display_name, 'password_hash' => $hashed, 'password_salt' => $salt])) {
-                        echo '<script>document.getElementById("accountMessage").innerHTML = "Account Created Successfully!";</script>';
+                        echo '<p>Account created successfully!</p>';
+                        createSession($db->lastInsertId());
+                        if (isset($_SESSION['login_redirect'])) {
+                            $redirect = $_SESSION['login_redirect'];
+                            echo '<p>You are being redirected to the previous page.</p>';
+                        } else {
+                            $redirect = urlFor('/');
+                            echo '<p>You are being redirected to the home page.</p>';
+                        }
+                        echo '<meta http-equiv="refresh" content="2;url=' . $redirect . '">';
                     } else {
                         echo "ERROR: Could not execute $sql. " . var_export($stmt->errorInfo(), true);
                     }

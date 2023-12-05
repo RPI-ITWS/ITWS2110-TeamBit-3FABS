@@ -38,7 +38,7 @@ generate_header();
             $row_count = $stmt->rowCount();
 
             if ($row_count == 0) {
-                echo '<p>No account with this username exists</p>';
+                echo '<p>Invalid Username or Password.</p>'; // Don't leak that the account doesn't exist
             } else {
                 //Account exists
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -52,9 +52,18 @@ generate_header();
                         // Passwords match, user authenticated
                         echo '<p>Password Match!</p>';
                         // Perform further actions or grant access
+                        createSession($row["id"]);
+                        if (isset($_SESSION['login_redirect'])) {
+                            $redirect = $_SESSION['login_redirect'];
+                            echo '<p>You are being redirected to the previous page.</p>';
+                        } else {
+                            $redirect = urlFor('/');
+                            echo '<p>You are being redirected to the home page.</p>';
+                        }
+                        echo '<meta http-equiv="refresh" content="2;url=' . $redirect . '">';
                     } else {
                         // Passwords don't match
-                        echo '<p>Invalid Password.</p>';
+                        echo '<p>Invalid Username or Password.</p>';
                     }
                 }
             }
