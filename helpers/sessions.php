@@ -34,7 +34,7 @@ function checkSessionValidity() {
     }
     $token = session_id();
     $userId = $_SESSION['userId'];
-    $result = $db->prepare("SELECT * FROM SESSIONS WHERE user_id = :userId AND token = :token AND expires > NOW()")
+    $result = $db->prepare("SELECT * FROM sessions WHERE user_id = :userId AND token = :token AND expires > NOW()")
         ->execute([
             'userId' => $userId,
             'token' => $token
@@ -53,7 +53,7 @@ function refreshValidity() {
     global $db;
     $newExpires = (new DateTimeImmutable())->add(new DateInterval('P1D'));
     $_SESSION['expires'] = $newExpires;
-    $db->prepare("UPDATE SESSIONS SET expires = :expires WHERE user_id = :userId AND token = :token")
+    $db->prepare("UPDATE sessions SET expires = :expires WHERE user_id = :userId AND token = :token")
         ->execute([
             'expires' => $newExpires->format('Y-m-d H:i:s'),
             'userId' => $_SESSION['userId'],
@@ -67,7 +67,7 @@ function getCurrentUserInfo(): ?array {
         return null;
     }
     $userId = $_SESSION['userId'];
-    $prepped = $db->prepare("SELECT * FROM USERS WHERE id = :userId");
+    $prepped = $db->prepare("SELECT * FROM users WHERE id = :userId");
     $success = $prepped->execute(['userId' => $userId]);
     if (!$success) {
         return null;
