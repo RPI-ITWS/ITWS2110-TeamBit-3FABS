@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $image_url = $target_file;
 
             $stmt = $conn->prepare("INSERT INTO posts (image_url, author_id, primary_comment_id, alt_text, caption) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("siis", $image_url, $author_id, $primary_comment_id, $alt_text, $caption);
+            $stmt->bind_param("siiss", $image_url, $author_id, $primary_comment_id, $alt_text, $caption);
 
             $stmt->execute();
             $stmt->close();
