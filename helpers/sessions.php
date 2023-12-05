@@ -3,12 +3,14 @@ require_once "./helpers/db.php";
 
 function createSession(int $userId) {
     global $db;
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
     $_SESSION['userId'] = $userId;
     $id = session_id();
     $timestamp = new DateTimeImmutable();
     $expires = $timestamp->add(new DateInterval('P1D'));
-    $db->prepare("INSERT INTO SESSIONS (user_id, token, expires) VALUES (:userId, :token, :expires)")
+    $db->prepare("INSERT INTO sessions (user_id, token, expires) VALUES (:userId, :token, :expires)")
         ->execute([
             'userId' => $userId,
             'token' => $id,
