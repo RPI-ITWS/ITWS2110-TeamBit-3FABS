@@ -15,7 +15,7 @@
         <ul>
         <li><a href="<?php echo urlFor('/') ?>" class="navi selected">HOME</a></li>
         <li><a href="<?php echo urlFor('/browse') ?>" class="navi">BROWSE</a></li>
-        <li><a href="<?php echo urlFor('/share') ?>" class="navi">SHARE</a></li>
+        <li><a href="<?php echo urlFor('/share.html') ?>" class="navi">SHARE</a></li>
         <li><a href="<?php echo urlFor('/login') ?>" class="navi">LOGIN</a></li>
         </ul>
     </header>
