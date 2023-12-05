@@ -26,9 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // if($check === false) {
         //     echo "File is not an image.";
         //     exit;
-        // }
+        // } 
         $dataURL = $_POST['img'];
         $alt_text = $_POST['alt_text'];
+        $caption = $_POST['caption'];
 
         list($type, $dataURL) = explode(';', $dataURL);
         list(, $dataURL) = explode(',', $dataURL);
@@ -46,8 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $primary_comment_id = 1;
             $image_url = $target_file;
 
-            $stmt = $conn->prepare("INSERT INTO posts (image_url, author_id, primary_comment_id, alt_text) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("siis", $image_url, $author_id, $primary_comment_id, $alt_text);
+            $stmt = $conn->prepare("INSERT INTO posts (image_url, author_id, primary_comment_id, alt_text) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("siis", $image_url, $author_id, $primary_comment_id, $alt_text, $caption);
 
             $stmt->execute();
             $stmt->close();

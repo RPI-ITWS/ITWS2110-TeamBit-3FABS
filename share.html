@@ -63,6 +63,9 @@
             <textarea id="caption" name="caption" rows="4" cols="50">
                 Enter text here...
             </textarea>
+            <textarea id="alt-text" name="alt-text" rows="4" cols="50">
+                Enter alt text here...
+            </textarea>
             <input type="submit" value="post" name="submit">
         </form>  
     </section>  
@@ -80,11 +83,13 @@
             
             var picture = document.getElementById('display');
             var caption = document.getElementById('caption').value;
+            var altText = document.getElementById('alt-text').value;
             var dataURL = picture.toDataURL();
 
             var formData = new FormData();
             formData.append('img', dataURL);
-            formData.append('alt_text', caption);
+            formData.append('caption', caption);
+            formData.append('alt_text', altText);
 
             fetch('process-share.php', {
                 method: 'POST',
