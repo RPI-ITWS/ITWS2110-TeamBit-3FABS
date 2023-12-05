@@ -16,12 +16,12 @@ if (!file_exists($target_dir)) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if user is logged in
     if (!checkSessionValidity()) {
-        header('Location: login.php');
+        echo "You must log in to create a post"
         exit;
     }
     $userInfo = getCurrentUserInfo();
     if ($userInfo == NULL) {
-        header('Location: login.php');
+        echo "You must log in to create a post"
         exit;
     }
     // Check if file is uploaded
