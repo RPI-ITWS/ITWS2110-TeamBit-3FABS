@@ -1,5 +1,5 @@
 <?php
-require "./helpers/sessions.php"
+require "./helpers/sessions.php";
 
 $servername = "localhost";
 $database = "team5project";
@@ -16,7 +16,7 @@ if (!file_exists($target_dir)) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if user is logged in
     $userInfo = getCurrentUserInfo();
-    if (!checkSessionValidity() or userInfo() == NULL) {
+    if (!checkSessionValidity() || $userInfo == NULL) {
         header('Location: login.php');
         exit;
     }
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         list(, $dataURL) = explode(',', $dataURL);
         $data = base64_decode($dataURL);
 
-        $filename = uniqid() . 'png';
+        $filename = uniqid() . '.png';
         $target_file = $target_dir . $filename;
 
         // Additional validations or processing can be added here
