@@ -34,7 +34,7 @@ function checkSessionValidity() {
     }
     $token = session_id();
     $userId = $_SESSION['userId'];
-    $result = $db->prepare("SELECT * FROM sessions WHERE user_id = :userId AND token = :token AND expires > NOW()")
+    $result = $db->prepare("SELECT * FROM sessions WHERE user_id = :userId AND token = :token AND expires_at > NOW()")
         ->execute([
             'userId' => $userId,
             'token' => $token

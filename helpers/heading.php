@@ -18,6 +18,7 @@ function generate_header(string $title = "TeamBit-3FABS") {
         $_SESSION['login_redirect'] = $_SERVER['REQUEST_URI'];
     } else {
         $userInfo = $loggedInUser;
+        refreshValidity();
     }
     $accountURL = urlFor('/profile/' . ($loggedInUser !== null ? $loggedInUser['username'] : ''));
     $accountText = "";
