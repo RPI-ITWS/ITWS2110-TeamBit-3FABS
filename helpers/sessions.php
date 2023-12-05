@@ -10,11 +10,11 @@ function createSession(int $userId) {
     $id = session_id();
     $timestamp = new DateTimeImmutable();
     $expires = $timestamp->add(new DateInterval('P1D'));
-    $db->prepare("INSERT INTO sessions (user_id, token, expires) VALUES (:userId, :token, :expires)")
+    $db->prepare("INSERT INTO sessions (user_id, token, expires_at) VALUES (:userId, :token, :expires_at)")
         ->execute([
             'userId' => $userId,
             'token' => $id,
-            'expires' => $expires->format('Y-m-d H:i:s')
+            'expires_at' => $expires->format('Y-m-d H:i:s')
         ]);
     $_SESSION['expires'] = $expires;
 }
