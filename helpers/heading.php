@@ -19,7 +19,7 @@ function generate_header(string $title = "TeamBit-3FABS") {
     } else {
         $userInfo = $loggedInUser;
     }
-    $accountURL = urlFor('/profile/' . $loggedInUser['username'] ?? '');
+    $accountURL = urlFor('/profile/' . $loggedInUser !== null ? $loggedInUser['username'] : '');
     $accountText = "";
     if ($loggedInUser !== null) {
         $accountText = '<li><a href="' . $accountURL . '" class="navi">' . $loggedInUser["display_name"] .'</a></li>';
