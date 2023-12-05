@@ -28,8 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //     exit;
         // } 
         $dataURL = $_POST['img'];
-        $alt_text = $_POST['alt_text'];
-        $caption = $_POST['caption'];
+        $alt_text = trim($_POST['alt_text']);
+        $caption = trim($_POST['caption']);
 
         list($type, $dataURL) = explode(';', $dataURL);
         list(, $dataURL) = explode(',', $dataURL);
