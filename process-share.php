@@ -1,4 +1,5 @@
 <?php
+require "./helpers/sessions.php"
 
 $servername = "localhost";
 $database = "team5project";
@@ -13,6 +14,13 @@ if (!file_exists($target_dir)) {
 
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if user is logged in
+    $userInfo = getCurrentUserInfo();
+    if (!checkSessionValidity() or userInfo() == NULL) {
+        header('Location: login.php');
+        exit;
+    }
+
     // Check if file is uploaded
     if (isset($_POST['img'])) {
         // Check file size (the value is in bytes, so 2MB is 2097152 bytes)
@@ -43,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Move uploaded file to a designated directory (optional)
         if (file_put_contents($target_file, $data)) {
             echo "The file has been uploaded.";
-            $author_id = 1;
+            $author_id = $userInfo['id'];
             $primary_comment_id = 1;
             $image_url = $target_file;
 
