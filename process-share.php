@@ -15,15 +15,12 @@ if (!file_exists($target_dir)) {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if user is logged in
-    if (!checkSessionValidity()) {
-        echo "You must log in to create a post"
-        exit;
-    }
     $userInfo = getCurrentUserInfo();
-    if ($userInfo == NULL) {
-        echo "You must log in to create a post"
+    if (!checkSessionValidity() || $userInfo == NULL) {
+        header('Location: login.php');
         exit;
     }
+    
     // Check if file is uploaded
     if (isset($_POST['img'])) {
         // Check file size (the value is in bytes, so 2MB is 2097152 bytes)
