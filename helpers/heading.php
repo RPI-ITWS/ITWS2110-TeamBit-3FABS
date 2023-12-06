@@ -7,15 +7,18 @@ $userInfo = null;
 
 function generate_header(string $title = "TeamBit-3FABS") {
     global $userInfo;
-    $iconURL = urlFor('/favicon.ico');
-    $cssURL = urlFor('/style.css');
     $rootURL = urlFor('/');
     $browseURL = urlFor('/browse');
-    $shareURL = urlFor('/share.html');
+    $shareURL = "";
     $loginURL = urlFor('/login');
     $accountCreationURL = urlFor('/create_acc');
     $loggedInUser = getCurrentUserInfo();
-    if (($_SERVER['REQUEST_URI'] !== $loginURL || $_SERVER['REQUEST_URI'] !== $accountCreationURL)) {
+    if ($loggedInUser !== null) {
+        $shareURl = urlFor('/share.html');
+    } else {
+        $shareURL = $shareURl = urlFor('/login');
+    }
+    if ($loggedInUser === null && ($_SERVER['REQUEST_URI'] !== $loginURL || $_SERVER['REQUEST_URI'] !== $accountCreationURL)) {
         // Make it easier for users to login
         $_SESSION['login_redirect'] = $_SERVER['REQUEST_URI'];
     } else {
@@ -38,8 +41,8 @@ function generate_header(string $title = "TeamBit-3FABS") {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>$title</title>
-        <link rel="stylesheet" href="$cssURL">
-        <link rel="icon" href="$iconURL" type="image/x-icon">
+        <link rel="stylesheet" href="./style.css">
+        <link rel="icon" href="./favicon.ico" type="image/x-icon">
     </head>
 
     <body>
