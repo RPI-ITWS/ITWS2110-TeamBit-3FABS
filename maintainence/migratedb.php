@@ -458,6 +458,10 @@
                     ALTER TABLE posts ADD COLUMN caption TEXT DEFAULT NULL;
                 ');
                 // Remove parent comment ID from posts table
+                // Drop foreign key first
+                $db->query('
+                    ALTER TABLE posts DROP FOREIGN KEY posts_ibfk_2;
+                ');
                 $db->query('
                     ALTER TABLE posts DROP COLUMN primary_comment_id;
                 ');
