@@ -7,6 +7,8 @@ $userInfo = null;
 
 function generate_header(string $title = "TeamBit-3FABS") {
     global $userInfo;
+    $iconURL = urlFor('/favicon.ico');
+    $cssURL = urlFor('/style.css');
     $rootURL = urlFor('/');
     $browseURL = urlFor('/browse');
     $shareURL = urlFor('/share.html');
@@ -36,8 +38,8 @@ function generate_header(string $title = "TeamBit-3FABS") {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>$title</title>
-        <link rel="stylesheet" href="./style.css">
-        <link rel="icon" href="./favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="$cssURL">
+        <link rel="icon" href="$iconURL" type="image/x-icon">
     </head>
 
     <body>
