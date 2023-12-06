@@ -1,6 +1,6 @@
 <?php
 require './helpers/heading.php';
-require './helpers/sessions.php';
+require_once './helpers/sessions.php';
 generate_header();
 $loggedInUser = getCurrentUserInfo();
 if ($loggedInUser === NULL) {
