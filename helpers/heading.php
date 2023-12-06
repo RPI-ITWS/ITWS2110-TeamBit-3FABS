@@ -9,10 +9,15 @@ function generate_header(string $title = "TeamBit-3FABS") {
     global $userInfo;
     $rootURL = urlFor('/');
     $browseURL = urlFor('/browse');
-    $shareURL = urlFor('/share.html');
+    $shareURL = "";
     $loginURL = urlFor('/login');
     $accountCreationURL = urlFor('/create_acc');
     $loggedInUser = getCurrentUserInfo();
+    if ($loggedInUser !== null) {
+        $shareURl = urlFor('/share.html');
+    } else {
+        $shareURL = $shareURl = urlFor('/login');
+    }
     if ($loggedInUser === null && ($_SERVER['REQUEST_URI'] !== $loginURL || $_SERVER['REQUEST_URI'] !== $accountCreationURL)) {
         // Make it easier for users to login
         $_SESSION['login_redirect'] = $_SERVER['REQUEST_URI'];
