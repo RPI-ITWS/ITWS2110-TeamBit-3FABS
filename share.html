@@ -93,6 +93,13 @@
                 method: 'POST',
                 body: formData
             })
+            .then(response=> {
+                alert('File Successfully Uploaded!')
+                window.location.reload();
+            })
+            .catch(error=> {
+                alert('There was an error uploading your file.')
+            })
         });
     </script>
         
