@@ -61,7 +61,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 9; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 10; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -447,6 +447,23 @@
                 ');
             } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #9:</p>';
+                printTrace($e);
+                exit;
+            }
+        }
+        if ($migrationVersion < 10) {
+            try {
+                // Add caption to posts table
+                $db->query('
+                    ALTER TABLE posts ADD COLUMN caption TEXT DEFAULT NULL;
+                ');
+                // Remove parent comment ID from posts table
+                $db->query('
+                    ALTER TABLE posts DROP COLUMN primary_comment_id;
+                ');
+            }
+            catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #10:</p>';
                 printTrace($e);
                 exit;
             }
