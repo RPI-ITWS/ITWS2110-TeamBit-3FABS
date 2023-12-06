@@ -21,7 +21,9 @@ function createSession(int $userId) {
 
 function checkSessionValidity() {
     global $db;
+    if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
+    }
     if (!isset($_SESSION['userId'])) {
         return false;
     }
