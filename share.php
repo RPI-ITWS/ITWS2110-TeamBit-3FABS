@@ -1,3 +1,13 @@
+<?php
+require './helpers/heading.php';
+require './helpers/sessions.php';
+generate_header();
+$loggedInUser = getCurrentUserInfo();
+if ($loggedInUser === NULL) {
+    header('Location: ./login');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +21,7 @@
 </head>
 
 <body>
-    <header>
+    <!-- <header>
 
         <ul>
             <li><a href="./index.php">HOME</a></li>
@@ -21,7 +31,7 @@
             <li><a href="./create_acc.php">CREATE ACCOUNT</a></li>
         </ul>
     </nav>
-</header>
+</header> -->
 <main class="content" id="content">
     <section class="editBar">
        <div class="slidersContainer"> 
