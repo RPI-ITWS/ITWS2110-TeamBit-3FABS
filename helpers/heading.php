@@ -9,7 +9,7 @@ function generate_header(string $title = "TeamBit-3FABS") {
     global $userInfo;
     $rootURL = urlFor('/');
     $browseURL = urlFor('/browse');
-    $shareURL = urlFor('/share.html');
+    $shareURL = urlFor('/share');
     $loginURL = urlFor('/login');
     $accountCreationURL = urlFor('/create_acc');
     $loggedInUser = getCurrentUserInfo();
