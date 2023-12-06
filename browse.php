@@ -20,15 +20,14 @@ generate_header();
                 users.username AS "username",
                 users.display_name AS "display_name",
                 posts.created_at AS "post_created_at",
-                comments.content AS "title",
-                comments.updated_at AS "post_updated_at",
+                caption as "title",
+                posts.updated_at AS "post_updated_at",
                 COALESCE(like_subquery.num_likes, 0) AS "num_likes",
                 -- COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked", -- Needed in the future
-                (COALESCE(num_comments_subquery.num_comments, 1) - 1) AS "num_comments" -- This has to be - 1 because we use a comment to make the post title.
+                COALESCE(num_comments_subquery.num_comments, 0) AS "num_comments"
             FROM
                 posts
             INNER JOIN users ON posts.author_id = users.id
-            INNER JOIN comments ON posts.primary_comment_id = comments.id
             LEFT JOIN (
                 SELECT 
                     likes.post_id "like_post_id",
@@ -62,7 +61,6 @@ generate_header();
             break;
     }
 
-    //        $preparedPostQuery->bind_param("si", $sortColumn, $limit);
     $preparedPostQuery->execute(["sortColumn" => $sortColumn]);
     $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
     $preparedPostQuery->closeCursor();
