@@ -71,7 +71,7 @@ generate_header();
         $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);
         echo '<div class="post">
                 <h1 class="postTitle">' . $post["title"] . '</h1>
-                <img class="postImage" src="' . urlFor('/images/' . $post['image_url']) . '" alt="' . $altText . '">
+                <img class="postImage" src="' . urlFor('/' . $post['image_url']) . '" alt="' . $altText . '">
                 <div class="postDetails">
                     <p class="author"><a href="' . urlFor('/profile/' . $post['username']) . '">' . $post['display_name'] . '</a></p>
                     <p class="postDate">' . $post["post_created_at"] . '</p>
