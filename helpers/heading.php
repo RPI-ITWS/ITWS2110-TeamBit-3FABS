@@ -16,7 +16,7 @@ function generate_header(string $title = "TeamBit-3FABS") {
     $accountCreationURL = urlFor('/create_acc');
     $loggedInUser = getCurrentUserInfo();
     if ($loggedInUser !== NULL) {
-        $shareURL = urlFor('/share.html');
+        $shareURL = urlFor('/share.php');
     }
     if (($_SERVER['REQUEST_URI'] !== $loginURL || $_SERVER['REQUEST_URI'] !== $accountCreationURL)) {
         // Make it easier for users to login
