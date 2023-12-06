@@ -61,7 +61,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 10; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 11; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -461,12 +461,28 @@
                 $db->query('
                     ALTER TABLE posts DROP COLUMN primary_comment_id;
                 ');
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 echo '<p class="failure">Caught exception during migration #10:</p>';
                 printTrace($e);
                 exit;
             }
+        }
+        if ($migrationVersion < 11) {
+            try {
+                // Add updated at to posts table
+                $db->query('
+                    ALTER TABLE posts ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+                ');
+                // Copy post creation time to updated at for now
+                $db->query('
+                    UPDATE posts SET updated_at = created_at;
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #11:</p>';
+                printTrace($e);
+                exit;
+            }
+
         }
         if ($migrationVersion != $maxMigrationVersion) {
             try {
