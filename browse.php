@@ -35,7 +35,7 @@ generate_header();
                 FROM 
                     likes
                 GROUP BY likes.post_id
-            ) like_subquery ON like_subquery.like_post_id = post_id
+            ) like_subquery ON like_subquery.like_post_id = posts.id
             LEFT JOIN (
                 SELECT 
                     comments.post_id "comment_post_id",
@@ -43,7 +43,7 @@ generate_header();
                 FROM
                     comments
                 GROUP BY comments.post_id
-            ) num_comments_subquery ON num_comments_subquery.comment_post_id = post_id
+            ) num_comments_subquery ON num_comments_subquery.comment_post_id = posts.id
             ORDER BY :sortColumn ' . $sortMode . '
             LIMIT ' . $limit . ';
         ');
