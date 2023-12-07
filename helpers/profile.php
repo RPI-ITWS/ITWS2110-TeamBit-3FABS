@@ -35,7 +35,7 @@ generate_header();
             <article class="about">
                 <img src="./images/download.png" alt="User Avatar">
                 <h1>Sample</h1>
-                <p>Hi! My name's Rei Ayanami! How's it hanging? I love dithering algorithms!</p>
+                <p>Sample profile</p>
             </article>
             <aside class="posts">
                 <?php foreach ($posts as $post): ?>

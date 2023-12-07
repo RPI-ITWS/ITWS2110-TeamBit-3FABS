@@ -34,22 +34,12 @@ generate_header();
         <section class="profile">
             <article class="about">
                 <img src="./images/download.png" alt="User Avatar">
-                <h1>@Ihrther</h1>
-                <p>Hi! My name's Rei Ayanami! How's it hanging? I love dithering algorithms!</p>
+                <h1>Sample</h1>
+                <p>Sample profile</p>
             </article>
             <aside class="posts">
-                <img src="./images/g1.png">
-                <img src="./images/g2.png">
-                <img src="./images/download (2).png">
-                <img src="./images/g3.png">
-                <img src="./images/g9.png">
-                <img src="./images/g10.png">
-                <img src="./images/download (3).png">
-                <img src="./images/g4.png">
-                <img src="./images/g5.png">
-                <img src="./images/g6.png">
-                <img src="./images/g7.png">
-                <img src="./images/g8.png">
+                <?php foreach ($posts as $post): ?>
+                    <img src ="<?php echo htmlspecialchars(urlFor('./images/'. $post['image_url'])); ?>" alt = "<?php echo htmlspecialchars($post['alt_text']); ?>">
             </aside>
         </section>
     </main>
