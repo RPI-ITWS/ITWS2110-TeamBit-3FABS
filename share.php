@@ -80,6 +80,7 @@ if ($loggedInUser === NULL) {
     </main>
 
     <script src="./Javascript/Dither.js"></script>
+    <script src="./Javascript/Functions.js"></script>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();

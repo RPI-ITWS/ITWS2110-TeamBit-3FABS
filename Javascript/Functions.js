@@ -123,3 +123,23 @@ const generatePosts = () => {
 }
 
 generatePosts();
+
+// Set default values
+const defaultThreshold = 50;
+const defaultContrast = 50;
+
+// Reset functions
+document.getElementById('resetThreshold').addEventListener('click', function () {
+  document.getElementById('threshold').value = defaultThreshold;
+  ditherCall();
+});
+
+document.getElementById('resetContrast').addEventListener('click', function () {
+  document.getElementById('contrast').value = defaultContrast;
+  ditherCall();
+});
+
+// jQuery click event for an interactive element
+$('.interactive-element').on('click', function () {
+  alert('You clicked the interactive element!');
+});
