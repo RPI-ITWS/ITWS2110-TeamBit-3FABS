@@ -34,12 +34,12 @@ generate_header();
         <section class="profile">
             <article class="about">
                 <img src="./images/download.png" alt="User Avatar">
-                <h1>@Ihrther</h1>
+                <h1>Sample</h1>
                 <p>Hi! My name's Rei Ayanami! How's it hanging? I love dithering algorithms!</p>
             </article>
             <aside class="posts">
                 <?php foreach ($posts as $post): ?>
-                    <img src ="<?php echo htmlspecialchars(urlFor('/'. $post['image_url'])); ?>" alt = "<?php echo htmlspecialchars($post['alt_text']); ?>">
+                    <img src ="<?php echo htmlspecialchars(urlFor('./images/'. $post['image_url'])); ?>" alt = "<?php echo htmlspecialchars($post['alt_text']); ?>">
             </aside>
         </section>
     </main>
