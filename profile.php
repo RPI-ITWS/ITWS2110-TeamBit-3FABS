@@ -39,7 +39,7 @@ generate_header();
             </article>
             <aside class="posts">
                 <?php foreach ($posts as $post): ?>
-                    <img src ="<?php echo htmlspecialchars(urlFor('./images/'. $post['image_url'])); ?>" alt = "<?php echo htmlspecialchars($post['alt_text']); ?>">
+                    <img src ="<?php echo htmlspecialchars(urlFor('/'. $post['image_url'])); ?>" alt = "<?php echo htmlspecialchars($post['alt_text']); ?>">
                 <?php endforeach; ?>
             </aside>
         </section>
