@@ -1,6 +1,6 @@
 <?php
-require_once 'db.php';
-require_once 'heading.php';
+require_once './helpers/db.php';
+require_once './helpers/heading.php';
 
 $username = $_GET['username'];
 
