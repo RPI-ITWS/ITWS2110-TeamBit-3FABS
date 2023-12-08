@@ -74,7 +74,7 @@ $preparedPostQuery->execute();
 $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
 $preparedPostQuery->closeCursor();
 ?>
-
+<div class="posts">
 <?php
 foreach ($posts as $post) {
     $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);
@@ -95,6 +95,7 @@ foreach ($posts as $post) {
             </div>';
 }
 ?>
+</div>
 
 
 
