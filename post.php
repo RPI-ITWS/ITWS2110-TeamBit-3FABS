@@ -100,7 +100,7 @@ generate_header($post['caption'] ?? "Post");
     <p class="post-date">Posted on <?php echo $post["created_at"] ?></p>
     <p>Likes: <?php echo $numLikes ?></p>
     <div class="postFooter">
-        <img class="like <?php echo ($userLiked ? 'active' : '') ?>" src="<?php echo $assetURLs['heart'] ?>" onclick="like(this, <?php echo $post['id'] ?>)" alt="Like button">
+        <img class="like <?php echo ($userLiked ? 'active' : '') ?>" src="<?php echo $assetURLs[$userLiked ? 'liked' : 'heart'] ?>" onclick="like(this, <?php echo $post['id'] ?>)" alt="Like button">
     </div>
 </section>
 <section class="comments">
@@ -119,7 +119,7 @@ generate_header($post['caption'] ?? "Post");
                 <div class="comment-footer">
                     <p class="comment-date">' . $comment['created_at'] . '</p>
                     <p class="comment-likes">' . $comment['num_likes'] . 'likes </p>
-                    <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs['heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button">
+                    <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs[$userLikedComment ? 'liked' : 'heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button">
                 </div>';
         if (array_key_exists($comment['comment_id'], $commentMapping)) {
             echo '<div class="comment-replies">';
