@@ -1,7 +1,7 @@
 <?php
-require "./helpers/heading.php";
-require "./helpers/apihelper.php";
-require_once "./helpers/db.php";
+require "../helpers/heading.php";
+require "../helpers/apihelper.php";
+require_once "../helpers/db.php";
 loginGated();
 if (!isset($_GET['post_id']) || !isset($_GET['comment_id'])) {
     badRequest("No post_id or comment_id provided");
