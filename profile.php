@@ -16,6 +16,7 @@ if ($profileUserInfo === null) {
 $postQuery = $db->prepare("SELECT * FROM posts WHERE author_id = :userId ORDER BY created_at DESC");
 $postQuery->execute(['userId' => $profileUserInfo['id']]);
 $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
+$userBlockedPoster = false;
 
 if (checkSessionValidity()) {
     $userBlockedPosterQuery = $db->prepare("SELECT COUNT(*) FROM blocks WHERE blocker_id = :blockerId AND blockee_id = :blockeeId");
@@ -24,7 +25,7 @@ if (checkSessionValidity()) {
     $posterBlockedUserQuery = $db->prepare("SELECT COUNT(*) FROM blocks WHERE blocker_id = :blockerId AND blockee_id = :blockeeId");
     $posterBlockedUserQuery->execute(['blockerId' => $profileUserInfo['id'], 'blockeeId' => $_SESSION["userId"]]);
     $posterBlockedUser = $posterBlockedUserQuery->fetch(PDO::FETCH_NUM)[0] > 0;
-    if ($userBlockedPoster || $posterBlockedUser) {
+    if ($posterBlockedUser) {
         http_response_code(403);
         die("You are not allowed to view this profile");
     }
@@ -42,12 +43,20 @@ generate_header();
         <?php else : ?>
             <form action="<?php echo urlFor('/api_block.php'); ?>" method="get">
                 <input type="hidden" name="blockee_id" value="<?php echo $profileUserInfo['id']; ?>">
-                <input type="submit" value="Block">
+                <?php if ($userBlockedPoster) : ?>
+                    <input type="hidden" name="unblock" value="true">
+                    <input type="submit" value="Unblock">
+                <?php else : ?>
+                    <input type="submit" value="Block">
+                <?php endif; ?>
             </form>
         <?php endif; ?>
     <?php endif; ?>
 
 </article>
+<?php if ($userBlockedPoster) : ?>
+    <p>You have blocked this user.</p>
+<?php endif; ?>
 <aside class="posts">
     <?php foreach ($posts as $post) : ?>
         <a href="<?php echo urlFor("/posts/" . $post['id']); ?>">
