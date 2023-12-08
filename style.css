@@ -381,7 +381,7 @@ body {
   margin-left: 75px;
 }
 
-.new-comment-form input[type="text"] {
+.new-comment-form textarea {
   border: 1px white solid;
   background-color: black;
   width: 50%;

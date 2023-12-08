@@ -129,7 +129,7 @@ generate_header($post['caption'] ?? "Post");
                             <form action="'. urlFor('/api_comment.php') . '" method="POST" class="comment-box">
                                 <input type="hidden" name="post_id" value="'. $post['id'] .'">
                                 <input type="hidden" name="parent_comment_id" value="'. $comment['comment_id'] .'">
-                                <textarea name="content" placeholder="Write a comment..."></textarea>
+                                <textarea name="content" rows="4" cols="50" placeholder="Write a comment..."></textarea>
                                 <button type="submit">Post</button>
                             </form>
                         </div>';
@@ -155,7 +155,7 @@ generate_header($post['caption'] ?? "Post");
         <h3>Leave a comment</h3>
         <form action="<?php echo urlFor('/api_comment.php') ?>" method="POST" class="comment-box">
             <input type="hidden" name="post_id" value="<?php echo $post['id'] ?>">
-            <textarea name="content" placeholder="Write a comment..."></textarea>
+            <textarea name="content" rows="4" cols="50" placeholder="Write a comment..."></textarea>
             <button type="submit">Post</button>
         </form>
     </div>
