@@ -45,6 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if username is empty
     if (empty($user_name)) {
         echo '<p>Please enter a username!</p>';
+    }
+    else if (empty($password)) {
+        echo '<p>Please enter a password!</p>';
     } else {
         try {
             $salt = bin2hex(random_bytes(16));
