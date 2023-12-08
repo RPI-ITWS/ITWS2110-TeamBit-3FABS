@@ -484,7 +484,7 @@ textarea {
     font-size: 175%;
 }
 
-.new-comment-form:not(.open) {
+.new-comment-form {
     display: none;
 }
 

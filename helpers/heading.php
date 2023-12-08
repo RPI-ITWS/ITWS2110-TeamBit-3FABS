@@ -43,6 +43,7 @@ function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = fa
         <title>$title</title>
         <link rel="stylesheet" href="$cssURL">
         <link rel="icon" href="$iconURL" type="image/x-icon">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     </head>
 
     <body>
