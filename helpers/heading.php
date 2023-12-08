@@ -5,7 +5,7 @@ require "./helpers/sessions.php";
 
 $userInfo = null;
 
-function generate_header(string $title = "TeamBit-3FABS") {
+function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = false) {
     global $userInfo;
     $iconURL = urlFor('/favicon.ico');
     $cssURL = urlFor('/style.css');
@@ -18,7 +18,7 @@ function generate_header(string $title = "TeamBit-3FABS") {
     if ($loggedInUser !== NULL) {
         $shareURL = urlFor('/share.php');
     }
-    if (($_SERVER['REQUEST_URI'] !== $loginURL || $_SERVER['REQUEST_URI'] !== $accountCreationURL)) {
+    if (!$isLoginPage && $loggedInUser === null) {
         // Make it easier for users to login
         $_SESSION['login_redirect'] = $_SERVER['REQUEST_URI'];
     } else {
@@ -27,12 +27,13 @@ function generate_header(string $title = "TeamBit-3FABS") {
     }
     $accountURL = urlFor('/profile/' . ($loggedInUser !== null ? $loggedInUser['username'] : ''));
     $accountText = "";
-    if ($loggedInUser !== null) {
-        $accountText = '<li><a href="' . $accountURL . '" class="navi">' . $loggedInUser["display_name"] .'</a></li>';
-    } else {
-        $accountText = '<li><a href="' . $loginURL . '" class="navi">LOGIN</a></li>';
-        $accountText .= '<li><a href="' . $accountCreationURL . '" class="navi">CREATE ACCOUNT</a></li>';
-    }
+if ($loggedInUser !== null) {
+    $accountText = '<li><a href="' . htmlspecialchars($accountURL) . '" class="navi">' . htmlspecialchars($loggedInUser["display_name"]) .'</a></li>';
+} else {
+    $accountText = '<li><a href="' . htmlspecialchars($loginURL) . '" class="navi">LOGIN</a></li>';
+    $accountText .= '<li><a href="' . htmlspecialchars($accountCreationURL) . '" class="navi">CREATE ACCOUNT</a></li>';
+}
+
     $header = <<<EOT
     <!DOCTYPE html>
     <html lang="en">
@@ -43,6 +44,7 @@ function generate_header(string $title = "TeamBit-3FABS") {
         <title>$title</title>
         <link rel="stylesheet" href="$cssURL">
         <link rel="icon" href="$iconURL" type="image/x-icon">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     </head>
 
     <body>
@@ -60,9 +62,10 @@ EOT;
 }
 
 function generate_footer() {
+    $JSURL = urlFor("/Javascript/Functions.js");
     $footer = <<<EOT
         </main>
-        <script src="./Javascript/Functions.js"></script>
+        <script src="$JSURL"></script>
         <footer>
             <p class="center">By Team 5 at ITWS 2110</p>
         </footer>

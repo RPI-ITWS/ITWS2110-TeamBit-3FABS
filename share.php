@@ -1,38 +1,9 @@
 <?php
 require './helpers/heading.php';
 require_once './helpers/sessions.php';
+loginGated();
 generate_header();
-$loggedInUser = getCurrentUserInfo();
-if ($loggedInUser === NULL) {
-    header('Location: ./login');
-    exit;
-}
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>1-Bit</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-</head>
-
-<body>
-    <!-- <header>
-
-        <ul>
-            <li><a href="./index.php">HOME</a></li>
-            <li><a href="/project/browse">BROWSE</a></li>
-            <li><a href="./share.html" class="selected">SHARE</a></li>
-            <li><a href="./login.php">LOGIN</a></li>
-            <li><a href="./create_acc.php">CREATE ACCOUNT</a></li>
-        </ul>
-    </nav>
-</header> -->
-<main class="content" id="content">
     <section class="editBar">
        <div class="slidersContainer"> 
            <div class="sliderWrap">
@@ -68,6 +39,7 @@ if ($loggedInUser === NULL) {
             <br>
             <label for="caption">Share Your Thoughts!</label>
             <br>
+
             <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here...">
             </textarea>
             <input type="submit" value="post" name="submit">
@@ -75,8 +47,8 @@ if ($loggedInUser === NULL) {
     </section>  
     </main>
 
-    <script src="./Javascript/Dither.js"></script>
-    <script src="./Javascript/Functions.js"></script>
+    <script src="<?php echo urlFor('/Javascript/Dither.js') ?>"></script>
+    <script src="<?php echo urlFor('/Javascript/Functions.js') ?>"></script>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
