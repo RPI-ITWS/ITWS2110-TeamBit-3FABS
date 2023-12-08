@@ -36,12 +36,10 @@ generate_header();
         <form method="post" action="process-share.php" enctype="multipart/form-data">
             <label for="img">Select image:</label>
             <input type="file" id="img" name="img" accept="image/*" required>
-            <input type="submit" value="Upload Image" name="submit">
 
             <br>
             <label for="caption">Share Your Thoughts!</label>
             <br>
-
             <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here...">
             </textarea>
             <input type="submit" value="post" name="submit">
@@ -62,13 +60,11 @@ generate_header();
             
             var picture = document.getElementById('display');
             var caption = document.getElementById('caption').value;
-            var altText = document.getElementById('alt-text').value;
             var dataURL = picture.toDataURL();
 
             var formData = new FormData();
             formData.append('img', dataURL);
             formData.append('caption', caption);
-            formData.append('alt_text', altText);
 
             fetch('process-share.php', {
                 method: 'POST',
