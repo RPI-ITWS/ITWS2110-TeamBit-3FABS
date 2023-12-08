@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check file size (the value is in bytes, so 2MB is 2097152 bytes)
         if ($_FILES['img']['size'] > 2097152) {
             echo "Sorry, your file is too large. It should be less than 2MB.";
+            http_response_code(400);
             exit;
         }
 
@@ -40,20 +41,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Move uploaded file to a designated directory (optional)
         if (file_put_contents($target_file, $data)) {
-            echo "The file has been uploaded.";
             $author_id = $_SESSION['userId'];
-            $primary_comment_id = 1;
             $image_url = $target_file;
 
             $stmt = $db->prepare("INSERT INTO posts (image_url, author_id, alt_text, caption) VALUES (:imageURL, :authorId, :altText, :caption)");
             $stmt->execute(['imageURL' => $image_url, 'authorId' => $author_id, 'altText' => $alt_text, 'caption' => $caption]);
             $stmt->closeCursor();
-
+            $postId = $db->lastInsertId();
+            echo "$postId";
         } else {
             echo "Sorry, there was an error uploading your file.";
+            http_response_code(400);
         }
     } else {
         echo "No file was uploaded or there was an error in the upload.";
+        http_response_code(400);
     }
 }
 ?>

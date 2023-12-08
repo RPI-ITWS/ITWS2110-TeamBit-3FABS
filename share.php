@@ -42,6 +42,8 @@ generate_header();
             <br>
             <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here...">
             </textarea>
+            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter image text here...">
+            </textarea>
             <input type="submit" value="post" name="submit">
         </form>  
     </section>  
@@ -58,21 +60,22 @@ generate_header();
             //     alert('File size must not exceed 2 MB');
             // }
             
-            var picture = document.getElementById('display');
-            var caption = document.getElementById('caption').value;
-            var dataURL = picture.toDataURL();
+            const picture = document.getElementById('display');
+            const caption = document.getElementById('caption').value;
+            const alt_text = document.getElementById('caption').value;
+            const dataURL = picture.toDataURL();
 
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('img', dataURL);
             formData.append('caption', caption);
+            formData.append('alt_text', 'submit');
 
-            fetch('process-share.php', {
+            fetch("<?php echo urlFor('/process-share.php') ?>", {
                 method: 'POST',
                 body: formData
             })
-            .then(response=> {
-                alert('File Successfully Uploaded!')
-                window.location.reload();
+            .then(response=>response.text()).then(newPostId => {
+                window.location.href = "<?php echo urlFor('/post/') ?>" + newPostId;
             })
             .catch(error=> {
                 alert('There was an error uploading your file.')
