@@ -48,8 +48,8 @@ if ($userInfo !== null) {
     ) like_logged_in_user_subquery
     ON
         like_logged_in_user_subquery.like_post_id = posts.id';
-    $userLoggedInWhere = 'WHERE posts.author_id NOT IN (SELECT blocks.blocker_id FROM blocks WHERE blocks.blockee_id = 1)
-    AND posts.author_id NOT IN (SELECT blocks.blockee_id FROM blocks  WHERE blocks.blocker_id = 1';
+    $userLoggedInWhere = 'WHERE posts.author_id NOT IN (SELECT blocks.blocker_id FROM blocks WHERE blocks.blockee_id = :userId)
+    AND posts.author_id NOT IN (SELECT blocks.blockee_id FROM blocks WHERE blocks.blocker_id = :userId';
     $userLoggedInParams = ['userId' => $userInfo['id']];
 }
 $postSQL = '
@@ -63,7 +63,7 @@ $postSQL = '
                 caption as "title",
                 posts.updated_at AS "post_updated_at",
                 COALESCE(like_subquery.num_likes, 0) AS "num_likes",
-                ' . $userLoggedInSelect . ',
+                ' . $userLoggedInSelect . '
                 COALESCE(num_comments_subquery.num_comments, 0) AS "num_comments"
             FROM
                 posts
