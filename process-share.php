@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Move uploaded file to a designated directory (optional)
         if (file_put_contents($target_file, $data)) {
             echo "The file has been uploaded.";
-            $author_id = $userInfo['id'];
+            $author_id = $_SESSION['userId'];
             $primary_comment_id = 1;
             $image_url = $target_file;
 
