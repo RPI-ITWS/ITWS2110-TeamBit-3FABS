@@ -14,6 +14,10 @@ function urlFor(string $script_path) {
     return $root . $script_path;
 }
 
+function authorURL(string $username, string $displayName) {
+    return '<a href="' . urlFor('/profile/' . $username) . '" class="author">' . htmlspecialchars($displayName) . '</a>';
+}
+
 $assetURLs = array(
     "style" => urlFor('/style.css'),
     "heart" => urlFor('/images/heart-black.png'),

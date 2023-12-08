@@ -1,11 +1,19 @@
 
 
-function like(element) {
+function like(element, id, isComment = false) {
     const likedImage = "./images/heart-white.png";
     const unlikedImage = "./images/heart-black.png";
 
-    element.src = element.classList.contains("active") ? unlikedImage : likedImage;
-    element.classList.toggle("active");
+    const isLiked = element.classList.contains("active");
+    const params = {
+        direction: isLiked ? "0" : "1",
+    };
+    params[isComment ? "comment_id" : "post_id"] = id;
+
+    fetch("/project/api/like.php?" + new URLSearchParams(params)).then(function () {
+        element.src = isLiked ? unlikedImage : likedImage;
+        element.classList.toggle("active");
+    })
 }
 
 /**
