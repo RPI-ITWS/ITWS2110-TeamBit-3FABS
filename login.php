@@ -14,7 +14,7 @@ generate_header("Login", true);
                 </p>
                 <p>
                     <label for="password">Password</label>
-                    <input type="text" name="password" id="password">
+                    <input type="password" name="password" id="password">
                 </p>
                 <input type="submit" value="Submit">
             </form>
