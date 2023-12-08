@@ -85,7 +85,7 @@ $postSQL = '
                 GROUP BY comments.post_id
             ) num_comments_subquery ON num_comments_subquery.comment_post_id = posts.id
             ' . $userLoggedInJoin . '
-            ' . $userLoggedInWhere . ')
+            ' . $userLoggedInWhere . '
             ORDER BY ' . $sortColumn . ' ' . $sortMode . '
             LIMIT ' . $limit . ';
         ';
