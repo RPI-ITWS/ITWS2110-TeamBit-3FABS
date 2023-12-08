@@ -506,6 +506,7 @@ input, select, textarea{
 .reply-btn {
   width: 48px;
   height: 48px;
+  color: white;
 }
 
 .new-comment-form {

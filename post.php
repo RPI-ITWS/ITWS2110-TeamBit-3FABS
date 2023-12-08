@@ -150,7 +150,7 @@ generate_header($post['caption'] ?? "Post");
     ?>
 <div class="comments-footer">
     <?php if ($loggedInUserInfo !== null) : ?>
-    <p class="new-comment-form-button" data-for="new-comment"><img class="reply-btn" src="<?php $assetURLs["reply"] ?>"></p>
+    <p class="new-comment-form-button" data-for="new-comment"><img class="reply-btn" src="<?php echo $assetURLs["reply"] ?>"></p>
     <div class="new-comment-form" id="new-comment">
         <h3>Leave a comment</h3>
         <form action="<?php echo urlFor('/api_comment.php') ?>" method="POST" class="comment-box">
