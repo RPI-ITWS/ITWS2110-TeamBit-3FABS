@@ -75,7 +75,7 @@ generate_header();
                 body: formData
             })
             .then(response=>response.text()).then(newPostId => {
-                window.location.href = "<?php echo urlFor('/post/') ?>" + newPostId;
+                window.location.href = "<?php echo urlFor('/posts/') ?>" + newPostId;
             })
             .catch(error=> {
                 alert('There was an error uploading your file.')
