@@ -67,6 +67,7 @@ select:hover{
 
 .slider{
     -webkit-appearance: none;
+    appearance: none;
     background: white;
 }
 
@@ -168,18 +169,9 @@ body {
     margin-right: auto;
     text-align: center;
     background-color: black;
-}
-.contentFeed {
-    border: 2px white solid;
-    padding: 8px;
-    width: 60vw;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    background-color: black;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 /*IMAGE EDITING CSS*/
@@ -212,13 +204,14 @@ body {
 }
 
 /*POST CSS*/
-.post{
+.posts .post{
+    width: fit-content;
+    max-width: 400px;
+}
+.post {
     border: 4px white solid;
     padding: 16px;
     margin: 8px; 
-    width: 100%;
-    max-width: 400px;
-    max-height: 400px;
 }
 
 #caption{
@@ -232,6 +225,7 @@ body {
 
 .postImage{
     padding: 8px;
+    width: 100%;
 }
 
 .postFooter > *{
@@ -244,7 +238,7 @@ body {
     margin-bottom: 5px;
 }
 
-.post-date {
+.post-date, .comment-date {
     color: #888;
     font-size: 0.9em;
     margin-bottom: 10px;
@@ -279,13 +273,30 @@ body {
     animation:like 0.5s 1;
 }
 
-  @-webkit-keyframes like {
-    100%   { transform: rotatey(360deg); }
-  }
+@-webkit-keyframes like {
+100%   { transform: rotatey(360deg); }
+}
+@keyframes like {
+100%   { transform: rotatey(360deg); }
+}
 
-.comment > *{
-    display: inline-block;
-    vertical-align: middle;
+.comments {
+    text-align: left;
+    width: 100%
+}
+
+.comment {
+    border-bottom: 1px solid #888;
+}
+
+.comment-text {
+    margin: 2px;
+    padding: 1px;
+    font-size: 150%; 
+}
+
+.reply {
+    margin-left: 75px;
 }
 
 .comment > input[type=text]{
@@ -316,7 +327,6 @@ body {
 }
 
 .posts img{
-    width: 25%;
     padding: 4px;
     border: 1px white solid;
 }
@@ -370,3 +380,12 @@ textarea:focus, input:focus {
 input, select, textarea{
     color: black;
 }
+
+.footerwrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .footerwrap > * {
+    width: fit-content;
+  }

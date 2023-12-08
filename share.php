@@ -1,38 +1,9 @@
 <?php
 require './helpers/heading.php';
 require_once './helpers/sessions.php';
+loginGated();
 generate_header();
-$loggedInUser = getCurrentUserInfo();
-if ($loggedInUser === NULL) {
-    header('Location: ./login');
-    exit;
-}
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>1-Bit</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-</head>
-
-<body>
-    <!-- <header>
-
-        <ul>
-            <li><a href="./index.php">HOME</a></li>
-            <li><a href="/project/browse">BROWSE</a></li>
-            <li><a href="./share.html" class="selected">SHARE</a></li>
-            <li><a href="./login.php">LOGIN</a></li>
-            <li><a href="./create_acc.php">CREATE ACCOUNT</a></li>
-        </ul>
-    </nav>
-</header> -->
-<main class="content" id="content">
     <section class="editBar">
        <div class="slidersContainer"> 
            <div class="sliderWrap">
@@ -48,7 +19,7 @@ if ($loggedInUser === NULL) {
                <p id="contrastValue">100%</p>
            </div>
        </div>
-            <select id="dithering" oninput="ditherCall()">
+            <select id="dithering" oninput="ditherCall()"> Aesthtics
                 <option value="bayer4x4">bayer 4x4</option>
                 <option value="bayer2x2">bayer 2x2</option>
                 <option value="floydsteinberg">floyd-steinberg</option>
@@ -77,8 +48,8 @@ if ($loggedInUser === NULL) {
     </section>  
     </main>
 
-    <script src="./Javascript/Dither.js"></script>
-    <script src="./Javascript/Functions.js"></script>
+    <script src="<?php echo urlFor('/Javascript/Dither.js') ?>"></script>
+    <script src="<?php echo urlFor('/Javascript/Functions.js') ?>"></script>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
