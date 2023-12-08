@@ -238,7 +238,7 @@ body {
     margin-bottom: 5px;
 }
 
-.post-date {
+.post-date, .comment-date {
     color: #888;
     font-size: 0.9em;
     margin-bottom: 10px;
@@ -273,12 +273,20 @@ body {
     animation:like 0.5s 1;
 }
 
-  @-webkit-keyframes like {
-    100%   { transform: rotatey(360deg); }
-  }
-  @keyframes like {
-    100%   { transform: rotatey(360deg); }
-  }
+@-webkit-keyframes like {
+100%   { transform: rotatey(360deg); }
+}
+@keyframes like {
+100%   { transform: rotatey(360deg); }
+}
+
+.comments {
+    text-align: left;
+}
+
+.comment {
+    border-bottom: 1px solid #888;
+}
 
 .reply {
     margin-left: 75px;

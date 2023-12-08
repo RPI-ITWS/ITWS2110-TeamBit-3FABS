@@ -117,7 +117,7 @@ generate_header($post['caption'] ?? "Post");
                 <div class="comment-author">'. authorURL($comment['username'], $comment['display_name']) . '</div>
                 <p class="comment-text">' . htmlspecialchars($comment['comment_text']) . '</p>
                 <div class="comment-footer">
-                    <span class="comment-date">' . $comment['created_at'] . '</span>
+                    <p class="comment-date">' . $comment['created_at'] . '</p>
                     <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs['heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button"><span class="comment-likes">' . $comment['num_likes'] . 'likes </span>
                 </div>';
         if (array_key_exists($comment['comment_id'], $commentMapping)) {
