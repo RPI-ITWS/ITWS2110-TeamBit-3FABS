@@ -93,11 +93,11 @@ foreach ($comments as $comment) {
 }
 generate_header($post['caption'] ?? "Post");
 ?>
-<section class="post">
-    <h1><?php echo htmlspecialchars($post["caption"]) ?></h1>
+<section class="post whole-post">
+    <h1 class="post-title"><?php echo htmlspecialchars($post["caption"]) ?></h1>
     <img src="<?php echo urlFor($post["image_url"]) ?>" alt="<?php echo htmlspecialchars($post["alt_text"]) ?>">
     <p>Photo by <?php echo authorURL($author["username"], $author["display_name"]) ?></p>
-    <p>Posted on <?php echo $post["created_at"] ?></p>
+    <p class="post-date">Posted on <?php echo $post["created_at"] ?></p>
     <p>Likes: <?php echo $numLikes ?></p>
     <div class="postFooter">
         <img class="like <?php echo ($userLiked ? 'active' : '') ?>" src="<?php echo $assetURLs['heart'] ?>" onclick="like(this, <?php echo $post['id'] ?>)" alt="Like button">
@@ -123,6 +123,9 @@ generate_header($post['caption'] ?? "Post");
             }
         }
         echo '</div>';
+    }
+    foreach ($commentMapping[null] as $comment) {
+        renderComment($comment);
     }
     ?>
 </section>
