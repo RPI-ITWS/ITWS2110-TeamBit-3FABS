@@ -15,7 +15,7 @@ generate_header("Create Account", true);
 
             <p>
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email">
+                <input type="email" name="email" id="email">
             </p>
 
             <p>
@@ -25,7 +25,7 @@ generate_header("Create Account", true);
 
             <p>
                 <label for="password">Password</label>
-                <input type="text" name="password" id="password">
+                <input type="password" name="password" id="password">
             </p>
 
             <input type="submit" value="Submit">
@@ -37,9 +37,9 @@ generate_header("Create Account", true);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once './helpers/db.php';
 
-    $display_name = $_REQUEST["displayname"] ?? $_REQUEST["username"];
+    $display_name = htmlspecialchars($_REQUEST["displayname"] ?? $_REQUEST["username"]);
     $email = $_REQUEST["email"];
-    $user_name = $_REQUEST["username"];
+    $user_name = htmlspecialchars($_REQUEST["username"]);
     $password = $_REQUEST["password"];
 
     // Check if username is empty

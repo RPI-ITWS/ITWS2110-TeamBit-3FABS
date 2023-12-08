@@ -17,6 +17,9 @@ $direction = $_GET['direction'];
 $userId = $_SESSION['userId'];
 if ($postIdIsSet) {
     $postId = $_GET['post_id'];
+    if (!is_numeric($postId)) {
+        badRequest("post_id must be a number");
+    }
     if ($direction == "0") {
         $db->prepare("DELETE FROM likes WHERE post_id = :postId AND author_id = :userId")
             ->execute([
@@ -32,6 +35,9 @@ if ($postIdIsSet) {
     }
 } else {
     $commentId = $_GET['comment_id'];
+    if (!is_numeric($commentId)) {
+        badRequest("comment_id must be a number");
+    }
     if ($direction == "0") {
         $db->prepare("DELETE FROM comment_likes WHERE comment_id = :commentId AND author_id = :userId")
             ->execute([
