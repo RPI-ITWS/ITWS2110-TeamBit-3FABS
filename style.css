@@ -343,6 +343,10 @@ body {
     margin: 0 auto;
 }
 
+button[type=submit]{
+    font:black;
+}
+
 .indexWrap { 
     display: flex; 
     flex-direction: row; 
@@ -369,4 +373,25 @@ textarea:focus, input:focus {
 
 input, select, textarea{
     color: black;
+}
+
+.footerwrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footerwrap > * {
+  width: fit-content;
+}
+
+.new-comment-form-button {
+    font-size: 175%;
+}
+
+.new-comment-form {
+    display: none;
+}
+
+.new-comment-form.open {
+    display: block;
 }
