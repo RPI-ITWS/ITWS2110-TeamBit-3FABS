@@ -1,5 +1,5 @@
 <?php
-require "./helpers/sessions.php";
+require "./helpers/heading.php";
 require "./helpers/apihelper.php";
 require_once "./helpers/db.php";
 loginGated();
