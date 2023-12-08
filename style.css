@@ -314,7 +314,8 @@ body {
   vertical-align: middle;
 }
 
-.post-title, .postTitle {
+.post-title,
+.postTitle {
   font-size: 1.2em;
   margin-bottom: 5px;
 }
@@ -445,16 +446,14 @@ aside.posts img {
   margin: 0 auto;
 }
 
-
-button[type=submit]{
-    color: black;
+button[type="submit"] {
+  color: black;
 }
 
-.indexWrap { 
-    display: flex; 
-    flex-direction: row; 
-} 
-
+.indexWrap {
+  display: flex;
+  flex-direction: row;
+}
 
 .right {
   align-self: center;
@@ -472,11 +471,8 @@ button[type=submit]{
 }
 
 input,
-select {
-  color: white;
-}
-
-textarea, input[type="text"] {
+select,
+textarea {
   background-color: white;
   color: black;
 }
@@ -492,11 +488,11 @@ textarea, input[type="text"] {
 }
 
 .new-comment-form-button {
-    font-size: 175%;
+  font-size: 175%;
 }
 
 .new-comment-form {
-    display: none;
+  display: none;
 }
 
 .reply-btn {
@@ -505,11 +501,9 @@ textarea, input[type="text"] {
   color: white;
 }
 
-
 .new-comment-form.open {
-    display: block;
+  display: block;
 }
-
 
 .postImage {
   width: 300px;
