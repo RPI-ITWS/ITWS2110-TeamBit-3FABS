@@ -68,7 +68,7 @@ $commentQuery = $db->prepare('SELECT
     LEFT JOIN(
         SELECT
             comment_likes.comment_id "like_comment_id",
-            COUNT(likes.author_id) "num_likes"
+            COUNT(comment_likes.author_id) "num_likes"
         FROM
             comment_likes
         GROUP BY
