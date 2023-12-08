@@ -32,17 +32,21 @@ if (checkSessionValidity()) {
 
 generate_header();
 ?>
-<!--<p>Where you can either log in or see your profile, and the top "login" thing would become your name if you sign in.</p>
-        <p>You should also be able to copy the link up top to share your profile.</p>-->
 <article class="about">
     <!-- <img src="default.png" alt="User Avatar"> -->
-    <h1>
-        <?php echo htmlspecialchars($username); ?>
-    </h1>
-    <p>This is the profile page for
-        <?php echo htmlspecialchars($username); ?>
+    <h1><?php echo htmlspecialchars($userInfo["display_name"]); ?></h1>
+    <p>This is the profile page for <?php echo htmlspecialchars($userInfo["display_name"]); ?>. (<?php echo htmlspecialchars($userInfo["username"]); ?>)</p>
+    <?php if (checkSessionValidity()) : ?>
+        <?php if ($_SESSION['userId'] == $userInfo['id']) : ?>
+            <!-- <a href="<?php echo urlFor('/settings'); ?>"><button>Edit Profile</button></a> -->
+        <?php else : ?>
+            <form action="<?php echo urlFor('/api_block.php'); ?>" method="post">
+                <input type="hidden" name="blockee_id" value="<?php echo $userInfo['id']; ?>">
+                <input type="submit" value="Block">
+            </form>
+        <?php endif; ?>
+    <?php endif; ?>
 
-    </p>
 </article>
 <aside class="posts">
     <?php foreach ($posts as $post) : ?>
