@@ -95,7 +95,7 @@ generate_header($post['caption'] ?? "Post");
 ?>
 <section class="post whole-post">
     <h1 class="post-title"><?php echo htmlspecialchars($post["caption"]) ?></h1>
-    <img src="<?php echo urlFor($post["image_url"]) ?>" alt="<?php echo htmlspecialchars($post["alt_text"]) ?>">
+    <img class="postImage" src="<?php echo urlFor($post["image_url"]) ?>" alt="<?php echo htmlspecialchars($post["alt_text"]) ?>">
     <p>Photo by <?php echo authorURL($author["username"], $author["display_name"]) ?></p>
     <p class="post-date">Posted on <?php echo $post["created_at"] ?></p>
     <p>Likes: <?php echo $numLikes ?></p>
