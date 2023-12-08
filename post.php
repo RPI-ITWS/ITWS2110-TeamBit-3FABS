@@ -121,7 +121,7 @@ generate_header($post['caption'] ?? "Post");
                     <p class="comment-date">' . $comment['created_at'] . '</p>
                     <p class="comment-likes">' . $comment['num_likes'] . 'likes </p>
                     <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs[$userLikedComment ? 'liked' : 'heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button"><span class="new-comment-form-button" data-for="reply-'. $comment["comment_id"] .'">⤷</span>
-                    <div class="new-commment-form" id="reply-'. $comment["comment_id"] .'">
+                    <div class="new-comment-form" id="reply-'. $comment["comment_id"] .'">
                         <h3>Leave a comment</h3>
                         <form action="'. urlFor('/api_comment.php') . '" method="POST" class="comment-box">
                             <input type="hidden" name="post_id" value="'. $post['id'] .'">
@@ -145,7 +145,7 @@ generate_header($post['caption'] ?? "Post");
     ?>
 <div class="comments-footer">
     <p class="new-comment-form-button" data-for="new-comment">⤷</p>
-    <div class="new-commment-form" id="new-comment">
+    <div class="new-comment-form" id="new-comment">
         <h3>Leave a comment</h3>
         <form action="<?php echo urlFor('/api_comment.php') ?>" method="POST" class="comment-box">
             <input type="hidden" name="post_id" value="<?php echo $post['id'] ?>">
