@@ -52,7 +52,7 @@ function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = fa
             <li><a href="$rootURL" class="navi">HOME</a></li>
             <li><a href="$browseURL" class="navi">BROWSE</a></li>
             <li><a href="$shareURL" class="navi">SHARE</a></li>
-            $accountText
+            htmlspecialchars($accountText)
             </ul>
         </header>
         <main class="content">
