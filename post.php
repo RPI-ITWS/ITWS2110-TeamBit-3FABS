@@ -2,7 +2,7 @@
 require "./helpers/heading.php";
 require_once "./helpers/db.php";
 $postQuery = $db->prepare("SELECT * FROM posts WHERE id = :postId");
-$postQuery->execute(['postId' => $_GET['id']]);
+$postQuery->execute(['postId' => $_GET['post_id']]);
 $post = $postQuery->fetch(PDO::FETCH_ASSOC);
 if ($post === false) {
     http_response_code(404);
