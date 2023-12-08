@@ -109,6 +109,7 @@ generate_header($post['caption'] ?? "Post");
     function renderComment(array $comment) {
         global $assetURLs;
         global $commentMapping;
+        global $post;
         $userLikedComment = false;
         if (array_key_exists('logged_in_user_liked', $comment)) {
             $userLikedComment = $comment['logged_in_user_liked'];
@@ -119,7 +120,16 @@ generate_header($post['caption'] ?? "Post");
                 <div class="comment-footer">
                     <p class="comment-date">' . $comment['created_at'] . '</p>
                     <p class="comment-likes">' . $comment['num_likes'] . 'likes </p>
-                    <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs[$userLikedComment ? 'liked' : 'heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button">
+                    <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs[$userLikedComment ? 'liked' : 'heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button"><span class="new-comment-form-button" data-for="reply-'. $comment["comment_id"] .'">⤷</span>
+                    <div class="new-commment-form" id="reply-'. $comment["comment_id"] .'">
+                        <h3>Leave a comment</h3>
+                        <form action="'. urlFor('/api_comment.php') . '" method="POST" class="comment-box">
+                            <input type="hidden" name="post_id" value="'. $post['id'] .'">
+                            <input type="hidden" name="parent_comment_id" value="'. $comment['comment_id'] .'">
+                            <textarea name="content" placeholder="Write a comment..."></textarea>
+                            <button type="submit">Post</button>
+                        </form>
+                    </div>
                 </div>';
         if (array_key_exists($comment['comment_id'], $commentMapping)) {
             echo '<div class="comment-replies">';
@@ -133,5 +143,16 @@ generate_header($post['caption'] ?? "Post");
         renderComment($comment);
     }
     ?>
+<div class="comments-footer">
+    <p class="new-comment-form-button" data-for="new-comment">⤷</p>
+    <div class="new-commment-form" id="new-comment">
+        <h3>Leave a comment</h3>
+        <form action="<?php echo urlFor('/api_comment.php') ?>" method="POST" class="comment-box">
+            <input type="hidden" name="post_id" value="<?php echo $post['id'] ?>">
+            <textarea name="content" placeholder="Write a comment..."></textarea>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+</div>
 </section>
 <?php generate_footer(); ?>
