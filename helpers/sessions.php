@@ -1,5 +1,6 @@
 <?php
 require_once "./helpers/db.php";
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
 
 function createSession(int $userId)
 {
