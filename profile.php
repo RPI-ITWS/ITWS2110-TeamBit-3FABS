@@ -6,29 +6,27 @@ $username = $_GET['username'];
 
 $userQuery = $db->prepare("SELECT * FROM users WHERE username = :username");
 $userQuery->execute(['username' => $username]);
-$userInfo = $userQuery->fetch(PDO::FETCH_ASSOC);
+$userInfo = getCurrentUserInfo();
 
 $postQuery = $db->prepare("SELECT * FROM posts WHERE author_id = :userId ORDER BY created_at DESC");
 $postQuery->execute(['userId' => $userInfo['id']]);
 $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
 
+if ($userInfo !== null) {
+    $userBlockedPosterQuery = $db->prepare("SELECT COUNT(*) FROM blocks WHERE blocker_id = :blockerId AND blockee_id = :blockeeId");
+    $userBlockedPosterQuery->execute(['blockerId' => $_SESSION["userId"], 'blockeeId' => $author['id']]);
+    $userBlockedPoster = $userBlockedPosterQuery->fetch(PDO::FETCH_NUM)[0] > 0;
+    $posterBlockedUserQuery = $db->prepare("SELECT COUNT(*) FROM blocks WHERE blocker_id = :blockerId AND blockee_id = :blockeeId");
+    $posterBlockedUserQuery->execute(['blockerId' => $author['id'], 'blockeeId' => $_SESSION["userId"]]);
+    $posterBlockedUser = $posterBlockedUserQuery->fetch(PDO::FETCH_NUM)[0] > 0;
+    if ($userBlockedPoster || $posterBlockedUser) {
+        http_response_code(403);
+        die("You are not allowed to view this profile");
+    }
+}
+
 generate_header();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>1-Bit</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-</head>
-
-<body>
-    <main class="content">
         <!--<p>Where you can either log in or see your profile, and the top "login" thing would become your name if you sign in.</p>
         <p>You should also be able to copy the link up top to share your profile.</p>-->
         <article class="about">
@@ -47,7 +45,4 @@ generate_header();
                     alt="<?php echo htmlspecialchars($post['alt_text']); ?>">
             <?php endforeach; ?>
         </aside>
-    </main>
-</body>
-
-</html>
+<?php generate_footer(); ?>

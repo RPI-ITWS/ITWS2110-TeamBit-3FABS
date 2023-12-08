@@ -32,6 +32,26 @@ switch ($sort) {
         $sortColumn = "post_created_at";
         break;
 }
+$userLoggedInSelect = "";
+$userLoggedInJoin = "";
+$userLoggedInWhere = "";
+$userLoggedInParams = [];
+if ($userInfo !== null) {
+    $userLoggedInSelect = ', COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked"';
+    $userLoggedInJoin = 'LEFT JOIN (
+        SELECT likes.post_id "like_post_id",
+            TRUE "is_liked"
+        FROM
+            likes
+        WHERE
+            likes.author_id = :userId
+    ) like_logged_in_user_subquery
+    ON
+        like_logged_in_user_subquery.like_post_id = posts.id';
+    $userLoggedInWhere = 'WHERE posts.author_id NOT IN (SELECT blocks.blocker_id FROM blocks WHERE blocks.blockee_id = 1)
+    AND posts.author_id NOT IN (SELECT blocks.blockee_id FROM blocks  WHERE blocks.blocker_id = 1';
+    $userLoggedInParams = ['userId' => $userInfo['id']];
+}
 $postSQL = '
             SELECT
                 posts.id AS "post_id",
@@ -43,7 +63,7 @@ $postSQL = '
                 caption as "title",
                 posts.updated_at AS "post_updated_at",
                 COALESCE(like_subquery.num_likes, 0) AS "num_likes",
-                -- COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked", -- Needed in the future
+                ' . $userLoggedInSelect . ',
                 COALESCE(num_comments_subquery.num_comments, 0) AS "num_comments"
             FROM
                 posts
@@ -64,13 +84,15 @@ $postSQL = '
                     comments
                 GROUP BY comments.post_id
             ) num_comments_subquery ON num_comments_subquery.comment_post_id = posts.id
+            ' . $userLoggedInJoin . '
+            ' . $userLoggedInWhere . ')
             ORDER BY ' . $sortColumn . ' ' . $sortMode . '
             LIMIT ' . $limit . ';
         ';
 $preparedPostQuery = $db->prepare($postSQL);
 // Look, I know we're not supposed to do this but I cannot find a better way to get PHP to stop yelling at me about both the sort direction (asc/desc) or the limit
 
-$preparedPostQuery->execute();
+$preparedPostQuery->execute($userLoggedInParams);
 $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
 $preparedPostQuery->closeCursor();
 ?>
@@ -78,6 +100,10 @@ $preparedPostQuery->closeCursor();
 <?php
 foreach ($posts as $post) {
     $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);
+    $userLiked = false;
+    if (array_key_exists('logged_in_user_liked', $post)) {
+        $userLiked = $post['logged_in_user_liked'];
+    }
     echo '<div class="post">
                 <a class="post-url" href="' . urlFor("/posts/" . $post["post_id"]) . '"><h1 class="postTitle">' . $post["title"] . '</h1>
                 <img class="postImage" src="' . urlFor('/' . $post['image_url']) . '" alt="' . $altText . '">
@@ -90,7 +116,7 @@ foreach ($posts as $post) {
                         <p class="comments">Comments: ' . $post["num_comments"] . '</p>
                     </div>
                     <div class="postFooter">
-                        <img class="like" src="' . $assetURLs['heart'] . '" onclick="like(this)" alt="Like button">
+                        <img class="like ' . ($userLiked ? 'active' : '') . '" src="' . $assetURLs[$userLiked ? 'liked' : 'heart'] . '" onclick="like(this, ' . $post['post_id'] . ')" alt="Like button">
                     </div>
                 </div>
             </div>';
