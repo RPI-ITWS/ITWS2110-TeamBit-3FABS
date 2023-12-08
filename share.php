@@ -36,12 +36,12 @@ generate_header();
         <form method="post" action="process-share.php" enctype="multipart/form-data">
             <label for="img">Select image:</label>
             <input type="file" id="img" name="img" accept="image/*" required>
-
+            <input type="submit" value="Upload Image" name="submit">
             <br>
             <label for="caption">Share Your Thoughts!</label>
             <br>
-            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here...">
-            </textarea>
+            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter image title here..."></textarea>
+            <textarea id="alt_text" name="alt_text" rows="4" cols="50" placeholder="Enter alt text here..."></textarea>
             <input type="submit" value="post" name="submit">
         </form>  
     </section>  
@@ -58,21 +58,22 @@ generate_header();
             //     alert('File size must not exceed 2 MB');
             // }
             
-            var picture = document.getElementById('display');
-            var caption = document.getElementById('caption').value;
-            var dataURL = picture.toDataURL();
+            const picture = document.getElementById('display');
+            const caption = document.getElementById('caption').value;
+            const alt_text = document.getElementById('alt_text').value;
+            const dataURL = picture.toDataURL();
 
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('img', dataURL);
             formData.append('caption', caption);
+            formData.append('alt_text', alt_text);
 
-            fetch('process-share.php', {
+            fetch("<?php echo urlFor('/process-share.php') ?>", {
                 method: 'POST',
                 body: formData
             })
-            .then(response=> {
-                alert('File Successfully Uploaded!')
-                window.location.reload();
+            .then(response=>response.text()).then(newPostId => {
+                window.location.href = "<?php echo urlFor('/posts/') ?>" + newPostId;
             })
             .catch(error=> {
                 alert('There was an error uploading your file.')
