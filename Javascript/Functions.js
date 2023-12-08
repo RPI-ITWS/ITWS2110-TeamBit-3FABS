@@ -10,7 +10,7 @@ function like(element, id, isComment = false) {
     };
     params[isComment ? "comment_id" : "post_id"] = id;
 
-    fetch("/project/api/like.php?" + new URLSearchParams(params)).then(function () {
+    fetch("/project/api_like.php?" + new URLSearchParams(params)).then(function () {
         element.src = isLiked ? unlikedImage : likedImage;
         element.classList.toggle("active");
     })
