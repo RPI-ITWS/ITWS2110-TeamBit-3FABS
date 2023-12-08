@@ -204,12 +204,14 @@ body {
 }
 
 /*POST CSS*/
-.post{
+.posts .post{
+    width: fit-content;
+    max-width: 400px;
+}
+.post {
     border: 4px white solid;
     padding: 16px;
     margin: 8px; 
-    width: fit-content;
-    max-height: 400px;
 }
 
 #caption{
