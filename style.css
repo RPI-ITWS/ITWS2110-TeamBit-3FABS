@@ -413,7 +413,7 @@ body {
   justify-content: center;
 }
 
-.posts img {
+.posts .postImage {
   padding: 4px;
   border: 1px white solid;
 }

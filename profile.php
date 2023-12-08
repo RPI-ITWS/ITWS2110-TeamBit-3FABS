@@ -60,7 +60,7 @@ generate_header();
 <aside class="posts">
     <?php foreach ($posts as $post) : ?>
         <a href="<?php echo urlFor("/posts/" . $post['id']); ?>">
-            <img src="<?php echo htmlspecialchars(urlFor('/' . $post['image_url'])); ?>" alt="<?php echo htmlspecialchars($post['alt_text']); ?>">
+            <img class="postImage" src="<?php echo htmlspecialchars(urlFor('/' . $post['image_url'])); ?>" alt="<?php echo htmlspecialchars($post['alt_text']); ?>">
         </a>
     <?php endforeach; ?>
 </aside>
