@@ -5,7 +5,7 @@ require "./helpers/sessions.php";
 
 $userInfo = null;
 
-function generate_header(string $title = "TeamBit-3FABS") {
+function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = false) {
     global $userInfo;
     $iconURL = urlFor('/favicon.ico');
     $cssURL = urlFor('/style.css');
@@ -18,7 +18,7 @@ function generate_header(string $title = "TeamBit-3FABS") {
     if ($loggedInUser !== NULL) {
         $shareURL = urlFor('/share.php');
     }
-    if (($_SERVER['REQUEST_URI'] !== $loginURL || $_SERVER['REQUEST_URI'] !== $accountCreationURL)) {
+    if (!$isLoginPage && $loggedInUser === null) {
         // Make it easier for users to login
         $_SESSION['login_redirect'] = $_SERVER['REQUEST_URI'];
     } else {
