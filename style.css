@@ -280,9 +280,8 @@ body {
     100%   { transform: rotatey(360deg); }
   }
 
-.comment > *{
-    display: inline-block;
-    vertical-align: middle;
+.reply {
+    margin-left: 75px;
 }
 
 .comment > input[type=text]{
