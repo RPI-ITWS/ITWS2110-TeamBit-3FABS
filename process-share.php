@@ -15,11 +15,7 @@ if (!file_exists($target_dir)) {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if user is logged in
-    $userInfo = getCurrentUserInfo();
-    if (!checkSessionValidity() || $userInfo == NULL) {
-        header('Location: login.php');
-        exit;
-    }
+    loginGated();
     
     // Check if file is uploaded
     if (isset($_POST['img'])) {
