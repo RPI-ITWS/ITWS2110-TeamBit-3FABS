@@ -16,7 +16,7 @@ function urlFor(string $script_path) {
 
 $assetURLs = array(
     "style" => urlFor('/style.css'),
-    "heart" => urlFor('/images/heart.png'),
-    "liked" => urlFor('/images/heart-liked.png'),
+    "heart" => urlFor('/images/heart-black.png'),
+    "liked" => urlFor('/images/heart-white.png'),
 )
 ?>

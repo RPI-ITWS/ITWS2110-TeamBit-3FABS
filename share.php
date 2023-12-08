@@ -48,7 +48,7 @@ if ($loggedInUser === NULL) {
                <p id="contrastValue">100%</p>
            </div>
        </div>
-            <select id="dithering" oninput="ditherCall()">
+            <select id="dithering" oninput="ditherCall()"> Aesthtics
                 <option value="bayer4x4">bayer 4x4</option>
                 <option value="bayer2x2">bayer 2x2</option>
                 <option value="floydsteinberg">floyd-steinberg</option>
