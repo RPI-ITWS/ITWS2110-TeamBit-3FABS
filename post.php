@@ -70,7 +70,7 @@ $commentQuery = $db->prepare('SELECT
             comment_likes.comment_id "like_comment_id",
             COUNT(likes.author_id) "num_likes"
         FROM
-            likes
+            comment_likes
         GROUP BY
             likes.post_id
     ) like_subquery
