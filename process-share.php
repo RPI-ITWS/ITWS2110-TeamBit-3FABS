@@ -1,5 +1,4 @@
 <?php
-require "./helpers/sessions.php";
 require "./helpers/heading.php";
 require_once "./helpers/db.php";
 $target_dir = "images/";
