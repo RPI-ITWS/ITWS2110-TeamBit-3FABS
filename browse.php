@@ -78,23 +78,22 @@ generate_header();
     ?>
 
     <?php
-    foreach ($posts as $post) {
-        $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);
-        echo '<div class="post">
-                <h1 class="postTitle">' . $post["title"] . '</h1>
-                <img class="postImage" src="' . urlFor('/' . $post['image_url']) . '" alt="' . $altText . '">
+    foreach ($posts as $post): { ?> 
+        <?$altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);?>
+        <div class="post">
+                <h1 class="postTitle"> <?=$post["title"]?> </h1>
+                <img class="postImage" src= <?urlFor('/' . $post['image_url']) ?> alt="' . $altText . '">
                 <div class="postDetails">
-                    <p class="author"><a href="' . urlFor('/profile/' . $post['username']) . '">' . $post['display_name'] . '</a></p>
-                    <p class="postDate">' . $post["post_created_at"] . '</p>
-                    <p class="likes">Likes: ' . $post["num_likes"] . '</p>
-                    <p class="comments">Comments: ' . $post["num_comments"] . '</p>
+                    <p class="author"><a href="<?urlFor('/profile/' . $post['username'])?>">'<? $post['display_name'] ?></a></p>
+                    <p class="postDate"><? $post["post_created_at"]?></p>
+                    <p class="likes">Likes: <?=$post["num_likes"]?>'</p>
+                    <p class="comments">Comments: <?=$post["num_comments"] ?></p>
                 </div>
                 <div class="postFooter">
-                    <img class="like" src="' . $assetURLs['heart'] . '" onclick="like(this)" alt="Like button">
+                    <img class="like" src=" <?=$assetURLs['heart']?>" onclick="like(this)" alt="Like button">
                 </div>
-            </div>';
-    }
-    ?>
+            </div>
+    <?php } endforeach; ?>
 
 
 
@@ -135,5 +134,5 @@ generate_header();
             </div>
         </div> -->
 </div>
-<script src="<?php urlFor('/Javascript/Functions.js') ?>"></script>
+<!-- <script src="<?php urlFor('/Javascript/Functions.js') ?>"></script> -->
 <?php generate_footer(); ?>
