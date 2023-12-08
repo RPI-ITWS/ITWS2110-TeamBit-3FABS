@@ -314,7 +314,7 @@ body {
   vertical-align: middle;
 }
 
-.post-title {
+.post-title, .postTitle {
   font-size: 1.2em;
   margin-bottom: 5px;
 }
@@ -408,9 +408,19 @@ body {
   border: 1px white dashed;
 }
 
+.posts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .posts img {
   padding: 4px;
   border: 1px white solid;
+}
+
+aside.posts img {
+  margin: 10px;
 }
 
 /*INDEX CSS*/
@@ -476,7 +486,7 @@ textarea {
 .footerwrap {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 }
 .footerwrap > * {
   width: fit-content;
@@ -516,4 +526,10 @@ input, select, textarea{
 
 .new-comment-form.open {
     display: block;
+}
+
+
+.postImage img {
+  width: 300px;
+  height: 300px;
 }
