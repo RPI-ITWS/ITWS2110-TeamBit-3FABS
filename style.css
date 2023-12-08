@@ -499,27 +499,10 @@ textarea {
     display: none;
 }
 
-input, select, textarea{
-    color: black;
-}
-
-.footerwrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.footerwrap > * {
-  width: fit-content;
-}
-
 .reply-btn {
   width: 30;
   height: 30px;
   color: white;
-}
-
-.new-comment-form {
-    display: none;
 }
 
 
