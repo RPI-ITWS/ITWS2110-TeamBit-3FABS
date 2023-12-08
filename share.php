@@ -40,8 +40,8 @@ generate_header();
             <br>
             <label for="caption">Share Your Thoughts!</label>
             <br>
-            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here..."></textarea>
-            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter image text here..."></textarea>
+            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter image title here..."></textarea>
+            <textarea id="alt_text" name="alt_text" rows="4" cols="50" placeholder="Enter alt text here..."></textarea>
             <input type="submit" value="post" name="submit">
         </form>  
     </section>  
@@ -60,13 +60,13 @@ generate_header();
             
             const picture = document.getElementById('display');
             const caption = document.getElementById('caption').value;
-            const alt_text = document.getElementById('caption').value;
+            const alt_text = document.getElementById('alt_text').value;
             const dataURL = picture.toDataURL();
 
             const formData = new FormData();
             formData.append('img', dataURL);
             formData.append('caption', caption);
-            formData.append('alt_text', 'submit');
+            formData.append('alt_text', alt_text);
 
             fetch("<?php echo urlFor('/process-share.php') ?>", {
                 method: 'POST',
