@@ -72,7 +72,7 @@ $commentQuery = $db->prepare('SELECT
         FROM
             comment_likes
         GROUP BY
-            likes.post_id
+        comment_likes.comment_id
     ) like_subquery
     ON
         like_subquery.like_comment_id = comments.id
