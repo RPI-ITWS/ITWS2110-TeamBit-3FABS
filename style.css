@@ -471,14 +471,13 @@ button[type=submit]{
   max-width: 100%;
 }
 
-textarea:focus,
-input:focus {
-  color: black;
+input,
+select {
+  color: white;
 }
 
-input,
-select,
-textarea {
+textarea, input[type="text"] {
+  background-color: white;
   color: black;
 }
 
