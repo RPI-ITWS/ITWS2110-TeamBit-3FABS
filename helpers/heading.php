@@ -27,12 +27,13 @@ function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = fa
     }
     $accountURL = urlFor('/profile/' . ($loggedInUser !== null ? $loggedInUser['username'] : ''));
     $accountText = "";
-    if ($loggedInUser !== null) {
-        $accountText = '<li><a href="' . $accountURL . '" class="navi">' . $loggedInUser["display_name"] .'</a></li>';
-    } else {
-        $accountText = '<li><a href="' . $loginURL . '" class="navi">LOGIN</a></li>';
-        $accountText .= '<li><a href="' . $accountCreationURL . '" class="navi">CREATE ACCOUNT</a></li>';
-    }
+if ($loggedInUser !== null) {
+    $accountText = '<li><a href="' . htmlspecialchars($accountURL) . '" class="navi">' . htmlspecialchars($loggedInUser["display_name"]) .'</a></li>';
+} else {
+    $accountText = '<li><a href="' . htmlspecialchars($loginURL) . '" class="navi">LOGIN</a></li>';
+    $accountText .= '<li><a href="' . htmlspecialchars($accountCreationURL) . '" class="navi">CREATE ACCOUNT</a></li>';
+}
+
     $header = <<<EOT
     <!DOCTYPE html>
     <html lang="en">
@@ -52,7 +53,7 @@ function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = fa
             <li><a href="$rootURL" class="navi">HOME</a></li>
             <li><a href="$browseURL" class="navi">BROWSE</a></li>
             <li><a href="$shareURL" class="navi">SHARE</a></li>
-            htmlspecialchars($accountText)
+            $accountText
             </ul>
         </header>
         <main class="content">
