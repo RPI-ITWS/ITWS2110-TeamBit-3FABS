@@ -110,7 +110,7 @@ foreach ($posts as $post) {
                 </a>
                 <div class="footerwrap">
                     <div class="postDetails">
-                        <p class="author"><a href="' . urlFor('/profile/' . $post['username']) . '">' . $post['display_name'] . '</a></p>
+                        <p class="author"><a href="' . urlFor('/profile/' . htmlspecialchars($post['username'])) . '">' . htmlspecialchars($post['display_name']) . '</a></p>
                         <p class="postDate">' . $post["post_created_at"] . '</p>
                         <p class="likes">Likes: ' . $post["num_likes"] . '</p>
                         <p class="comments">Comments: ' . $post["num_comments"] . '</p>
