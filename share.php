@@ -48,7 +48,7 @@ generate_header();
     </section>  
     </main>
 
-    <script src="<?php urlFor('/Javascript/Dither.js') ?>></script>
+    <script src="<?php urlFor('/Javascript/Dither.js') ?>"></script>
     <script src="<?php urlFor('/Javascript/Functions.js') ?>"></script>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
