@@ -32,22 +32,23 @@ if (checkSessionValidity()) {
 
 generate_header();
 ?>
-        <!--<p>Where you can either log in or see your profile, and the top "login" thing would become your name if you sign in.</p>
+<!--<p>Where you can either log in or see your profile, and the top "login" thing would become your name if you sign in.</p>
         <p>You should also be able to copy the link up top to share your profile.</p>-->
-        <article class="about">
-            <!-- <img src="default.png" alt="User Avatar"> -->
-            <h1>
-                <?php echo htmlspecialchars($username); ?>
-            </h1>
-            <p>This is the profile page for
-                <?php echo htmlspecialchars($username); ?>
+<article class="about">
+    <!-- <img src="default.png" alt="User Avatar"> -->
+    <h1>
+        <?php echo htmlspecialchars($username); ?>
+    </h1>
+    <p>This is the profile page for
+        <?php echo htmlspecialchars($username); ?>
 
-            </p>
-        </article>
-        <aside class="posts">
-            <?php foreach ($posts as $post): ?>
-                <img src="<?php echo htmlspecialchars(urlFor('/' . $post['image_url'])); ?>"
-                    alt="<?php echo htmlspecialchars($post['alt_text']); ?>">
-            <?php endforeach; ?>
-        </aside>
+    </p>
+</article>
+<aside class="posts">
+    <?php foreach ($posts as $post) : ?>
+        <a href="<?php echo urlFor("/posts/" . $post['id']); ?>">
+            <img src="<?php echo htmlspecialchars(urlFor('/' . $post['image_url'])); ?>" alt="<?php echo htmlspecialchars($post['alt_text']); ?>">
+        </a>
+    <?php endforeach; ?>
+</aside>
 <?php generate_footer(); ?>
