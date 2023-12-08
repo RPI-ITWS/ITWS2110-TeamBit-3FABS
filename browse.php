@@ -77,7 +77,6 @@ generate_header();
     $preparedPostQuery->closeCursor();
     ?>
 
-
 <?php
     foreach ($posts as $post) {
         $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);
