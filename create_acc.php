@@ -58,11 +58,8 @@ generate_header("Create Account", true);
 
         if ($stmt->rowCount() > 0) {
             echo '<p>"This username is already in use!"</p>';
-        } 
-        else if{$user_name = ""}{
-            echo '<p>"You must enter a username!"'
-        }
-        else {
+
+        } else {
             // Check if email exists
             $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
             $result = $stmt->execute(['email' => $email]);
