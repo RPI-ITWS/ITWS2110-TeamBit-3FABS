@@ -118,7 +118,8 @@ generate_header($post['caption'] ?? "Post");
                 <p class="comment-text">' . htmlspecialchars($comment['comment_text']) . '</p>
                 <div class="comment-footer">
                     <p class="comment-date">' . $comment['created_at'] . '</p>
-                    <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs['heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button"><span class="comment-likes">' . $comment['num_likes'] . 'likes </span>
+                    <p class="comment-likes">' . $comment['num_likes'] . 'likes </p>
+                    <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs['heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button">
                 </div>';
         if (array_key_exists($comment['comment_id'], $commentMapping)) {
             echo '<div class="comment-replies">';
