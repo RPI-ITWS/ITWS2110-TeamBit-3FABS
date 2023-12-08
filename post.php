@@ -120,7 +120,7 @@ generate_header($post['caption'] ?? "Post");
                 <p class="comment-text">' . htmlspecialchars($comment['comment_text']) . '</p>
                 <div class="comment-footer">
                     <p class="comment-date">' . $comment['created_at'] . '</p>
-                    <p class="comment-likes">' . $comment['num_likes'] . 'likes </p>
+                    <p class="comment-likes">' . $comment['num_likes'] . ' likes </p>
                     <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs[$userLikedComment ? 'liked' : 'heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button">';
                     if ($loggedInUserInfo !== null) {
                         echo '<span class="new-comment-form-button" data-for="reply-'. $comment["comment_id"] .'"><img class="reply-btn" src="' . $assetURLs["reply"] . '"></span>
