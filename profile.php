@@ -33,9 +33,9 @@ generate_header();
         <p>You should also be able to copy the link up top to share your profile.</p>-->
         <section class="profile">
             <article class="about">
-                <img src="./images/download.png" alt="User Avatar">
-                <h1>Sample</h1>
-                <p>Sample profile</p>
+                <img src="/bit_logo trans.png" alt="User Avatar">
+                <h1><?php echo htmlspecialchars($userInfo['username']); ?></h1>
+                <p>This is the profile page for <?php echo htmlspecialchars($userInfo['username']); ?> </p>
             </article>
             <aside class="posts">
                 <?php foreach ($posts as $post): ?>
