@@ -3,9 +3,11 @@ require "./helpers/heading.php";
 require "./helpers/apihelper.php";
 require_once "./helpers/db.php";
 loginGated();
-if (!isset($_GET['post_id']) && !isset($_GET['comment_id'])) {
+$postIdIsSet = isset($_GET['post_id']);
+$commentIdIsSet = isset($_GET['comment_id']);
+if (!$postIdIsSet && !$commentIdIsSet) {
     badRequest("No post_id or comment_id provided");
-} elseif (isset($_GET['post_id']) && isset($_GET['comment_id'])) {
+} else if ($postIdIsSet && $commentIdIsSet) {
     badRequest("Only one of post_id or comment_id can be provided");
 }
 if (!isset($_GET['direction'])) {
