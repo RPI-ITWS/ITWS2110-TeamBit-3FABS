@@ -40,10 +40,8 @@ generate_header();
             <br>
             <label for="caption">Share Your Thoughts!</label>
             <br>
-            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here...">
-            </textarea>
-            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter image text here...">
-            </textarea>
+            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here..."></textarea>
+            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter image text here..."></textarea>
             <input type="submit" value="post" name="submit">
         </form>  
     </section>  
