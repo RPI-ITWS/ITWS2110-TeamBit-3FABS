@@ -15,19 +15,21 @@ if (!isset($_GET['direction'])) {
 }
 $direction = $_GET['direction'];
 $userId = $_SESSION['userId'];
-if (isset($_GET["post_id"])) {
+if ($postIdIsSet) {
     if ($direction == "0") {
         $db->prepare("DELETE FROM likes WHERE post_id = :postId AND author_id = :userId")
             ->execute([
                 'postId' => $postId,
                 'userId' => $userId
             ]);
+        echo '<!--Removed post like for p=' . $postId . ', u=' . $userId . '-->';
     } else {
         $db->prepare("INSERT IGNORE INTO likes (post_id, author_id) VALUES (:postId, :userId)")
             ->execute([
                 'postId' => $postId,
                 'userId' => $userId
             ]);
+        echo '<!--Added post like for p=' . $postId . ', u=' . $userId . '-->';
     }
 } else {
     if ($direction == "0") {
@@ -36,13 +38,14 @@ if (isset($_GET["post_id"])) {
                 'commentId' => $commentId,
                 'userId' => $userId
             ]);
+        echo '<!--Removed comment like for c=' . $commentId . ', u=' . $userId . '-->';
     } else {
         $db->prepare("INSERT IGNORE INTO comment_likes (comment_id, author_id) VALUES (:commentId, :userId)")
             ->execute([
                 'commentId' => $commentId,
                 'userId' => $userId
             ]);
+        echo '<!--Added comment like for c=' . $commentId . ', u=' . $userId . '-->';
     }
 }
-http_response_code(204);
 ?>
