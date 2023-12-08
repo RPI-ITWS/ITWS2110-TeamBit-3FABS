@@ -91,7 +91,7 @@ foreach ($comments as $comment) {
     $commentMapping[$comment['parent_comment_id']][] = $comment;
     $commentCount++;
 }
-generate_header($post['caption']);
+generate_header($post['caption'] ?? "Post");
 ?>
 <section class="post">
     <h1><?php echo htmlspecialchars($post["caption"]) ?></h1>
