@@ -3,7 +3,7 @@ require "./helpers/heading.php";
 require "./helpers/apihelper.php";
 require_once "./helpers/db.php";
 loginGated();
-if (!isset($_GET['post_id']) || !isset($_GET['comment_id'])) {
+if (!isset($_GET['post_id']) && !isset($_GET['comment_id'])) {
     badRequest("No post_id or comment_id provided");
 } elseif (isset($_GET['post_id']) && isset($_GET['comment_id'])) {
     badRequest("Only one of post_id or comment_id can be provided");
