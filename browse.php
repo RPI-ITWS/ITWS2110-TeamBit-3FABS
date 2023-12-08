@@ -37,7 +37,7 @@ $userLoggedInJoin = "";
 $userLoggedInWhere = "";
 $userLoggedInParams = [];
 if ($userInfo !== null) {
-    $userLoggedInSelect = ', COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked"';
+    $userLoggedInSelect = 'COALESCE(like_logged_in_user_subquery.is_liked, false) "logged_in_user_liked",';
     $userLoggedInJoin = 'LEFT JOIN (
         SELECT likes.post_id "like_post_id",
             TRUE "is_liked"
