@@ -289,6 +289,12 @@ body {
     border-bottom: 1px solid #888;
 }
 
+.comment-text {
+    margin: 2px;
+    padding: 1px;
+    font-size: 150%; 
+}
+
 .reply {
     margin-left: 75px;
 }
