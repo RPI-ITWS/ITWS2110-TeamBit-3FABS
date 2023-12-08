@@ -381,7 +381,7 @@ body {
   margin-left: 75px;
 }
 
-.new-comment-form > input[type="text"] {
+.new-comment-form input[type="text"] {
   border: 1px white solid;
   background-color: black;
   width: 50%;
@@ -503,8 +503,9 @@ input, select, textarea{
   width: fit-content;
 }
 
-.new-comment-form-button {
-    font-size: 175%;
+.reply-btn {
+  width: 48px;
+  height: 48px;
 }
 
 .new-comment-form {

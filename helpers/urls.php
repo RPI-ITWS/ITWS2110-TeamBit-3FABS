@@ -22,5 +22,6 @@ $assetURLs = array(
     "style" => urlFor('/style.css'),
     "heart" => urlFor('/images/heart-black.png'),
     "liked" => urlFor('/images/heart-white.png'),
+    "reply" => urlFor('/images/reply.svg'),
 )
 ?>
