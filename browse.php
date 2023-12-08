@@ -49,7 +49,7 @@ if ($userInfo !== null) {
     ON
         like_logged_in_user_subquery.like_post_id = posts.id';
     $userLoggedInWhere = 'WHERE posts.author_id NOT IN (SELECT blocks.blocker_id FROM blocks WHERE blocks.blockee_id = :userId)
-    AND posts.author_id NOT IN (SELECT blocks.blockee_id FROM blocks WHERE blocks.blocker_id = :userId';
+    AND posts.author_id NOT IN (SELECT blocks.blockee_id FROM blocks WHERE blocks.blocker_id = :userId)';
     $userLoggedInParams = ['userId' => $userInfo['id']];
 }
 $postSQL = '
