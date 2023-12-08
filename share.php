@@ -36,13 +36,12 @@ generate_header();
         <form method="post" action="process-share.php" enctype="multipart/form-data">
             <label for="img">Select image:</label>
             <input type="file" id="img" name="img" accept="image/*" required>
-            <input type="submit" value="Upload Image" name="submit">
-
             <br>
             <label for="caption">Share Your Thoughts!</label>
             <br>
-            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here..."></textarea>
-            <textarea id="alt-text" name="alt-text" rows="4" cols="50" placeholder="Enter alt text here..."></textarea>
+
+            <textarea id="caption" name="caption" rows="4" cols="50" placeholder="Enter text here...">
+            </textarea>
             <input type="submit" value="post" name="submit">
         </form>  
     </section>  
