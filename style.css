@@ -381,11 +381,11 @@ body {
   font-size: 150%;
 }
 
-.reply {
+.comment-replies {
   margin-left: 75px;
 }
 
-.comment > input[type="text"] {
+.new-comment-form > input[type="text"] {
   border: 1px white solid;
   background-color: black;
   width: 50%;
