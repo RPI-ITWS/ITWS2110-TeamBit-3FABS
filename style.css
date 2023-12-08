@@ -504,8 +504,8 @@ input, select, textarea{
 }
 
 .reply-btn {
-  width: 48px;
-  height: 48px;
+  width: 30;
+  height: 30px;
   color: white;
 }
 
