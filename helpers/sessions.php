@@ -89,3 +89,18 @@ function loginGated()
         exit();
     }
 }
+
+function logoutCurrentSession() {
+    global $db;
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        return;
+    }
+    $userId = $_SESSION['userId'];
+    $token = session_id();
+    $db->prepare("DELETE FROM sessions WHERE user_id = :userId AND token = :token")
+        ->execute([
+            'userId' => $userId,
+            'token' => $token
+        ]);
+    session_destroy();
+}
