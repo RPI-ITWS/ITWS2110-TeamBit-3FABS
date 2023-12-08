@@ -60,9 +60,10 @@ EOT;
 }
 
 function generate_footer() {
+    $JSURL = urlFor("/Javascript/Functions.js");
     $footer = <<<EOT
         </main>
-        <script src="./Javascript/Functions.js"></script>
+        <script src="$JSURL"></script>
         <footer>
             <p class="center">By Team 5 at ITWS 2110</p>
         </footer>
