@@ -13,6 +13,7 @@ function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = fa
     $browseURL = urlFor('/browse');
     $shareURL = urlFor('/login');
     $loginURL = urlFor('/login');
+    $logoutURL = urlFor('/logout');
     $accountCreationURL = urlFor('/create_acc');
     $loggedInUser = getCurrentUserInfo();
     if ($loggedInUser !== NULL) {
@@ -29,6 +30,7 @@ function generate_header(string $title = "TeamBit-3FABS", bool $isLoginPage = fa
     $accountText = "";
 if ($loggedInUser !== null) {
     $accountText = '<li><a href="' . htmlspecialchars($accountURL) . '" class="navi">' . htmlspecialchars($loggedInUser["display_name"]) .'</a></li>';
+    $accountText .= '<li><a href="' . htmlspecialchars($logoutURL) . '" class="navi">LOGOUT</a></li>';
 } else {
     $accountText = '<li><a href="' . htmlspecialchars($loginURL) . '" class="navi">LOGIN</a></li>';
     $accountText .= '<li><a href="' . htmlspecialchars($accountCreationURL) . '" class="navi">CREATE ACCOUNT</a></li>';
