@@ -17,7 +17,7 @@ $postQuery = $db->prepare("SELECT * FROM posts WHERE author_id = :userId ORDER B
 $postQuery->execute(['userId' => $userInfo['id']]);
 $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
 
-if ($userInfo !== null) {
+if (checkSessionValidity()) {
     $userBlockedPosterQuery = $db->prepare("SELECT COUNT(*) FROM blocks WHERE blocker_id = :blockerId AND blockee_id = :blockeeId");
     $userBlockedPosterQuery->execute(['blockerId' => $_SESSION["userId"], 'blockeeId' => $userInfo['id']]);
     $userBlockedPoster = $userBlockedPosterQuery->fetch(PDO::FETCH_NUM)[0] > 0;
