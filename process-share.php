@@ -1,12 +1,7 @@
 <?php
 require "./helpers/sessions.php";
-
-$servername = "localhost";
-$database = "team5project";
-$username = "root";
-$password = "team5";
-
-$conn = mysqli_connect($servername, $username, $password, $database);
+require "./helpers/heading.php";
+require_once "./helpers/db.php";
 $target_dir = "images/";
 
 if (!file_exists($target_dir)) {
@@ -51,11 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $primary_comment_id = 1;
             $image_url = $target_file;
 
-            $stmt = $conn->prepare("INSERT INTO posts (image_url, author_id, alt_text, caption) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("siss", $image_url, $author_id, $alt_text, $caption);
-
-            $stmt->execute();
-            $stmt->close();
+            $stmt = $db->prepare("INSERT INTO posts (image_url, author_id, alt_text, caption) VALUES (:imageURL, :authorId, :altText, :caption)");
+            $stmt->execute(['imageURL' => $image_url, 'authorId' => $author_id, 'altText' => $alt_text, 'caption' => $caption]);
+            $stmt->closeCursor();
 
         } else {
             echo "Sorry, there was an error uploading your file.";
@@ -64,7 +57,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "No file was uploaded or there was an error in the upload.";
     }
 }
-
-
-mysqli_close($conn);
 ?>
