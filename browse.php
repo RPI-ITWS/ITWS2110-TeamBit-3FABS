@@ -65,15 +65,14 @@ generate_header();
                     comments
                 GROUP BY comments.post_id
             ) num_comments_subquery ON num_comments_subquery.comment_post_id = posts.id
-            ORDER BY :sortColumn ' . $sortMode . '
+            ORDER BY '. $sortColumn . ' ' . $sortMode . '
             LIMIT ' . $limit . ';
         ';
+    echo '<!--' . $postSQL . '-->';
     $preparedPostQuery = $db->prepare($postSQL);
     // Look, I know we're not supposed to do this but I cannot find a better way to get PHP to stop yelling at me about both the sort direction (asc/desc) or the limit
-    echo '<!--' . $postSQL . '-->';
-    echo '<!--' . $sortColumn . '-->';
 
-    $preparedPostQuery->execute(["sortColumn" => $sortColumn]);
+    $preparedPostQuery->execute();
     $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
     $preparedPostQuery->closeCursor();
     ?>
