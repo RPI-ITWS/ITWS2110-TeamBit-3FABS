@@ -136,6 +136,7 @@ generate_header($post['caption'] ?? "Post");
             foreach ($commentMapping[$comment['comment_id']] as $reply) {
                 renderComment($reply);
             }
+            echo '</div>';
         }
         echo '</div>';
     }
