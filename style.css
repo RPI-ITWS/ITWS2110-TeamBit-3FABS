@@ -217,7 +217,7 @@ body {
     border: 4px white solid;
     padding: 16px;
     margin: 8px; 
-    width: 100%;
+    width: fit-content;
     max-height: 400px;
 }
 
@@ -232,6 +232,7 @@ body {
 
 .postImage{
     padding: 8px;
+    width: 100%;
 }
 
 .postFooter > *{
@@ -373,3 +374,12 @@ textarea:focus, input:focus {
 input, select, textarea{
     color: black;
 }
+
+.footerwrap{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .footerwrap > * {
+    width: fit-content;
+  }
