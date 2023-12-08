@@ -1,10 +1,7 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-require "../helpers/heading.php";
-require "../helpers/apihelper.php";
-require_once "../helpers/db.php";
+require "./helpers/heading.php";
+require "./helpers/apihelper.php";
+require_once "./helpers/db.php";
 loginGated();
 if (!isset($_GET['post_id']) || !isset($_GET['comment_id'])) {
     badRequest("No post_id or comment_id provided");
