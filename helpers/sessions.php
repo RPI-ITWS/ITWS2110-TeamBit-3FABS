@@ -1,7 +1,8 @@
 <?php
 require_once "./helpers/db.php";
 
-function createSession(int $userId) {
+function createSession(int $userId)
+{
     global $db;
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
@@ -19,10 +20,11 @@ function createSession(int $userId) {
     $_SESSION['expires'] = $expires;
 }
 
-function checkSessionValidity() {
+function checkSessionValidity()
+{
     global $db;
     if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+        session_start();
     }
     if (!isset($_SESSION['userId'])) {
         return false;
@@ -51,7 +53,8 @@ function checkSessionValidity() {
  * Refreshes the validity of the current session
  * Precondition: The session is valid
  */
-function refreshValidity() {
+function refreshValidity()
+{
     global $db;
     $newExpires = (new DateTimeImmutable())->add(new DateInterval('P1D'));
     $_SESSION['expires'] = $newExpires;
@@ -63,7 +66,8 @@ function refreshValidity() {
         ]);
 }
 
-function getCurrentUserInfo(): ?array {
+function getCurrentUserInfo(): ?array
+{
     global $db;
     if (!checkSessionValidity()) {
         return null;
@@ -75,4 +79,12 @@ function getCurrentUserInfo(): ?array {
         return null;
     }
     return $prepped->fetch(PDO::FETCH_ASSOC);
+}
+
+function loginGated()
+{
+    if (!checkSessionValidity()) {
+        header("Location: " . urlFor("/login"));
+        exit();
+    }
 }
