@@ -34,10 +34,11 @@ generate_header();
         <article class="about">
             <!-- <img src="default.png" alt="User Avatar"> -->
             <h1>
-                <?php echo htmlspecialchars($userInfo['username']); ?>
+                <?php echo htmlspecialchars($username); ?>
             </h1>
             <p>This is the profile page for
-                <?php echo htmlspecialchars($userInfo['username']); ?>
+                <?php echo htmlspecialchars($username); ?>
+
             </p>
         </article>
         <aside class="posts">
