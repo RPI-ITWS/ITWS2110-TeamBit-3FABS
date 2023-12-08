@@ -67,6 +67,7 @@ select:hover{
 
 .slider{
     -webkit-appearance: none;
+    appearance: none;
     background: white;
 }
 
@@ -279,6 +280,9 @@ body {
 }
 
   @-webkit-keyframes like {
+    100%   { transform: rotatey(360deg); }
+  }
+  @keyframes like {
     100%   { transform: rotatey(360deg); }
   }
 
