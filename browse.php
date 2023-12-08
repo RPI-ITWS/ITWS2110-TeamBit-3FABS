@@ -105,7 +105,7 @@ foreach ($posts as $post) {
         $userLiked = $post['logged_in_user_liked'];
     }
     echo '<div class="post">
-                <a class="post-url" href="' . urlFor("/posts/" . $post["post_id"]) . '"><h1 class="postTitle">' . $post["title"] . '</h1>
+                <a class="post-url" href="' . urlFor("/posts/" . $post["post_id"]) . '"><h1 class="postTitle">' . htmlspecialchars($post["title"]) . '</h1>
                 <img class="postImage" src="' . urlFor('/' . $post['image_url']) . '" alt="' . $altText . '">
                 </a>
                 <div class="footerwrap">
