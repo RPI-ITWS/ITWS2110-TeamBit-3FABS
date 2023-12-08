@@ -1,6 +1,6 @@
 <?php
 require './helpers/heading.php';
-generate_header();
+generate_header("Login", true);
 ?>
     <section class="indexWrap">
         <figure class="left">

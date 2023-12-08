@@ -61,7 +61,7 @@
             printTrace($e);
             exit;
         }
-        $maxMigrationVersion = 11; # TODO: Update this as we add more migrations
+        $maxMigrationVersion = 12; # TODO: Update this as we add more migrations
         if ($migrationVersion < 1) {
             try {
                 $db->query('
@@ -486,7 +486,42 @@
                 printTrace($e);
                 exit;
             }
-
+        }
+        if ($migrationVersion < 12) {
+            try {
+                // Add unique index on likes (post_id, author_id)
+                $db->query('
+                    ALTER TABLE likes ADD UNIQUE INDEX idx_likes_post_id_author_id (post_id, author_id);
+                ');
+                // Add unique index on comment_likes (comment_id, author_id)
+                $db->query('
+                    ALTER TABLE comment_likes ADD UNIQUE INDEX idx_comment_likes_comment_id_author_id (comment_id, author_id);
+                ');
+                // Add unique index on follows (follower_id, followee_id)
+                $db->query('
+                    ALTER TABLE follows ADD UNIQUE INDEX idx_follows_follower_id_followee_id (follower_id, followee_id);
+                ');
+                // Add unique index on blocks (blocker_id, blockee_id)
+                $db->query('
+                    ALTER TABLE blocks ADD UNIQUE INDEX idx_blocks_blocker_id_blockee_id (blocker_id, blockee_id);
+                ');
+                // Add unique index on post_hashtags (post_id, hashtag_id)
+                $db->query('
+                    ALTER TABLE post_hashtags ADD UNIQUE INDEX idx_post_hashtags_post_id_hashtag_id (post_id, hashtag_id);
+                ');
+                // Add unique index on post_reports (reported_post_id, reporter_id)
+                $db->query('
+                    ALTER TABLE post_reports ADD UNIQUE INDEX idx_post_reports_reported_post_id_reporter_id (reported_post_id, reporter_id);
+                ');
+                // Add unique index on comment_reports (reported_comment_id, reporter_id)
+                $db->query('
+                    ALTER TABLE comment_reports ADD UNIQUE INDEX idx_comment_reports_reported_comment_id_reporter_id (reported_comment_id, reporter_id);
+                ');
+            } catch (Exception $e) {
+                echo '<p class="failure">Caught exception during migration #12:</p>';
+                printTrace($e);
+                exit;
+            }
         }
         if ($migrationVersion != $maxMigrationVersion) {
             try {
