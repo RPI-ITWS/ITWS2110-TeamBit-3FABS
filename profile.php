@@ -40,7 +40,7 @@ generate_header();
         <?php if ($_SESSION['userId'] == $profileUserInfo['id']) : ?>
             <!-- <a href="<?php echo urlFor('/settings'); ?>"><button>Edit Profile</button></a> -->
         <?php else : ?>
-            <form action="<?php echo urlFor('/api_block.php'); ?>" method="post">
+            <form action="<?php echo urlFor('/api_block.php'); ?>" method="get">
                 <input type="hidden" name="blockee_id" value="<?php echo $profileUserInfo['id']; ?>">
                 <input type="submit" value="Block">
             </form>
