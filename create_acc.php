@@ -33,14 +33,19 @@ generate_header("Create Account", true);
     </article>
 </section>
 <div id="accountMessage">
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require_once './helpers/db.php';
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once './helpers/db.php';
 
-        $display_name = $_REQUEST["displayname"] ?? $_REQUEST["username"];
-        $email = $_REQUEST["email"];
-        $user_name = $_REQUEST["username"];
-        $password = $_REQUEST["password"];
+    $display_name = $_REQUEST["displayname"] ?? $_REQUEST["username"];
+    $email = $_REQUEST["email"];
+    $user_name = $_REQUEST["username"];
+    $password = $_REQUEST["password"];
+
+    // Check if username is empty
+    if (empty($user_name)) {
+        echo '<p>Please enter a username!</p>';
+    } else {
         try {
             $salt = bin2hex(random_bytes(16));
         } catch (Exception $e) {
@@ -57,8 +62,7 @@ generate_header("Create Account", true);
         }
 
         if ($stmt->rowCount() > 0) {
-            echo '<p>"This username is already in use!"</p>';
-
+            echo '<p>This username is already in use!</p>';
         } else {
             // Check if email exists
             $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
@@ -95,6 +99,8 @@ generate_header("Create Account", true);
             }
         }
     }
-    ?>
+}
+?>
+
 </div>
 <?php generate_footer(); ?>
