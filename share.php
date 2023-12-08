@@ -65,6 +65,8 @@ if ($loggedInUser === NULL) {
         <form method="post" action="process-share.php" enctype="multipart/form-data">
             <label for="img">Select image:</label>
             <input type="file" id="img" name="img" accept="image/*" required>
+            <input type="submit" value="Upload Image" name="submit">
+
             <br>
             <label for="caption">Share Your Thoughts!</label>
             <br>
