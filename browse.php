@@ -133,5 +133,5 @@ generate_header();
             </div>
         </div> -->
 </div>
-<script src="<?php urlFor('/Javascript/Functions.js') ?>"></script>
+<!-- <script src="<?php urlFor('/Javascript/Functions.js') ?>"></script> -->
 <?php generate_footer(); ?>
