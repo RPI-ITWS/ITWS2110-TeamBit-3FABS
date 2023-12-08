@@ -9,9 +9,30 @@ generate_header();
     global $assetURLs;
     $sort = $_GET["sort"];
     // $time = $_GET["time"]; Not used yet
-    $sortMode = ($_GET["sortMode"] ?? "desc") == "desc" ? "desc" : "asc";
+    $sortMode = "desc";
     $limit = 50;
     $sortColumn = "post_created_at";
+    switch ($sort) {
+        case "new":
+            $sortColumn = "post_created_at";
+            $sortMode = "desc";
+            break;
+        case "top":
+            $sortColumn = "num_likes";
+            $sortMode = "desc";
+            break;
+        case "old":
+            $sortColumn = "post_created_at";
+            $sortMode = "asc";
+            break;
+        case "hated":
+            $sortColumn = "num_likes";
+            $sortMode = "asc";
+            break;
+        default:
+            $sortColumn = "post_created_at";
+            break;
+    }
     $preparedPostQuery = $db->prepare('
             SELECT
                 posts.id AS "post_id",
@@ -48,18 +69,6 @@ generate_header();
             LIMIT ' . $limit . ';
         ');
     // Look, I know we're not supposed to do this but I cannot find a better way to get PHP to stop yelling at me about both the sort direction (asc/desc) or the limit
-
-    switch ($sort) {
-        case "new":
-            $sortColumn = "post_created_at";
-            break;
-        case "top":
-            $sortColumn = "num_likes";
-            break;
-        default:
-            $sortColumn = "post_created_at";
-            break;
-    }
 
     $preparedPostQuery->execute(["sortColumn" => $sortColumn]);
     $posts = $preparedPostQuery->fetchAll(PDO::FETCH_ASSOC);
