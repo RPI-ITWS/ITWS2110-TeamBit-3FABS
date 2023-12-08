@@ -436,10 +436,16 @@ body {
   margin: 0 auto;
 }
 
-.indexWrap {
-  display: flex;
-  flex-direction: row;
+
+button[type=submit]{
+    font:black;
 }
+
+.indexWrap { 
+    display: flex; 
+    flex-direction: row; 
+} 
+
 
 .right {
   align-self: center;
@@ -483,6 +489,28 @@ textarea {
 .new-comment-form {
     display: none;
 }
+
+input, select, textarea{
+    color: black;
+}
+
+.footerwrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footerwrap > * {
+  width: fit-content;
+}
+
+.new-comment-form-button {
+    font-size: 175%;
+}
+
+.new-comment-form {
+    display: none;
+}
+
 
 .new-comment-form.open {
     display: block;
