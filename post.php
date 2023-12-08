@@ -109,12 +109,16 @@ generate_header($post['caption'] ?? "Post");
     function renderComment(array $comment) {
         global $assetURLs;
         global $commentMapping;
+        $userLikedComment = false;
+        if (array_key_exists('logged_in_user_liked', $comment)) {
+            $userLikedComment = $comment['logged_in_user_liked'];
+        }
         echo '<div class="comment">
-                <div class="comment-author>'. authorURL($comment['username'], $comment['display_name']) . '</div>
+                <div class="comment-author">'. authorURL($comment['username'], $comment['display_name']) . '</div>
                 <p class="comment-text">' . htmlspecialchars($comment['comment_text']) . '</p>
                 <div class="comment-footer">
                     <span class="comment-date">' . $comment['created_at'] . '</span>
-                    <img class="like ' . ($comment['logged_in_user_liked'] ? 'active' : '') . '" src="' . $assetURLs['heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button"><span class="comment-likes">' . $comment['num_likes'] . 'likes </span>
+                    <img class="like ' . ($userLikedComment ? 'active' : '') . '" src="' . $assetURLs['heart'] . '" onclick="like(this, ' . $comment['comment_id'] . ', true)" alt="Like button"><span class="comment-likes">' . $comment['num_likes'] . 'likes </span>
                 </div>';
         if (array_key_exists($comment['comment_id'], $commentMapping)) {
             echo '<div class="comment-replies">';
