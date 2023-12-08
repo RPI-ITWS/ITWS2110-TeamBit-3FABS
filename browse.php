@@ -68,7 +68,6 @@ generate_header();
             ORDER BY '. $sortColumn . ' ' . $sortMode . '
             LIMIT ' . $limit . ';
         ';
-    echo '<!--' . $postSQL . '-->';
     $preparedPostQuery = $db->prepare($postSQL);
     // Look, I know we're not supposed to do this but I cannot find a better way to get PHP to stop yelling at me about both the sort direction (asc/desc) or the limit
 
