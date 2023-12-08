@@ -79,7 +79,7 @@ generate_header();
 
     <?php
     foreach ($posts as $post): { ?> 
-        <?$altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);?>
+        <?php $altText = $post["alt_text"] ?? ($post["title"] . " by " . $post["display_name"]);?>
         <div class="post">
                 <h1 class="postTitle"> <?=$post["title"]?> </h1>
                 <img class="postImage" src= <?urlFor('/' . $post['image_url']) ?> alt="' . $altText . '">
