@@ -15,8 +15,19 @@ $blockerId = $_SESSION['userId'];
 if ($blockeeId == $blockerId) {
     badRequest("You cannot block yourself");
 }
-$stmt = $db->prepare("INSERT IGNORE INTO blocks (blocker_id, blockee_id) VALUES (:blockerId, :blockeeId)");
-$stmt->execute(['blockerId' => $blockerId, 'blockeeId' => $blockeeId]);
-http_response_code(303);
-header("Location: " . urlFor("/")); // No point going back to the profile of the person you blocked
+$isUnblock = isset($_GET['unblock']);
+$targetUsernameStmt = $db->prepare("SELECT username FROM users WHERE id = :blockeeId");
+$targetUsernameStmt->execute(['blockeeId' => $blockeeId]);
+$targetUsername = $targetUsernameStmt->fetch(PDO::FETCH_ASSOC)['username'];
+if ($isUnblock) {
+    $db->prepare("DELETE FROM blocks WHERE blocker_id = :blockerId AND blockee_id = :blockeeId")
+        ->execute(['blockerId' => $blockerId, 'blockeeId' => $blockeeId]);
+    http_response_code(303);
+    header("Location: " . urlFor("/profile/$targetUsername"));
+} else {
+    $db->prepare("INSERT IGNORE INTO blocks (blocker_id, blockee_id) VALUES (:blockerId, :blockeeId)")
+        ->execute(['blockerId' => $blockerId, 'blockeeId' => $blockeeId]);
+    http_response_code(303);
+    header("Location: " . urlFor("/profile/$targetUsername"));
+}
 ?>
